@@ -15,7 +15,7 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
 
 - [x] 1\) A aplicação deve conter uma página inicial de menu contendo 4 módulos: Fornecedor, Produto, Pedido, Cliente. 
 - [ ] 2\) Módulo do Fornecedor (crie para essa entidade classe de modelo, repository, service, controller e páginas html que achar necessário para completar os itens a seguir) 
-    - [ ] a\) Deve ser criada uma entidade de Fornecedor criando a sua classe modelo com os atributos id(pk), nome e produtos que será mapeado em OneToMany onde um fornecedor tem vários produtos.
+    - [x] a\) Deve ser criada uma entidade de Fornecedor criando a sua classe modelo com os atributos id(pk), nome e produtos que será mapeado em OneToMany onde um fornecedor tem vários produtos.
     - [ ] b\) Ao clicar no link do módulo do fornecedor deve ser redirecionado para uma página com a listagem dos fornecedores. Para cada fornecedor deve ser apresentado o nome e os produtos fornecidos por ele. (read/list)
     - [ ] c\) Na página de listagem do fornecedor deve existir um link para uma página de formulário para adicionar um novo fornecedor.(create)
     - [ ] d\) Ao submeter o formulário o usuário deve ser redirecionado a uma página com detalhes do fornecedor que acabou de criar.(read/get)
