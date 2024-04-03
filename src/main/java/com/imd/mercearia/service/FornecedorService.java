@@ -25,5 +25,13 @@ public class FornecedorService {
     public Fornecedor getFornecedorPorId(Integer id) {
         return fornecedorRepository.findById(id).orElse(null);
     }
+
+    public void atualizarFornecedor(Fornecedor fornecedor) {
+        fornecedorRepository.save(fornecedor);
+    }
+
+    public void deletarFornecedor(Integer id) {
+        fornecedorRepository.deleteById(id);
+    }
     
 }
