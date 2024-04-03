@@ -17,12 +17,12 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
 - [ ] 2\) Módulo do Fornecedor (crie para essa entidade classe de modelo, repository, service, controller e páginas html que achar necessário para completar os itens a seguir) 
     - [x] a\) Deve ser criada uma entidade de Fornecedor criando a sua classe modelo com os atributos id(pk) e nome. 
     - [x] b\) Ao clicar no link do módulo do fornecedor deve ser redirecionado para uma página com a listagem dos fornecedores. (read/list)
-    - [ ] c\) Na página de listagem do fornecedor deve existir um link para uma página de formulário para adicionar um novo fornecedor.(create)
-    - [ ] d\) Ao submeter o formulário o usuário deve ser redirecionado a uma página com detalhes do fornecedor que acabou de criar.(read/get)
-    - [ ] e\) Na página de listagem para cada fornecedor adicione um link/botão para deletar o fornecedor. (delete)
-    - [ ] f\) Na página de listagem para cada fornecedor adicione um link/botão que leve a um formulário para editar o fornecedor.(edit)
+    - [x] c\) Na página de listagem do fornecedor deve existir um link para uma página de formulário para adicionar um novo fornecedor.(create)
+    - [x] d\) Ao submeter o formulário o usuário deve ser redirecionado a uma página com detalhes do fornecedor que acabou de criar.(read/get)
+    - [x] e\) Na página de listagem para cada fornecedor adicione um link/botão para deletar o fornecedor. (delete)
+    - [x] f\) Na página de listagem para cada fornecedor adicione um link/botão que leve a um formulário para editar o fornecedor.(edit)
     - [ ] g\) Adicione o atributo produtos na entidade fornecedor, esse atributo será mapeado em OneToMany onde um fornecedor tem vários produtos.
-    - [ ] h\) Altere a listagem, para cada fornecedor deve ser apresentado os produtos fornecidos por ele.
+    - [ ] h\) Na página de detalhes do fonecedor, deve ser apresentado os produtos fornecidos por ele.
 - [ ] 3\) Módulo do produto  (crie para essa entidade classe de modelo, repository, service, controller e páginas html que achar necessário para completar os itens a seguir) 
     - [ ] a\) Deve ser criada uma entidade de Produto criando a sua classe modelo com os atributos id(pk), nome, preço, quantidadeEstoque.
     - [ ] b\) Ao clicar no link do módulo do produto deve ser redirecionado para uma página com a listagem dos produtos. Para cada produto deve ser apresentado o seu nome, preço e quantidadeEstoque. (read/list)

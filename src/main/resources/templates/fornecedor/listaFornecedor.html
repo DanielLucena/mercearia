@@ -1,41 +1,47 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="/css/styles.css" />
     <title>Fornecedor</title>
-  </head>
+</head>
 
-  <body>
+<body>
     <h1><p>Lista de Fornecedores</p></h1>
     <ul>
-      <li th:each="fornecedor : ${fornecedores}">
-        <span
-          th:text="'id: ' + ${fornecedor.id} +', fornecedor: '+ ${fornecedor.nome}"
-        />
-      </li>
+        <li th:each="fornecedor : ${fornecedores}">
+            <span th:text="'id: ' + ${fornecedor.id} +', fornecedor: '+ ${fornecedor.nome}" />
+            <a th:href="@{/fornecedor/detalhes(id=${fornecedor.id})}">Detalhes</a>
+        </li>
     </ul>
-    <br/>
+    <br />
     <table>
-      <thead>
-        <tr>
-          <th th:text="Fornecedor"></th>
-          <th th:text="id"></th>
-          
-        </tr>
-      </thead>
-      <tbody>
-        <tr th:each="fornecedor: ${fornecedores}">
-          <td th:text="${fornecedor.nome}"></td>
-          <td th:text="${fornecedor.id}"></td>
-          
-        </tr>
-      </tbody>
+        <thead>
+            <tr>
+                <th th:text="ID"></th>
+                <th th:text="Fornecedor"></th>
+                <th th:text="Ações"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="fornecedor: ${fornecedores}">
+                <td th:text="${fornecedor.id}"></td>
+                <td th:text="${fornecedor.nome}"></td>
+                <td>
+                  <a th:href="@{/fornecedor/detalhes/' + ${fornecedor.id}}">Detalhes</a>
+                  <a th:href="@{'/fornecedor/editar/' + ${fornecedor.id}}">Editar</a>
+                  <form th:action="@{'/fornecedor/deletar/' + ${fornecedor.id}}" method="post">
+                      <button type="submit">Deletar</button>
+                  </form>
+                </td>
+            </tr>
+        </tbody>
     </table>
-    
+
     <br /><br />
+    <a th:href="@{/fornecedor/novo}">Criar Novo Fornecedor</a><br>
     <a href="/">Voltar para o menu</a><br>
-  </body>
+</body>
 </html>
