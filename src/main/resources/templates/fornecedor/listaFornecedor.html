@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+    <title>Fornecedor</title>
+  </head>
+
+  <body>
+    <h1><p>Lista de Fornecedores</p></h1>
+    <ul>
+      <li th:each="fornecedor : ${fornecedores}">
+        <span
+          th:text="'id: ' + ${fornecedor.id} +', fornecedor: '+ ${fornecedor.nome}"
+        />
+      </li>
+    </ul>
+    <br/>
+    <table>
+      <thead>
+        <tr>
+          <th th:text="Fornecedor"></th>
+          <th th:text="id"></th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="fornecedor: ${fornecedores}">
+          <td th:text="${fornecedor.nome}"></td>
+          <td th:text="${fornecedor.id}"></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    
+    <br /><br />
+    <a href="/">Voltar para o menu</a><br>
+  </body>
+</html>
