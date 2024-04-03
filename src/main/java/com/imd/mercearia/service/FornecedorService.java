@@ -17,4 +17,13 @@ public class FornecedorService {
     public List<Fornecedor> getListaFornecedores() {
         return fornecedorRepository.findAll();
     }
+
+    public Fornecedor criarFornecedor(Fornecedor fornecedor) {
+        return fornecedorRepository.save(fornecedor);
+    }
+
+    public Fornecedor getFornecedorPorId(Integer id) {
+        return fornecedorRepository.findById(id).orElse(null);
+    }
+    
 }
