@@ -18,8 +18,8 @@ public class FornecedorService {
         return fornecedorRepository.findAll();
     }
 
-    public Fornecedor criarFornecedor(Fornecedor fornecedor) {
-        return fornecedorRepository.save(fornecedor);
+    public void criarFornecedor(Fornecedor fornecedor) {
+        fornecedorRepository.save(fornecedor);
     }
 
     public Fornecedor getFornecedorPorId(Integer id) {

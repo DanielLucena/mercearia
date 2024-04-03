@@ -34,8 +34,8 @@ public class FornecedorController {
 
      @PostMapping("/criar")
     public String criarFornecedor(@ModelAttribute("fornecedor") Fornecedor fornecedor, RedirectAttributes redirectAttributes) {
-        Fornecedor novoFornecedor = fornecedorService.criarFornecedor(fornecedor);
-        redirectAttributes.addAttribute("id", novoFornecedor.getId());
+        fornecedorService.criarFornecedor(fornecedor);
+        redirectAttributes.addAttribute("id", fornecedor.getId());
         return "redirect:/fornecedor/detalhes";
     }
 
