@@ -36,8 +36,8 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
     - [x] j\) Altere a listagem, para cada produto deve ser apresentado o fornecedor dele.
     obs.: ideia de como implementar a quantidade no relacionamento entre produto e pedidos: https://www.baeldung.com/jpa-many-to-many#many-to-many-using-a-composite-key
 - [ ] 4\) Módulo de Pedido (crie para essa entidade classe de modelo, repository, service, controller e páginas html que achar necessário para completar os itens a seguir) 
-    - [ ] a\) Deve ser criada uma entidade de Pedido criando a sua classe modelo com os atributos id(pk), CPFCliente, valorTotal.
-    - [ ] b\) Ao clicar no link do módulo do pedido deve ser redirecionado para uma página com a listagem dos pedidos. Para cada pedido deve ser apresentado o CPFCliente, valorTotal. (read/list)
+    - [x] a\) Deve ser criada uma entidade de Pedido criando a sua classe modelo com os atributos id(pk), cpfCliente, valorTotal.
+    - [ ] b\) Ao clicar no link do módulo do pedido deve ser redirecionado para uma página com a listagem dos pedidos. Para cada pedido deve ser apresentado o cpfCliente, valorTotal. (read/list)
     - [ ] c\) Na página de listagem dos pedidos deve existir um link para uma página de formulário para adicionar um novo pedido. (create)
         - [ ] i\) Nesta página  deve ser mostrado uma lista com  os produtos que foram cadastrados no sistema e um campo de input do tipo number para cada item para informar a quantidade de cada produto.
         - [ ] ii\) A lista de produtos para esse formulário deve estar em ordem alfabética do nome dos produtos. (queries de busca personalizada)
