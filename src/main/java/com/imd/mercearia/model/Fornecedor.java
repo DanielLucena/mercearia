@@ -22,8 +22,8 @@ public class Fornecedor {
     @Column(length = 100)
     private String nome;
 
-    // @OneToMany(mappedBy = "produto", fetch = FetchType.LAZY)
-    // private Set<Produto> produtos;
+    @OneToMany(mappedBy = "fornecedor", fetch = FetchType.LAZY)
+    private Set<Produto> produtos;
 
     public Fornecedor() {
 
@@ -49,13 +49,13 @@ public class Fornecedor {
         this.nome = nome;
     }
 
-    // public Set<Produto> getProdutos() {
-    // return produtos;
-    // }
+    public Set<Produto> getProdutos() {
+        return produtos;
+    }
 
-    // public void setProdutos(Set<Produto> produtos) {
-    // this.produtos = produtos;
-    // }
+    public void setProdutos(Set<Produto> produtos) {
+        this.produtos = produtos;
+    }
 
     @Override
     public String toString() {

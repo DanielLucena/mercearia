@@ -21,19 +21,19 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
     - [x] d\) Ao submeter o formulário o usuário deve ser redirecionado a uma página com detalhes do fornecedor que acabou de criar.(read/get)
     - [x] e\) Na página de listagem para cada fornecedor adicione um link/botão para deletar o fornecedor. (delete)
     - [x] f\) Na página de listagem para cada fornecedor adicione um link/botão que leve a um formulário para editar o fornecedor.(edit)
-    - [ ] g\) Adicione o atributo produtos na entidade fornecedor, esse atributo será mapeado em OneToMany onde um fornecedor tem vários produtos.
+    - [x] g\) Adicione o atributo produtos na entidade fornecedor, esse atributo será mapeado em OneToMany onde um fornecedor tem vários produtos.
     - [ ] h\) Na página de detalhes do fonecedor, deve ser apresentado os produtos fornecidos por ele.
 - [ ] 3\) Módulo do produto  (crie para essa entidade classe de modelo, repository, service, controller e páginas html que achar necessário para completar os itens a seguir) 
-    - [ ] a\) Deve ser criada uma entidade de Produto criando a sua classe modelo com os atributos id(pk), nome, preço, quantidadeEstoque.
-    - [ ] b\) Ao clicar no link do módulo do produto deve ser redirecionado para uma página com a listagem dos produtos. Para cada produto deve ser apresentado o seu nome, preço e quantidadeEstoque. (read/list)
+    - [x] a\) Deve ser criada uma entidade de Produto criando a sua classe modelo com os atributos id(pk), nome, preço, quantidadeEstoque.
+    - [x] b\) Ao clicar no link do módulo do produto deve ser redirecionado para uma página com a listagem dos produtos. Para cada produto deve ser apresentado o seu nome, preço e quantidadeEstoque. (read/list)
     - [ ] c\) Na página de listagem dos produtos  deve existir um link para uma página de formulário para adicionar um novo produto. Nesta página o nome dos fornecedores deve ser listado para que o usuário escolha um para o produto. O campo preço deve aceitar apenas valores numéricos. (create)
     - [ ] d\) Ao submeter o formulário o usuário deve ser redirecionado a uma página com detalhes do produto que acabou de criar. (read/get)
     - [ ] e\) Na página de listagem para cada produto adicione um link/botão para deletar o produto. (delete)
     - [ ] f\) Na página de listagem para cada produto adicione um link/botão que leve a um formulário para editar o produto.(edit)
     - [ ] g\) Na página de listagem para cada produto adicione um link/botão que leve a um formulário para incrementar quantidadeEstoque em um valor fornecido pelo usuário.(edit)
-    - [ ] h\) Adicione o atributo fornecedor, que será mapeado em OneToMany onde um fornecedor tem vários produtos.
+    - [x] h\) Adicione o atributo fornecedor, que será mapeado em OneToMany onde um fornecedor tem vários produtos.
     - [ ] i\) Adicione o atributo pedidos, que será mapeado em ManyToMany pela tabela de ligação itens_pedido e deve conter nessa tabela a coluna quantidade que indica a quantidade de itens daquele produto presentes no pedido.
-    - [ ] j\) Altere a listagem, para cada produto deve ser apresentado o fornecedor dele.
+    - [x] j\) Altere a listagem, para cada produto deve ser apresentado o fornecedor dele.
     obs.: ideia de como implementar a quantidade no relacionamento entre produto e pedidos: https://www.baeldung.com/jpa-many-to-many#many-to-many-using-a-composite-key
 - [ ] 4\) Módulo de Pedido (crie para essa entidade classe de modelo, repository, service, controller e páginas html que achar necessário para completar os itens a seguir) 
     - [ ] a\) Deve ser criada uma entidade de Pedido criando a sua classe modelo com os atributos id(pk), CPFCliente, valorTotal.
