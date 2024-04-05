@@ -32,18 +32,24 @@ public class FornecedorController {
         return "fornecedor/listaFornecedor";
     }
 
-     @PostMapping("/criar")
-    public String criarFornecedor(@ModelAttribute("fornecedor") Fornecedor fornecedor, RedirectAttributes redirectAttributes) {
-        fornecedorService.criarFornecedor(fornecedor);
-        redirectAttributes.addAttribute("id", fornecedor.getId());
-        return "redirect:/fornecedor/detalhes";
+    @GetMapping("/novo")
+    public String mostrarFormularioNovoFornecedor(Model model) {
+        model.addAttribute("fornecedor", new Fornecedor()); // Adiciona um novo fornecedor ao modelo
+        return "fornecedor/criarFornecedor"; // Retorna o nome da página do formulário de criação
     }
 
-    @GetMapping("/detalhes")
-    public String mostrarDetalhes(@RequestParam("id") Integer id, Model model) {
+
+    @PostMapping("/criar")
+    public String criarFornecedor(@ModelAttribute("fornecedor") Fornecedor fornecedor, RedirectAttributes redirectAttributes) {
+        fornecedorService.criarFornecedor(fornecedor);
+        return "redirect:/fornecedor/getListaFornecedores";
+    }
+
+    @GetMapping("/detalhes/{id}")
+    public String mostrarDetalhes(@PathVariable("id") Integer id, Model model) {
         Fornecedor fornecedor = fornecedorService.getFornecedorPorId(id);
         model.addAttribute("fornecedor", fornecedor);
-        return "fornecedor/detalhes";
+        return "fornecedor/detalhesFornecedor";
     }
 
      @GetMapping("/editar/{id}")
@@ -55,12 +61,12 @@ public class FornecedorController {
 
     @PostMapping("/atualizar/{id}")
     public String atualizarFornecedor(@PathVariable("id") Integer id, @ModelAttribute("fornecedor") Fornecedor fornecedor) {
-        fornecedor.setId(id);
+
         fornecedorService.atualizarFornecedor(fornecedor);
         return "redirect:/fornecedor/getListaFornecedores";
     }
 
-     @DeleteMapping("/deletar/{id}")
+    @PostMapping("/deletar/{id}")
     public String deletarFornecedor(@PathVariable("id") Integer id) {
         fornecedorService.deletarFornecedor(id);
         return "redirect:/fornecedor/getListaFornecedores";

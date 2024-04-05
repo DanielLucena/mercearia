@@ -5,7 +5,7 @@
 </head>
 <body>
     <h1>Editar Fornecedor</h1>
-    <form action="/fornecedor/atualizar/{id}" method="post" th:object="${fornecedor}">
+    <form action="/fornecedor/atualizar/{id}" th:action="@{/fornecedor/atualizar/{id}(id=${fornecedor.id})}" method="post" th:object="${fornecedor}">
         <input type="hidden" th:field="*{id}" />
         <label for="nome">Nome do Fornecedor:</label>
         <input type="text" id="nome" name="nome" th:field="*{nome}" required>
