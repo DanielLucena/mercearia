@@ -22,7 +22,7 @@ public class Produto {
     private double preco;
 
     @Column
-    private int quatidadeEstoque;
+    private int quantidadeEstoque;
 
     public Produto() {
 
@@ -31,7 +31,7 @@ public class Produto {
     public Produto(String nome, double preco, int quantidadeEstoque) {
         this.nome = nome;
         this.preco = preco;
-        this.quatidadeEstoque = quantidadeEstoque;
+        this.quantidadeEstoque = quantidadeEstoque;
     }
 
     public Integer getId() {
@@ -58,18 +58,18 @@ public class Produto {
         this.preco = preco;
     }
 
-    public int getQuatidadeEstoque() {
-        return quatidadeEstoque;
+    public int getQuantidadeEstoque() {
+        return quantidadeEstoque;
     }
 
-    public void setQuatidadeEstoque(int quatidadeEstoque) {
-        this.quatidadeEstoque = quatidadeEstoque;
+    public void setQuantidadeEstoque(int quantidadeEstoque) {
+        this.quantidadeEstoque = quantidadeEstoque;
     }
 
     @Override
     public String toString() {
         return "Produto [nome: " + nome + ", preço: " + preco
-                + ", quantidade em estoque: " + quatidadeEstoque + "]";
+                + ", quantidade em estoque: " + quantidadeEstoque + "]";
     }
 
 }

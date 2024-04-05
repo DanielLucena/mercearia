@@ -25,7 +25,7 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
     - [ ] h\) Na página de detalhes do fonecedor, deve ser apresentado os produtos fornecidos por ele.
 - [ ] 3\) Módulo do produto  (crie para essa entidade classe de modelo, repository, service, controller e páginas html que achar necessário para completar os itens a seguir) 
     - [x] a\) Deve ser criada uma entidade de Produto criando a sua classe modelo com os atributos id(pk), nome, preço, quantidadeEstoque.
-    - [ ] b\) Ao clicar no link do módulo do produto deve ser redirecionado para uma página com a listagem dos produtos. Para cada produto deve ser apresentado o seu nome, preço e quantidadeEstoque. (read/list)
+    - [x] b\) Ao clicar no link do módulo do produto deve ser redirecionado para uma página com a listagem dos produtos. Para cada produto deve ser apresentado o seu nome, preço e quantidadeEstoque. (read/list)
     - [ ] c\) Na página de listagem dos produtos  deve existir um link para uma página de formulário para adicionar um novo produto. Nesta página o nome dos fornecedores deve ser listado para que o usuário escolha um para o produto. O campo preço deve aceitar apenas valores numéricos. (create)
     - [ ] d\) Ao submeter o formulário o usuário deve ser redirecionado a uma página com detalhes do produto que acabou de criar. (read/get)
     - [ ] e\) Na página de listagem para cada produto adicione um link/botão para deletar o produto. (delete)
