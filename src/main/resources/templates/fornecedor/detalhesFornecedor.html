@@ -18,11 +18,22 @@
     <!-- Verifica se há uma mensagem (mensagem só aparece caso produtos.isEmpty() em fornecedorController) e a exibe -->
 
     <p th:if="${mensagem}" th:text="${mensagem}" class="alert alert-warning"></p>
-
+    
     <!-- Verifica se há produtos e os exibe -->
-    <ul th:if="${produtos}">
-        <li th:each="produto : ${produtos}" th:text="${produto.nome}"></li>
-    </ul>
+    <tr th:if="${produtos}">
+        <td colspan="3">
+            <table>
+                <tr>
+                    <th>Nome do Produto</th>
+                    <th>Quantidade em Estoque</th>
+                </tr>
+                <tr th:each="produto : ${produtos}">
+                    <td th:text="${produto.nome}"></td>
+                    <td th:text="${produto.quantidadeEstoque}"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>    
     
     <a href="/fornecedor/getListaFornecedores">Voltar para a lista de fornecedores</a>
     <br />

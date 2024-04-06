@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+    <title>Adicionar Novo Produto</title>
+</head>
+
+<body>
+    <h1><p>Adicionar Novo Produto</p></h1>
+    
+    <form action="/produto/novo" method="post">
+        <label for="nome">Nome do Produto:</label><br>
+        <input type="text" id="nome" name="nome" required><br>
+        
+        <label for="preco">Preço:</label><br>
+        <input type="number" id="preco" name="preco" step="0.01" required><br>
+        
+        <label for="quantidadeEstoque">Quantidade em Estoque:</label><br>
+        <input type="number" id="quantidadeEstoque" name="quantidadeEstoque" required><br>
+
+        <label for="fornecedor">Fornecedor:</label><br>
+        <select id="fornecedor" name="fornecedor" required>
+            <option value="" selected disabled >Selecione um fornecedor</option>
+            <th:block th:each="fornecedor: ${fornecedores}">
+                <option th:value="${fornecedor.id}" th:text="${fornecedor.nome}"></option>
+            </th:block>
+        </select><br>
+
+        <button type="submit">Adicionar Produto</button>
+    </form>
+
+    <br /><br />
+
+    <a href="/produto/getListaProdutos">Voltar para a lista de produtos</a><br>
+    <a href="/">Voltar para o menu</a><br>
+</body>
+</html>

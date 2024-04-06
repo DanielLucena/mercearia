@@ -79,8 +79,13 @@ public class FornecedorController {
     }
 
     @PostMapping("/deletar/{id}")
-    public String deletarFornecedor(@PathVariable("id") Integer id) {
-        fornecedorService.deletarFornecedor(id);
+    public String deletarFornecedor(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+        try {
+            fornecedorService.deletarFornecedor(id);
+            redirectAttributes.addFlashAttribute("sucesso", "Fornecedor excluído com sucesso.");
+        } catch (IllegalStateException e) {
+            redirectAttributes.addFlashAttribute("erro", e.getMessage());
+        }
         return "redirect:/fornecedor/getListaFornecedores";
     }
 
