@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+    <title>Pedidos</title>
+</head>
+
+<body>
+    <h1><p>Lista de Pedidos</p></h1>
+    
+    <br />
+    <table>
+        <thead>
+            <tr>
+                <th th:text="ID"></th>
+                <th th:text="CPF"></th>
+                <th th:text="PreçoTotal"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="pedido: ${pedidos}">
+                <td th:text="${pedido.id}"></td>
+                <td th:text="${pedido.cpfCliente}"></td>
+                <td th:text="${pedido.valorTotal}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br /><br />
+
+    <a href="/">Voltar para o menu</a><br>
+</body>
+</html>
