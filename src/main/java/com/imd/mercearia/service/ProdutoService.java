@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.imd.mercearia.model.Fornecedor;
 import com.imd.mercearia.model.Produto;
 import com.imd.mercearia.repository.ProdutoRepository;
 
@@ -36,5 +37,9 @@ public class ProdutoService {
 
     public void deleteProdutoById(Integer id) {
         deleteProduto(getProdutoById(id));
+    }
+
+    public List<Produto> getProdutosPorFornecedor(Fornecedor fornecedor) {
+        return produtoRepository.findByFornecedor(fornecedor);
     }
 }

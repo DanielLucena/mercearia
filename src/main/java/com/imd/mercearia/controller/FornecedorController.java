@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.imd.mercearia.model.Fornecedor;
+import com.imd.mercearia.model.Produto;
 import com.imd.mercearia.service.FornecedorService;
+import com.imd.mercearia.service.ProdutoService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +26,9 @@ public class FornecedorController {
 
     @Autowired
     FornecedorService fornecedorService;
+
+    @Autowired
+    ProdutoService produtoService;
 
     @GetMapping("/getListaFornecedores")
     public String showListaFornecedor(Model model) {
@@ -48,7 +53,14 @@ public class FornecedorController {
     @GetMapping("/detalhes/{id}")
     public String mostrarDetalhes(@PathVariable("id") Integer id, Model model) {
         Fornecedor fornecedor = fornecedorService.getFornecedorPorId(id);
+        List<Produto> produtos = produtoService.getProdutosPorFornecedor(fornecedor);
+        if (produtos.isEmpty()) {
+            model.addAttribute("mensagem", "Nenhum produto encontrado para este fornecedor.");
+        } else {
+            model.addAttribute("produtos", produtos);
+        }
         model.addAttribute("fornecedor", fornecedor);
+        // model.addAttribute("produtos", produtos);
         return "fornecedor/detalhesFornecedor";
     }
 

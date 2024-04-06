@@ -12,8 +12,21 @@
     <h1>Detalhes do Fornecedor</h1>
     <p th:text="'ID: ' + ${fornecedor.id}"></p>
     <p th:text="'Nome: ' + ${fornecedor.nome}"></p>
+    
+
+    <h2>Produtos do Fornecedor:</h2>
+    <!-- Verifica se há uma mensagem (mensagem só aparece caso produtos.isEmpty() em fornecedorController) e a exibe -->
+
+    <p th:if="${mensagem}" th:text="${mensagem}" class="alert alert-warning"></p>
+
+    <!-- Verifica se há produtos e os exibe -->
+    <ul th:if="${produtos}">
+        <li th:each="produto : ${produtos}" th:text="${produto.nome}"></li>
+    </ul>
+    
     <a href="/fornecedor/getListaFornecedores">Voltar para a lista de fornecedores</a>
     <br />
     <a href="/">Voltar para o menu</a><br>
 </body>
+
 </html>

@@ -6,13 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.imd.mercearia.model.Fornecedor;
+import com.imd.mercearia.model.Produto;
 import com.imd.mercearia.repository.FornecedorRepository;
+import com.imd.mercearia.repository.ProdutoRepository;
 
 @Component
 public class FornecedorService {
 
     @Autowired
     FornecedorRepository fornecedorRepository;
+    ProdutoRepository produtoRepository;
 
     public List<Fornecedor> getListaFornecedores() {
         return fornecedorRepository.findAll();
@@ -32,6 +35,10 @@ public class FornecedorService {
 
     public void deletarFornecedor(Integer id) {
         fornecedorRepository.deleteById(id);
+    }
+
+    public List<Produto> getProdutosPorFornecedor(Fornecedor fornecedor) {
+        return produtoRepository.findByFornecedor(fornecedor);
     }
     
 }
