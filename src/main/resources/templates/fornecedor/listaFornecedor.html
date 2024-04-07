@@ -9,6 +9,9 @@
 </head>
 
 <body>
+    <!-- Verifica se há uma mensagem de erro e a exibe -->
+    <p th:if="${erro}" th:text="${erro}" class="alert alert-danger"></p>
+
     <h1><p>Lista de Fornecedores</p></h1>
     <br />
     <table>
