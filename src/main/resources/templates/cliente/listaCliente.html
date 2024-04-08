@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Clientes</title>
+</head>
+<body>
+    <h1>Lista de Clientes</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Pontos Cashback</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cliente : ${clientes}">
+                <td th:text="${cliente.nome}"></td>
+                <td th:text="${cliente.cpf}"></td>
+                <td th:text="${cliente.beneficioCliente.pontosCashback}"></td>
+                <td>
+                    <a th:href="@{/clientes/{id}/detalhes(id=${cliente.id})}">Detalhes</a>
+                    <a th:href="@{/clientes/{id}/editar(id=${cliente.id})}">Editar</a>
+                    <a th:href="@{/clientes/{id}/deletar(id=${cliente.id})}">Deletar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/clientes/novo">Adicionar Novo Cliente</a>
+</body>
+</html>

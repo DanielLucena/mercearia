@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Cliente</title>
+</head>
+<body>
+    <h1>Detalhes do Cliente</h1>
+    <p>Nome: <span th:text="${cliente.nome}"></span></p>
+    <p>CPF: <span th:text="${cliente.cpf}"></span></p>
+    <p>Pontos Cashback: <span th:text="${cliente.beneficioCliente.pontosCashback}"></span></p>
+    <a href="/clientes">Voltar para a Lista</a>
+</body>
+</html>
