@@ -32,7 +32,7 @@
                 <td th:text="${produto.fornecedor?.nome}"></td>
                 <td>
                     <a th:href="@{/produto/editar/{id}(id=${produto.id})}">Editar</a>
-                    <a th:href="@{/produto/delete/{id}(id=${produto.id})}">Excluir</a> |
+                    <a onclick="return confirmDelete()" th:href ="@{/produto/delete/{id}(id=${produto.id})}">Excluir</a> |
                 </td>
             </tr>
         </tbody>
@@ -44,7 +44,7 @@
 </body>
 </html>
 
-<!-- resta implementar esse script -->
+
 <script>
     function confirmDelete() {
         if (confirm("Tem certeza que deseja excluir este produto?")) {
