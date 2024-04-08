@@ -28,9 +28,9 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
     - [x] b\) Ao clicar no link do módulo do produto deve ser redirecionado para uma página com a listagem dos produtos. Para cada produto deve ser apresentado o seu nome, preço e quantidadeEstoque. (read/list)
     - [x] c\) Na página de listagem dos produtos  deve existir um link para uma página de formulário para adicionar um novo produto. Nesta página o nome dos fornecedores deve ser listado para que o usuário escolha um para o produto. O campo preço deve aceitar apenas valores numéricos. (create)
     - [x] d\) Ao submeter o formulário o usuário deve ser redirecionado a uma página com detalhes do produto que acabou de criar. (read/get)
-    - [ ] e\) Na página de listagem para cada produto adicione um link/botão para deletar o produto. (delete)
-    - [ ] f\) Na página de listagem para cada produto adicione um link/botão que leve a um formulário para editar o produto.(edit)
-    - [ ] g\) Na página de listagem para cada produto adicione um link/botão que leve a um formulário para incrementar quantidadeEstoque em um valor fornecido pelo usuário.(edit)
+    - [x] e\) Na página de listagem para cada produto adicione um link/botão para deletar o produto. (delete)
+    - [x] f\) Na página de listagem para cada produto adicione um link/botão que leve a um formulário para editar o produto.(edit)
+    - [x] g\) Na página de listagem para cada produto adicione um link/botão que leve a um formulário para incrementar quantidadeEstoque em um valor fornecido pelo usuário.(edit)
     - [x] h\) Adicione o atributo fornecedor, que será mapeado em OneToMany onde um fornecedor tem vários produtos.
     - [ ] i\) Adicione o atributo pedidos, que será mapeado em ManyToMany pela tabela de ligação itens_pedido e deve conter nessa tabela a coluna quantidade que indica a quantidade de itens daquele produto presentes no pedido.
     - [x] j\) Altere a listagem, para cada produto deve ser apresentado o fornecedor dele.
