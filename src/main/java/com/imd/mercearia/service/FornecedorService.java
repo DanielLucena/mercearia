@@ -37,12 +37,9 @@ public class FornecedorService {
 
     public void deletarFornecedor(Integer id) {
         Fornecedor fornecedor = fornecedorRepository.findById(id).orElse(null);
-        List<Produto> produtos = produtoRepository.findByFornecedor(fornecedor);
-        if (!produtos.isEmpty()) {
-            throw new IllegalStateException("Não é possível excluir o fornecedor pois há produtos associados a ele. Exclua os produtos primeiro.");
-        }
-        fornecedorRepository.deleteById(id);
-        
+       
+        produtoRepository.deleteByFornecedor(fornecedor);
+        fornecedorRepository.delete(fornecedor);
     }
 
     public List<Produto> getProdutosPorFornecedor(Fornecedor fornecedor) {
