@@ -15,11 +15,12 @@
     <table>
         <thead>
             <tr>
-                <th th:text="ID"></th>
-                <th th:text="Produto"></th>
-                <th th:text="Preço"></th>
-                <th th:text="Quantidade"></th>
-                <th th:text="Fornecedor"></th>
+                <th>ID</th>
+                <th>Produto</th>
+                <th>Preço</th>
+                <th>Quantidade</th>
+                <th>Fornecedor</th>
+                <th>Ações</th> <!-- Nova coluna para os links -->
             </tr>
         </thead>
         <tbody>
@@ -29,6 +30,10 @@
                 <td th:text="${produto.preco}"></td>
                 <td th:text="${produto.quantidadeEstoque}"></td>
                 <td th:text="${produto.fornecedor?.nome}"></td>
+                <td>
+                    <a th:href="@{/produto/editar/{id}(id=${produto.id})}">Editar</a>
+                    <a th:href="@{/produto/delete/{id}(id=${produto.id})}">Excluir</a> |
+                </td>
             </tr>
         </tbody>
     </table>
@@ -38,3 +43,14 @@
     <a href="/">Voltar para o menu</a><br>
 </body>
 </html>
+
+<!-- resta implementar esse script -->
+<script>
+    function confirmDelete() {
+        if (confirm("Tem certeza que deseja excluir este produto?")) {
+            return true; 
+        } else {
+            return false; 
+        }
+    }
+</script>
