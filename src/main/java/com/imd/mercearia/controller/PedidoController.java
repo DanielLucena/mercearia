@@ -58,6 +58,7 @@ public class PedidoController {
         // cria novo objeto do pedido adiciona cpf e persiste no banco
         Pedido pedido = new Pedido();
         pedido.setCpfCliente(form.getCpfCliente());
+        pedido.setValorTotal(produtoPedidoService.getValorTotal(form.getItens()));
         pedidoService.criarPedido(pedido);
 
         for (ProdutoPedido produtoPedido : form.getItens()) {
@@ -74,12 +75,20 @@ public class PedidoController {
 
         }
         try {
-            produtoPedidoService.persistListaProdutosPedido(pedido.getProdutosPedido());
+            produtoPedidoService.persistListaProdutosPedido(pedido.getProdutosPedido(), pedido.getId());
         } catch (Exception e) {
             pedidoService.deletePedido(pedido);
             model.addAttribute("mensagem", e.getMessage());
             return "pedido/pedidoInvalido";
         }
+
+        // pedido.setValorTotal(produtoPedidoService.getValorTotal(pedido.getProdutosPedido()));
+
+        // System.out.println("id do pedido: " + pedido.getId());
+        // Pedido mesmoPedido = pedidoService.getPedidoById(pedido.getId());
+        // System.out.println("id do mesmoPedido: " + pedido.getId());
+        // mesmoPedido.setCpfCliente(form.getCpfCliente());
+        // pedidoService.atualizarPedido(mesmoPedido);
 
         model.addAttribute("pedido", pedido);
         return "pedido/detalhesPedido";

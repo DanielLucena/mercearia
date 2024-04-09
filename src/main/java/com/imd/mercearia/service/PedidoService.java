@@ -29,4 +29,8 @@ public class PedidoService {
     public void deletePedido(Pedido pedido) {
         pedidoRepository.delete(pedido);
     }
+
+    public void atualizarPedido(Pedido pedido) {
+        pedidoRepository.save(pedido);
+    }
 }
