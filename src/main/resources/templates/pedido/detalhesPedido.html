@@ -1,40 +1,44 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes do Pedido</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
-
 <body>
-    <h1>Detalhes do Pedido</h1>
-    <p th:text="'ID: ' + ${pedido.id}"></p>
-    <p th:text="'CPF do Cliente: ' + ${pedido.cpfCliente}"></p>
-    <p th:text="'Valor total: ' + ${pedido.valorTotal}"></p>
-    <p th:text="'Cashback usado: ' + ${pedido.cashbackUsado}"></p>
-    <p th:text="'Cashback gerado: ' + ${pedido.cashbackGerado}"></p>
-    
-    <h2>Itens do Pedido:</h2>
-    <table>
-        <thead>
-            <tr>
-                <th> Nome </th>
-                <th> Quantidade </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="item : ${pedido.ProdutosPedido}">
-                <td><span th:text="${item.produto?.nome}"> Nome </span></td>
-                <td><span th:text="${item.quantidade}"> Quantidade </span></td>
-            </tr>
-        </tbody>
-    </table> 
-    
-    <a href="getListaPedidos">Voltar para a lista de pedidos</a>
-    <br />
-    <a href="/">Voltar para o menu</a><br>
-</body>
+    <div class="container">
+        <h1 class="mt-5">Detalhes do Pedido</h1>
+        <p>ID: <span th:text="${pedido.id}"></span></p>
+        <p>CPF do Cliente: <span th:text="${pedido.cpfCliente}"></span></p>
+        <p>Valor total: <span th:text="${pedido.valorTotal}"></span></p>
+        <p>Cashback usado: <span th:text="${pedido.cashbackUsado}"></span></p>
+        <p>Cashback gerado: <span th:text="${pedido.cashbackGerado}"></span></p>
+        
+        <h2 class="mt-5">Itens do Pedido:</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Quantidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item : ${pedido.ProdutosPedido}">
+                        <td><span th:text="${item.produto?.nome}"></span></td>
+                        <td><span th:text="${item.quantidade}"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <a href="getListaPedidos" class="btn btn-primary">Voltar para a lista de pedidos</a>
+        <a href="/" class="btn btn-secondary">Voltar para o menu</a>
+    </div>
 
+   
+</body>
 </html>

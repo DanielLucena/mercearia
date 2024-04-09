@@ -4,40 +4,48 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <title>Formulário Pedido</title>
-
-    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 <body>
-
-    <form action="#" th:action="@{/pedido/addPedido}" th:object="${form}" method="post">
-        <fieldset>
-        <p>Produtos: </p>
-            <table>
-                <thead>
-                    <tr>
-                        <th> Id </th>
-                        <th> Produto </th>
-                        <th> Preço </th>
-                        <th> Quantidade</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="item, itemStat : *{itens}">
-                        <td><input th:field="*{itens[__${itemStat.index}__].produto}" readonly/></td>
-                        <td ><span th:text="*{itens[__${itemStat.index}__].produto.nome}">nome </span></td>
-                        <td ><span th:text="*{itens[__${itemStat.index}__].produto.preco}">preço </span></td>
-                        <td><input th:field="*{itens[__${itemStat.index}__].quantidade}"  type="number"/></td>
-                        
-                    </tr>
-                </tbody>
-            </table>
-            <p><input type="text" th:field="*{cpfCliente}" placeholder="Insira seu cpf" /></p>
-            <p><input type="checkbox" th:name="usandoCashback" th:checked="${usandoCashback}" th:text="'usar cashback?'"/></p>
-        <p><input type="submit" value="Adicionar" /></p>
-        </fieldset>
-    </form>
-    
+    <div class="container">
+        <form action="#" th:action="@{/pedido/addPedido}" th:object="${form}" method="post">
+            <fieldset>
+                <legend>Produtos</legend>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Id</th>
+                                <th>Produto</th>
+                                <th>Preço</th>
+                                <th>Quantidade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="item, itemStat : *{itens}">
+                                <td><input th:field="*{itens[__${itemStat.index}__].produto}" readonly class="form-control"/></td>
+                                <td><span th:text="*{itens[__${itemStat.index}__].produto.nome}" class="form-control-plaintext"></span></td>
+                                <td><span th:text="*{itens[__${itemStat.index}__].produto.preco}" class="form-control-plaintext"></span></td>
+                                <td><input th:field="*{itens[__${itemStat.index}__].quantidade}" type="number" class="form-control"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="form-group">
+                    <label for="cpfCliente">CPF do Cliente:</label>
+                    <input type="text" th:field="*{cpfCliente}" class="form-control" placeholder="Insira seu CPF">
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" th:name="usandoCashback" th:checked="${usandoCashback}" class="form-check-input" id="usandoCashback">
+                    <label class="form-check-label" for="usandoCashback">Usar cashback?</label>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Adicionar</button>
+            </fieldset>
+        </form>
+    </div>
+   
 </body>
 </html>
