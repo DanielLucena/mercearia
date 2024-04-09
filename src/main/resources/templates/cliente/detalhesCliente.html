@@ -1,21 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes do Cliente</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Detalhes do Cliente</h1>
-    <br>
-    <p>Nome: <span th:text="${cliente.nome}"></span></p> <br>
-    <p>CPF: <span th:text="${cliente.cpf}"></span></p> <br>
-<!--    <p>Pontos Cashback: <span th:text="${cliente.beneficioCliente.pontosCashback}"></span></p>-->
-    <br>
-    <a href="/cliente/getListaCliente">Voltar para a Lista</a>
-    <br />
-    <a href="/">Voltar para o menu</a><br>
+    <div class="container">
+        <h1 class="mt-5">Detalhes do Cliente</h1>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Nome:</strong> <span th:text="${cliente.nome}"></span></p>
+                <p><strong>CPF:</strong> <span th:text="${cliente.cpf}"></span></p>
+                <!-- <p><strong>Pontos Cashback:</strong> <span th:text="${cliente.beneficioCliente.pontosCashback}"></span></p> -->
+            </div>
+        </div>
+        <br>
+        <a href="/cliente/getListaCliente" class="btn btn-secondary">Voltar para a Lista</a>
+        <a href="/" class="btn btn-secondary">Voltar para o menu</a>
+    </div>
+
+    
 </body>
 </html>

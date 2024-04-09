@@ -1,48 +1,55 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Clientes</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-
 <body>
-    <!-- Verifica se há uma mensagem de erro e a exibe -->
-    <p th:if="${erro}" th:text="${erro}" class="alert alert-danger"></p>
+    <div class="container">
+        <!-- Verifica se há uma mensagem de erro e a exibe -->
+        <p th:if="${erro}" th:text="${erro}" class="alert alert-danger"></p>
 
-    <h1>Lista de Clientes</h1>
-    <br />
-    <table>
-        <thead>
-            <tr>
-                <th th:text="ID"></th>
-                <th th:text="Nome"></th>
-                <th th:text="CPF"></th>
-<!--                <th th:text="Pontos Cashback"></th>-->
-                <th th:text="Ações"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="cliente : ${clientes}">
-                <td th:text="${cliente.id}"></td>
-                <td th:text="${cliente.nome}"></td>
-                <td th:text="${cliente.cpf}"></td>
-<!--                <td th:text="${cliente.beneficioCliente.pontosCashback}"></td>-->
-                <td>
-                    <a th:href="@{/cliente/detalhes/{id} (id=${cliente.id})}">Detalhes</a>
-                    <a th:href="@{/cliente/editar/{id} (id=${cliente.id})}">Editar</a>
-                    <form th:action="@{'/cliente/deletar/' + ${cliente.id}}" method="post">
-                        <input type="hidden" name="_method" value="delete" />
-                        <button type="submit">Deletar</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+        <h1 class="mt-5">Lista de Clientes</h1>
+        <br />
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">CPF</th>
+                    <!-- <th scope="col">Pontos Cashback</th> -->
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="cliente : ${clientes}">
+                    <td th:text="${cliente.id}"></td>
+                    <td th:text="${cliente.nome}"></td>
+                    <td th:text="${cliente.cpf}"></td>
+                    <!-- <td th:text="${cliente.beneficioCliente.pontosCashback}"></td> -->
+                    <td>
+                        <a th:href="@{/cliente/detalhes/{id}(id=${cliente.id})}" class="btn btn-info btn-sm">Detalhes</a>
+                        <a th:href="@{/cliente/editar/{id}(id=${cliente.id})}" class="btn btn-primary btn-sm">Editar</a>
+                        <form th:action="@{'/cliente/deletar/' + ${cliente.id}}" method="post" style="display: inline;">
+                            <input type="hidden" name="_method" value="delete" />
+                            <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-    <br /><br />
-    <a th:href="@{/cliente/novo}">Adicionar Novo Cliente</a><br>
-    <a href="/">Voltar para o menu</a><br>
+        <br /><br />
+        <a th:href="@{/cliente/novo}" class="btn btn-success">Adicionar Novo Cliente</a><br>
+        <a href="/" class="btn btn-secondary">Voltar para o menu</a><br>
+    </div>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
