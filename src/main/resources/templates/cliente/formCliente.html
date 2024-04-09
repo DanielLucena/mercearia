@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Novo Cliente</title>
+</head>
+
+<body>
+<h1>Criar Novo Cliente</h1>
+<form action="/cliente/salvar" method="post" th:object="${cliente}">
+    <label for="nome">Nome:</label> <br>
+    <input type="text" id="nome" th:field="*{nome}" required><br>
+
+    <label for="cpf">CPF:</label> <br>
+    <input type="text" id="cpf" th:field="*{cpf}" required><br><br>
+
+    <button type="submit">Criar Cliente</button>
+</form>
+<br />
+<a href="/cliente/getListaCliente">Voltar para a lista de clientes</a> <br>
+<a href="/">Voltar para o menu</a><br>
+</body>
+</html>
