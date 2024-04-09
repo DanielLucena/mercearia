@@ -1,37 +1,37 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
-    <title>Pedidos</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Pedidos</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-
 <body>
-    <h1><p>Lista de Pedidos</p></h1>
-    
-    <br />
-    <table>
-        <thead>
-            <tr>
-                <th th:text="ID"></th>
-                <th th:text="CPF"></th>
-                <th th:text="PreçoTotal"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="pedido: ${pedidos}">
-                <td th:text="${pedido.id}"></td>
-                <td th:text="${pedido.cpfCliente}"></td>
-                <td th:text="${pedido.valorTotal}"></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="container">
+        <h1 class="mt-5">Lista de Pedidos</h1>
+        <br>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>CPF</th>
+                    <th>Preço Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="pedido: ${pedidos}">
+                    <td th:text="${pedido.id}"></td>
+                    <td th:text="${pedido.cpfCliente}"></td>
+                    <td th:text="${pedido.valorTotal}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <a href="/" class="btn btn-secondary">Voltar para o menu</a>
+        <a href="showForm" class="btn btn-primary">Cadastrar</a>
+    </div>
 
-    <br /><br />
-
-    <a href="/">Voltar para o menu</a><br>
-    <a href="showForm">Cadastrar</a><br>
 </body>
 </html>
