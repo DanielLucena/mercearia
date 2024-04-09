@@ -14,6 +14,7 @@ import com.imd.mercearia.service.ProdutoService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -46,5 +47,28 @@ public class ProdutoController {
         produtoService.criarProduto(produto);
         return "redirect:/produto/getListaProdutos";
     }
+    @GetMapping("/delete/{id}")
+    public String deletarProduto(@PathVariable("id") Integer id) {
+        produtoService.deleteProdutoById(id);
+        return "redirect:/produto/getListaProdutos";
+    }
+
+    @GetMapping("/editar/{id}")
+    public String editarProdutoForm(@PathVariable("id") Integer id, Model model) {
+        Produto produto = produtoService.getProdutoById(id);
+        List<Fornecedor> fornecedores = fornecedorService.getListaFornecedores();
+        model.addAttribute("produto", produto);
+        model.addAttribute("fornecedores", fornecedores);
+        return "produto/editarProduto";
+    }
+
+    @PostMapping("/atualizar")
+    public String atualizarProduto(@ModelAttribute Produto produto) {
+        produtoService.atualizarProduto(produto);
+        return "redirect:/produto/getListaProdutos";
+    }
+
+    
+
 
 }
