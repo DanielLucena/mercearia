@@ -1,5 +1,8 @@
 package com.imd.mercearia.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,6 +33,9 @@ public class Produto {
     @ManyToOne
     @JoinColumn(name = "fornecedor_id")
     private Fornecedor fornecedor;
+
+    @OneToMany(mappedBy = "produto")
+    Set<ProdutoPedido> produtosPedido = new HashSet<>();
 
     public Produto() {
 
@@ -80,10 +87,19 @@ public class Produto {
         this.fornecedor = fornecedor;
     }
 
+    public Set<ProdutoPedido> getProdutosPedido() {
+        return produtosPedido;
+    }
+
+    public void setProdutosPedido(Set<ProdutoPedido> produtosPedido) {
+        this.produtosPedido = produtosPedido;
+    }
+
     @Override
     public String toString() {
-        return "Produto [nome: " + nome + ", preço: " + preco
-                + ", quantidade em estoque: " + quantidadeEstoque + "]";
+        // return "Produto [nome: " + nome + ", preço: " + preco
+        // + ", quantidade em estoque: " + quantidadeEstoque + "]";
+        return "[produto_id: " + id + " ]";
     }
 
 }
