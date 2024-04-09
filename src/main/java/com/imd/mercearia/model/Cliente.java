@@ -1,8 +1,8 @@
 package com.imd.mercearia.model;
 
-import java.util.Set;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "clientes")

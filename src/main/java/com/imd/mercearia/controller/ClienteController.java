@@ -2,6 +2,7 @@ package com.imd.mercearia.controller;
 
 import java.util.List;
 
+import com.imd.mercearia.model.Fornecedor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +24,11 @@ public class ClienteController {
     @Autowired
     private ClienteService clienteService;
 
-    @GetMapping
+    @GetMapping("/getListaCliente")
     public String listarClientes(Model model) {
-        model.addAttribute("clientes", clienteService.listarClientes());
-        return "listaClientes";
+        List<Cliente> clientes = clienteService.listarClientes();
+        model.addAttribute("clientes", clientes);
+        return "cliente/listaCliente";
     }
 
     @GetMapping("/novo")
