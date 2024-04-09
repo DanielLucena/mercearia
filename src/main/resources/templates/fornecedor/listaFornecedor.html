@@ -1,38 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fornecedor</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-
 <body>
-    
+    <div class="container">
         <!-- Verifica se há uma mensagem de erro e a exibe -->
-        <p th:if="${erro}" th:text="${erro}" class="alert alert-danger"></p>
+        <p th:if="${erro}" class="alert alert-danger" role="alert" th:text="${erro}"></p>
 
-        <h1 class= "text-center"><p>Lista de Fornecedores</p></h1>
+        <h1 class="text-center mt-5">Lista de Fornecedores</h1>
         <br />
         <table class="table">
             <thead class="thead-dark">
                 <tr>
-                    <th th:text="ID"></th>
-                    <th th:text="Fornecedor"></th>
-                    <th th:text="Ações"></th>
+                    <th>ID</th>
+                    <th>Fornecedor</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="fornecedor: ${fornecedores}">
                     <td th:text="${fornecedor.id}"></td>
                     <td th:text="${fornecedor.nome}"></td>
-                    <td class="action-buttons">
-                        <a class="btn btn-primary" th:href="@{/fornecedor/detalhes/{id} (id=${fornecedor.id})}">Detalhes</a>
-                        <a class="btn btn-secondary" th:href="@{/fornecedor/editar/{id} (id=${fornecedor.id})}">Editar</a>
-                        <a class="btn btn-danger" onclick="return confirmDelete()" th:href ="@{/fornecedor/deletar/{id}(id=${fornecedor.id})}">Excluir</a>
+                    <td>
+                        <a class="btn btn-primary" th:href="@{/fornecedor/detalhes/{id}(id=${fornecedor.id})}">Detalhes</a>
+                        <a class="btn btn-secondary" th:href="@{/fornecedor/editar/{id}(id=${fornecedor.id})}">Editar</a>
+                        <a class="btn btn-danger" th:href="@{/fornecedor/deletar/{id}(id=${fornecedor.id})}" onclick="return confirmDelete()">Excluir</a>
                     </td>
                 </tr>
             </tbody>
@@ -41,31 +39,14 @@
         <br /><br />
         <a class="btn btn-success create-btn" th:href="@{/fornecedor/novo}">Criar Novo Fornecedor</a>
         <br>
-        <a class="btn btn-secondary" href="/">Voltar para o menu</a><br>
-   
-</body>
-    
-</html>
+        <a class="btn btn-secondary mt-3" href="/">Voltar para o menu</a><br>
+    </div>
 
-<script>
-    function confirmDelete() {
-        if (confirm("ATENÇÃO: Ao excluir o fornecedor, você exclui TODOS os produtos associados a ele. Tem certeza que deseja excluir este fornecedor?")) {
-            return true; 
-        } else {
-            return false; 
+
+    <script>
+        function confirmDelete() {
+            return confirm("ATENÇÃO: Ao excluir o fornecedor, você exclui TODOS os produtos associados a ele. Tem certeza que deseja excluir este fornecedor?");
         }
-    }
-</script>
-
-<style>
-    .action-buttons {
-        text-align: center;
-    }
-
-    /* Estilo personalizado para o botão "Criar Novo Fornecedor" */
-    .create-btn {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-    }
-</style>
+    </script>
+</body>
+</html>

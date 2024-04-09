@@ -1,30 +1,48 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Produto</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Editar Produto</h1>
-    <form action="/produto/atualizar" method="post" th:object="${produto}">
-        <input type="hidden" th:field="*{id}" />
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" th:field="*{nome}" required /><br>
-        <label for="preco">Preço:</label>
-        <input type="number" id="preco" name="preco" th:field="*{preco}" required /><br>
-        <label for="quantidadeEstoque">Quantidade em Estoque:</label>
-        <input type="number" id="quantidadeEstoque" name="quantidadeEstoque" th:field="*{quantidadeEstoque}" required /><br>
-        <label for="fornecedor">Fornecedor:</label>
-        <select id="fornecedor" name="fornecedor" required>
-            <option th:each="fornecedor : ${fornecedores}" 
-                    th:value="${fornecedor.id}" 
-                    th:text="${fornecedor.nome}">
-            </option>
-        </select><br>
-        <button type="submit">Salvar</button>
-        <a href="/produto/getListaProdutos">Voltar para a lista de produtos</a><br>
-    </form>
+    <div class="container">
+        <h1 class="mt-5">Editar Produto</h1>
+        <form action="/produto/atualizar" method="post" th:object="${produto}" class="mt-4">
+            <input type="hidden" th:field="*{id}" />
+            
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" th:field="*{nome}" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="preco">Preço:</label>
+                <input type="number" id="preco" name="preco" th:field="*{preco}" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="quantidadeEstoque">Quantidade em Estoque:</label>
+                <input type="number" id="quantidadeEstoque" name="quantidadeEstoque" th:field="*{quantidadeEstoque}" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="fornecedor">Fornecedor:</label>
+                <select id="fornecedor" name="fornecedor" class="form-control" required>
+                    <option th:each="fornecedor : ${fornecedores}" 
+                            th:value="${fornecedor.id}" 
+                            th:text="${fornecedor.nome}">
+                    </option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="/produto/getListaProdutos" class="btn btn-secondary">Voltar para a lista de produtos</a>
+        </form>
+    </div>
+
 </body>
 </html>
