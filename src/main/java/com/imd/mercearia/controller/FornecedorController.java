@@ -78,7 +78,7 @@ public class FornecedorController {
         return "redirect:/fornecedor/getListaFornecedores";
     }
 
-    @PostMapping("/deletar/{id}")
+    @GetMapping("/deletar/{id}")
     public String deletarFornecedor(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         try {
             fornecedorService.deletarFornecedor(id);

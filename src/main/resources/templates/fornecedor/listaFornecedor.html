@@ -1,56 +1,52 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fornecedor</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-
 <body>
-    <!-- Verifica se há uma mensagem de erro e a exibe -->
-    <p th:if="${erro}" th:text="${erro}" class="alert alert-danger"></p>
+    <div class="container">
+        <!-- Verifica se há uma mensagem de erro e a exibe -->
+        <p th:if="${erro}" class="alert alert-danger" role="alert" th:text="${erro}"></p>
 
-    <h1><p>Lista de Fornecedores</p></h1>
-    <br />
-    <table>
-        <thead>
-            <tr>
-                <th th:text="ID"></th>
-                <th th:text="Fornecedor"></th>
-                <th th:text="Ações"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="fornecedor: ${fornecedores}">
-                <td th:text="${fornecedor.id}"></td>
-                <td th:text="${fornecedor.nome}"></td>
-                <td>
-                  <a th:href="@{/fornecedor/detalhes/{id} (id=${fornecedor.id})}">Detalhes</a>
-                  <a th:href="@{/fornecedor/editar/{id} (id=${fornecedor.id})}">Editar</a>
-                  <form th:action="@{'/fornecedor/deletar/' + ${fornecedor.id}}" method="post">
-                        <input type="hidden" name="_method" value="delete" />
-                        <button type="submit" onclick="return confirmDelete()">Deletar</button> 
-                  </form>
-                  
-                </td>
-            </tr>
-        </tbody>
-    </table>
+        <h1 class="text-center mt-5">Lista de Fornecedores</h1>
+        <br />
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Fornecedor</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="fornecedor: ${fornecedores}">
+                    <td th:text="${fornecedor.id}"></td>
+                    <td th:text="${fornecedor.nome}"></td>
+                    <td>
+                        <a class="btn btn-primary" th:href="@{/fornecedor/detalhes/{id}(id=${fornecedor.id})}">Detalhes</a>
+                        <a class="btn btn-secondary" th:href="@{/fornecedor/editar/{id}(id=${fornecedor.id})}">Editar</a>
+                        <a class="btn btn-danger" th:href="@{/fornecedor/deletar/{id}(id=${fornecedor.id})}" onclick="return confirmDelete()">Excluir</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-    <br /><br />
-    <a th:href="@{/fornecedor/novo}">Criar Novo Fornecedor</a><br>
-    <a href="/">Voltar para o menu</a><br>
+        <br /><br />
+        <a class="btn btn-success create-btn" th:href="@{/fornecedor/novo}">Criar Novo Fornecedor</a>
+        <br>
+        <a class="btn btn-secondary mt-3" href="/">Voltar para o menu</a><br>
+    </div>
+
+
+    <script>
+        function confirmDelete() {
+            return confirm("ATENÇÃO: Ao excluir o fornecedor, você exclui TODOS os produtos associados a ele. Tem certeza que deseja excluir este fornecedor?");
+        }
+    </script>
 </body>
 </html>
-
-<script>
-    function confirmDelete() {
-        if (confirm("ATENÇÃO: Ao excluir o fornecedor, você exclui TODOS os produtos associados a ele. Tem certeza que deseja excluir este fornecedor?")) {
-            return true; 
-        } else {
-            return false; 
-        }
-    }
-</script>

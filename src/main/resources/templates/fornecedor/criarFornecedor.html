@@ -1,22 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
     <title>Novo Fornecedor</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
-    <h1>Criar Novo Fornecedor</h1>
-    <form action="/fornecedor/criar" method="post" th:object="${fornecedor}">
-        <label for="nome">Nome do Fornecedor:</label>
-        <input type="text" id="nome" name="nome" required>
-        <button type="submit">Criar Fornecedor</button>
-    </form>
-    <br />
-    <a href="/fornecedor/getListaFornecedores">Voltar para a lista de fornecedores</a>
-    <a href="/">Voltar para o menu</a><br>
+    <div class="container">
+        <h1 class="mt-5 mb-4 text-center">Criar Novo Fornecedor</h1>
+        <form action="/fornecedor/criar" method="post" class="mb-4">
+            <div class="form-group">
+                <label for="nome">Nome do Fornecedor:</label>
+                <input type="text" class="form-control" id="nome" name="nome" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Criar Fornecedor</button>
+        </form>
+        <div class="mb-3">
+            <a href="/fornecedor/getListaFornecedores" class="btn btn-secondary mr-2">Voltar para a lista de fornecedores</a>
+        </div>
+    </div>
+
 </body>
 </html>
