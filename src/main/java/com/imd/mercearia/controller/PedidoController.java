@@ -40,7 +40,7 @@ public class PedidoController {
     @RequestMapping("/showForm")
     public String showFormPedido(Model model) {
         ProdutoPedidoCreationDto produtosForm = new ProdutoPedidoCreationDto(new ArrayList<ProdutoPedido>());
-        List<Produto> produtos = produtoService.getListaProdutos();
+        List<Produto> produtos = produtoService.getListaProdutosOrderByName();
         for (Produto produto : produtos) {
             ProdutoPedido item = new ProdutoPedido();
             item.setProduto(produto);

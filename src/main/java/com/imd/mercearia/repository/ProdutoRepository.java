@@ -10,7 +10,8 @@ import com.imd.mercearia.model.Produto;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 
-    // @Query(value = "selec e.* from produto order by name")
-    // List<Produto> getListaProdutosPorNome();
+    @Query(value = "select * from produto p order by p.nome", nativeQuery = true)
+    List<Produto> getProdutosOrded();
+
     List<Produto> findByFornecedor(Fornecedor fornecedor);
 }

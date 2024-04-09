@@ -42,4 +42,8 @@ public class ProdutoService {
     public List<Produto> getProdutosPorFornecedor(Fornecedor fornecedor) {
         return produtoRepository.findByFornecedor(fornecedor);
     }
+
+    public List<Produto> getListaProdutosOrderByName() {
+        return produtoRepository.getProdutosOrded();
+    }
 }
