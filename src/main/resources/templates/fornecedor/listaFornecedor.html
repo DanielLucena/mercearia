@@ -5,44 +5,51 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
     <title>Fornecedor</title>
 </head>
 
 <body>
-    <!-- Verifica se há uma mensagem de erro e a exibe -->
-    <p th:if="${erro}" th:text="${erro}" class="alert alert-danger"></p>
+    
+        <!-- Verifica se há uma mensagem de erro e a exibe -->
+        <p th:if="${erro}" th:text="${erro}" class="alert alert-danger"></p>
 
-    <h1><p>Lista de Fornecedores</p></h1>
-    <br />
-    <table>
-        <thead>
-            <tr>
-                <th th:text="ID"></th>
-                <th th:text="Fornecedor"></th>
-                <th th:text="Ações"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="fornecedor: ${fornecedores}">
-                <td th:text="${fornecedor.id}"></td>
-                <td th:text="${fornecedor.nome}"></td>
-                <td>
-                  <a th:href="@{/fornecedor/detalhes/{id} (id=${fornecedor.id})}">Detalhes</a>
-                  <a th:href="@{/fornecedor/editar/{id} (id=${fornecedor.id})}">Editar</a>
-                  <form th:action="@{'/fornecedor/deletar/' + ${fornecedor.id}}" method="post">
-                        <input type="hidden" name="_method" value="delete" />
-                        <button type="submit" onclick="return confirmDelete()">Deletar</button> 
-                  </form>
-                  
-                </td>
-            </tr>
-        </tbody>
-    </table>
+        <h1><p>Lista de Fornecedores</p></h1>
+        <br />
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th th:text="ID"></th>
+                    <th th:text="Fornecedor"></th>
+                    <th th:text="Ações"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="fornecedor: ${fornecedores}">
+                    <td th:text="${fornecedor.id}"></td>
+                    <td th:text="${fornecedor.nome}"></td>
+                    <td class="action-buttons">
+                        <form th:action="@{'/fornecedor/deletar/' + ${fornecedor.id}}" method="post"></form>
+                            <a class="btn btn-primary" th:href="@{/fornecedor/detalhes/{id} (id=${fornecedor.id})}">Detalhes</a>
+                            <a class="btn btn-secondary" th:href="@{/fornecedor/editar/{id} (id=${fornecedor.id})}">Editar</a>
+                            <input type="hidden" name="_method" value="delete" />
+                            <button class="btn btn-danger" type="submit" onclick="return confirmDelete()">Excluir</button> 
+                        </form>
+                    
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-    <br /><br />
-    <a th:href="@{/fornecedor/novo}">Criar Novo Fornecedor</a><br>
-    <a href="/">Voltar para o menu</a><br>
+        <br /><br />
+        <a class="btn btn-success create-btn" th:href="@{/fornecedor/novo}">Criar Novo Fornecedor</a>
+        <!-- <a class="btn btn-success" th:href="@{/fornecedor/novo}">Criar Novo Fornecedor</a><br> -->
+        <br>
+        <a class="btn btn-info" href="/">Voltar para o menu</a><br>
+   
 </body>
+    
 </html>
 
 <script>
@@ -54,3 +61,16 @@
         }
     }
 </script>
+
+<style>
+    .action-buttons {
+        text-align: center;
+    }
+
+    /* Estilo personalizado para o botão "Criar Novo Fornecedor" */
+    .create-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+</style>
