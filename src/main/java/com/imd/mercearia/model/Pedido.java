@@ -1,10 +1,14 @@
 package com.imd.mercearia.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,13 +25,15 @@ public class Pedido {
     @Column
     private double valorTotal;
 
+    @OneToMany(mappedBy = "pedido")
+    Set<ProdutoPedido> produtosPedido = new HashSet<>();
+
     public Pedido() {
 
     }
 
-    public Pedido(String cpfCliente, double valorTotal) {
+    public Pedido(String cpfCliente) {
         this.cpfCliente = cpfCliente;
-        this.valorTotal = valorTotal;
     }
 
     public Integer getId() {
@@ -54,4 +60,16 @@ public class Pedido {
         this.valorTotal = valorTotal;
     }
 
+    public Set<ProdutoPedido> getProdutosPedido() {
+        return produtosPedido;
+    }
+
+    public void setProdutosPedido(Set<ProdutoPedido> produtosPedido) {
+        this.produtosPedido = produtosPedido;
+    }
+
+    @Override
+    public String toString() {
+        return "[pedido_id: " + id + " ]";
+    }
 }
