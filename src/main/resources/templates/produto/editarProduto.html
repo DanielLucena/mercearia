@@ -34,7 +34,8 @@
                 <select id="fornecedor" name="fornecedor" class="form-control" required>
                     <option th:each="fornecedor : ${fornecedores}" 
                             th:value="${fornecedor.id}" 
-                            th:text="${fornecedor.nome}">
+                            th:text="${fornecedor.nome}"
+                            th:selected="${fornecedor.id == produto.fornecedor.id}">
                     </option>
                 </select>
             </div>
