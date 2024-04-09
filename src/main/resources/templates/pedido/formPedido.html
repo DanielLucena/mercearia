@@ -34,6 +34,7 @@
                 </tbody>
             </table>
             <p><input type="text" th:field="*{cpfCliente}" placeholder="Insira seu cpf" /></p>
+            <p><input type="checkbox" th:name="usandoCashback" th:checked="${usandoCashback}" th:text="'usar cashback?'"/></p>
         <p><input type="submit" value="Adicionar" /></p>
         </fieldset>
     </form>

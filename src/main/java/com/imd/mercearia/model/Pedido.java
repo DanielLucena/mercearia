@@ -28,6 +28,12 @@ public class Pedido {
     @OneToMany(mappedBy = "pedido")
     Set<ProdutoPedido> produtosPedido = new HashSet<>();
 
+    @Column
+    private double cashbackGerado;
+
+    @Column
+    private double cashbackUsado;
+
     public Pedido() {
 
     }
@@ -62,6 +68,22 @@ public class Pedido {
 
     public Set<ProdutoPedido> getProdutosPedido() {
         return produtosPedido;
+    }
+
+    public double getCashbackGerado() {
+        return cashbackGerado;
+    }
+
+    public void setCashbackGerado(double cashbackGerado) {
+        this.cashbackGerado = cashbackGerado;
+    }
+
+    public double getCashbackUsado() {
+        return cashbackUsado;
+    }
+
+    public void setCashbackUsado(double cashbackUsado) {
+        this.cashbackUsado = cashbackUsado;
     }
 
     public void setProdutosPedido(Set<ProdutoPedido> produtosPedido) {

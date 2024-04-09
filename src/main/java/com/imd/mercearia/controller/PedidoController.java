@@ -40,6 +40,7 @@ public class PedidoController {
     @RequestMapping("/showForm")
     public String showFormPedido(Model model) {
         ProdutoPedidoCreationDto produtosForm = new ProdutoPedidoCreationDto(new ArrayList<ProdutoPedido>());
+        produtosForm.setUsandoCashback(true);
         List<Produto> produtos = produtoService.getListaProdutosOrderByName();
         for (Produto produto : produtos) {
             ProdutoPedido item = new ProdutoPedido();
@@ -59,6 +60,15 @@ public class PedidoController {
         Pedido pedido = new Pedido();
         pedido.setCpfCliente(form.getCpfCliente());
         pedido.setValorTotal(produtoPedidoService.getValorTotal(form.getItens()));
+
+        System.out.println("\nusando cashback: " + form.isUsandoCashback() + " \n");
+        double cachbackCLiente = 0;
+        if (form.isUsandoCashback()) {
+            // subistituir
+            cachbackCLiente = 0;
+        }
+        pedido.setCashbackUsado(cachbackCLiente);
+        pedido.setCashbackGerado(pedidoService.getCashbackGerado(pedido));
         pedidoService.criarPedido(pedido);
 
         for (ProdutoPedido produtoPedido : form.getItens()) {
@@ -81,14 +91,6 @@ public class PedidoController {
             model.addAttribute("mensagem", e.getMessage());
             return "pedido/pedidoInvalido";
         }
-
-        // pedido.setValorTotal(produtoPedidoService.getValorTotal(pedido.getProdutosPedido()));
-
-        // System.out.println("id do pedido: " + pedido.getId());
-        // Pedido mesmoPedido = pedidoService.getPedidoById(pedido.getId());
-        // System.out.println("id do mesmoPedido: " + pedido.getId());
-        // mesmoPedido.setCpfCliente(form.getCpfCliente());
-        // pedidoService.atualizarPedido(mesmoPedido);
 
         model.addAttribute("pedido", pedido);
         return "pedido/detalhesPedido";
