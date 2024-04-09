@@ -42,4 +42,28 @@ public class ProdutoService {
     public List<Produto> getProdutosPorFornecedor(Fornecedor fornecedor) {
         return produtoRepository.findByFornecedor(fornecedor);
     }
+
+    public List<Produto> getListaProdutosOrderByName() {
+        return produtoRepository.getProdutosOrded();
+    }
+
+    public void adicionarAoEstoque(Produto produto, int quantidade) {
+        if (quantidade > 0) {
+            int novaQuantidade = produto.getQuantidadeEstoque() + quantidade;
+            produto.setQuantidadeEstoque(novaQuantidade);
+            produtoRepository.save(produto);
+        }
+    }
+
+    public void darBaixaAoEstoque(Produto produto, int quantidade) {
+        int novaQuantidade;
+        if (quantidade < produto.getQuantidadeEstoque()) {
+            novaQuantidade = produto.getQuantidadeEstoque() - quantidade;
+
+        } else {
+            novaQuantidade = 0;
+        }
+        produto.setQuantidadeEstoque(novaQuantidade);
+        produtoRepository.save(produto);
+    }
 }

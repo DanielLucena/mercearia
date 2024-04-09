@@ -31,7 +31,7 @@
                   <a th:href="@{/fornecedor/editar/{id} (id=${fornecedor.id})}">Editar</a>
                   <form th:action="@{'/fornecedor/deletar/' + ${fornecedor.id}}" method="post">
                         <input type="hidden" name="_method" value="delete" />
-                        <button type="submit">Deletar</button> 
+                        <button type="submit" onclick="return confirmDelete()">Deletar</button> 
                   </form>
                   
                 </td>
@@ -44,3 +44,13 @@
     <a href="/">Voltar para o menu</a><br>
 </body>
 </html>
+
+<script>
+    function confirmDelete() {
+        if (confirm("ATENÇÃO: Ao excluir o fornecedor, você exclui TODOS os produtos associados a ele. Tem certeza que deseja excluir este fornecedor?")) {
+            return true; 
+        } else {
+            return false; 
+        }
+    }
+</script>

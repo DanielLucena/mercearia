@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <title>Formulário Pedido</title>
+
+    
+</head>
+<body>
+
+    <form action="#" th:action="@{/pedido/addPedido}" th:object="${form}" method="post">
+        <fieldset>
+        <p>Produtos: </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th> Id </th>
+                        <th> Produto </th>
+                        <th> Preço </th>
+                        <th> Quantidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item, itemStat : *{itens}">
+                        <td><input th:field="*{itens[__${itemStat.index}__].produto}" readonly/></td>
+                        <td ><span th:text="*{itens[__${itemStat.index}__].produto.nome}">nome </span></td>
+                        <td ><span th:text="*{itens[__${itemStat.index}__].produto.preco}">preço </span></td>
+                        <td><input th:field="*{itens[__${itemStat.index}__].quantidade}"  type="number"/></td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+            <p><input type="text" th:field="*{cpfCliente}" placeholder="Insira seu cpf" /></p>
+        <p><input type="submit" value="Adicionar" /></p>
+        </fieldset>
+    </form>
+    
+</body>
+</html>

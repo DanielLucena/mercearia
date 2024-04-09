@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+    <title>Detalhes do Pedido</title>
+</head>
+
+<body>
+    <h1>Detalhes do Pedido</h1>
+    <p th:text="'ID: ' + ${pedido.id}"></p>
+    <p th:text="'CPF do Cliente: ' + ${pedido.cpfCliente}"></p>
+    <h2>Itens do Pedido:</h2>
+    <table>
+        <thead>
+            <tr>
+                <th> Nome </th>
+                <th> Quantidade </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item : ${pedido.ProdutosPedido}">
+                <td><span th:text="${item.produto?.nome}"> Nome </span></td>
+                <td><span th:text="${item.quantidade}"> Quantidade </span></td>
+            </tr>
+        </tbody>
+    </table> 
+    
+    <a href="getListaPedidos">Voltar para a lista de pedidos</a>
+    <br />
+    <a href="/">Voltar para o menu</a><br>
+</body>
+
+</html>
