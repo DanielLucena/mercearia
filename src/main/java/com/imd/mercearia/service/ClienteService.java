@@ -2,12 +2,14 @@ package com.imd.mercearia.service;
 
 import java.util.List;
 
+import com.imd.mercearia.model.Fornecedor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import com.imd.mercearia.model.Cliente;
 import com.imd.mercearia.repository.ClienteRepository;
 
-@Service
+@Component
 public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
@@ -16,7 +18,12 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
-    public void deletarCliente(Long id) {
+    public void atualizarCliente(Cliente cliente) {
+        clienteRepository.save(cliente);
+    }
+
+
+    public void deletarCliente(Integer id) {
         clienteRepository.deleteById(id);
     }
 
@@ -24,7 +31,7 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
-    public Cliente buscarClientePorId(Long id) {
+    public Cliente buscarClientePorId(Integer id) {
         return clienteRepository.findById(id).orElse(null);
     }
 }

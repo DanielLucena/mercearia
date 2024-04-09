@@ -9,19 +9,21 @@ import java.util.Set;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
+    @Column(length = 100)
     private String nome;
+    @Column(length = 10)
     private String cpf;
 
     @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
     private BeneficioCliente beneficioCliente;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

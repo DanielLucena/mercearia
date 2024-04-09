@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-@RequestMapping("/clientes")
+@RequestMapping("/cliente")
 public class ClienteController {
     @Autowired
     private ClienteService clienteService;
@@ -34,39 +34,45 @@ public class ClienteController {
     @GetMapping("/novo")
     public String formularioNovoCliente(Model model) {
         model.addAttribute("cliente", new Cliente());
-        return "formCliente";
+        return "cliente/formCliente";
     }
 
-    @PostMapping("/novo")
-    public String salvarNovoCliente(@ModelAttribute("cliente") Cliente cliente) {
-        clienteService.salvarCliente(cliente);
-        return "redirect:/clientes";
+    @PostMapping("/salvar")
+    public String salvarNovoCliente(@ModelAttribute("cliente") Cliente cliente, RedirectAttributes redirectAttributes) {
+        Cliente clienteSalvo = clienteService.salvarCliente(cliente);
+        redirectAttributes.addAttribute("id", clienteSalvo.getId());
+        return "redirect:/cliente/detalhes/{id}";
     }
 
-    @GetMapping("/{id}/detalhes")
-    public String detalhesCliente(@PathVariable Long id, Model model) {
+    @GetMapping("/detalhes/{id}")
+    public String detalhesCliente(@PathVariable("id") Integer id, Model model) {
         Cliente cliente = clienteService.buscarClientePorId(id);
         model.addAttribute("cliente", cliente);
-        return "detalhesCliente";
+        return "cliente/detalhesCliente";
     }
 
-    @GetMapping("/{id}/editar")
-    public String editarCliente(@PathVariable Long id, Model model) {
+    @GetMapping("/editar/{id}")
+    public String editarCliente(@PathVariable("id") Integer id, Model model) {
         Cliente cliente = clienteService.buscarClientePorId(id);
         model.addAttribute("cliente", cliente);
-        return "formCliente";
+        return "cliente/editarCliente";
     }
 
-    @PostMapping("/{id}/editar")
-    public String salvarClienteEditado(@PathVariable Long id, @ModelAttribute("cliente") Cliente cliente) {
-        cliente.setId(id);
-        clienteService.salvarCliente(cliente);
-        return "redirect:/clientes";
+    @PostMapping("/atualizar/{id}")
+    public String atualizarCliente(@PathVariable("id") Integer id, @ModelAttribute("cliente") Cliente cliente) {
+        clienteService.atualizarCliente(cliente);
+        return "redirect:/cliente/getListaCliente";
     }
 
-    @GetMapping("/{id}/deletar")
-    public String deletarCliente(@PathVariable Long id) {
-        clienteService.deletarCliente(id);
-        return "redirect:/clientes";
+    @PostMapping("/deletar/{id}")
+    public String deletarCliente(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+        try {
+            clienteService.deletarCliente(id);
+            redirectAttributes.addFlashAttribute("sucesso", "Cliente excluído com sucesso.");
+        } catch (IllegalStateException e) {
+            redirectAttributes.addFlashAttribute("erro", e.getMessage());
+        }
+
+        return "redirect:/cliente/getListaCliente";
     }
 }

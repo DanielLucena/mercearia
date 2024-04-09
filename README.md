@@ -49,11 +49,11 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
     - [ ] e\) Adicione o atributo produtos que será mapeado em ManyToMany pela tabela de ligação itens_pedido e deve conter nessa tabela a coluna quantidade que indica a quantidade de itens daquele produto presentes no pedido.
     - [ ] f\) Altere a listagem, para cada pedido deve ser listado seus produtos e suas quantidade de cada produto no pedido.
 obs.: Não haverá edição nem remoção do pedido visto que os pontos de cashback já teriam sido criados e os produtos já levaram baixa no estoque.
-- [ ] 5\) Módulo do cliente/beneficioCliente  (crie para essa entidade classe de modelo, repository, service, controller e páginas html que achar necessário para completar os itens a seguir) 
-    - [ ] a\) Deve ser criada uma entidade de Cliente criando a sua classe modelo com os atributos id(pk), nome e cpf que será mapeado em OneToOne onde um cliente tem um beneficioCliente.
-    - [ ] b\) Deve ser criada uma entidade de BeneficioCliente criando a sua classe modelo com os atributos cpf(pk), pontosCashback.
-    - [ ] c\) Ao clicar no link do módulo do cliente deve ser redirecionado para uma página com a listagem dos clientes. Para cada cliente deve ser apresentado o nome, cpf e o valor de pontosCashback. (read/list)
-    - [ ] d\) Na página de listagem do cliente deve existir um link para uma página de formulário para adicionar um novo cliente. Neste formulário o cliente deve informar o nome e o cpf, caso já exista um cliente com esse cpf não deve ser possível criar outro. (create)
-    - [ ] e\) Ao submeter o formulário o usuário deve ser redirecionado a uma página com detalhes do cliente que acabou de criar.(read/get)
-    - [ ] f\) Na página de listagem para cada cliente adicione um link/botão para deletar o cliente. (delete)
-    - [ ] g\) Na página de listagem para cada cliente adicione um link/botão que leve a um formulário para editar o cliente.(edit)
+- [X] 5\) Módulo do cliente/beneficioCliente  (crie para essa entidade classe de modelo, repository, service, controller e páginas html que achar necessário para completar os itens a seguir) 
+    - [X] a\) Deve ser criada uma entidade de Cliente criando a sua classe modelo com os atributos id(pk), nome e cpf que será mapeado em OneToOne onde um cliente tem um beneficioCliente.
+    - [X] b\) Deve ser criada uma entidade de BeneficioCliente criando a sua classe modelo com os atributos cpf(pk), pontosCashback.
+    - [X] c\) Ao clicar no link do módulo do cliente deve ser redirecionado para uma página com a listagem dos clientes. Para cada cliente deve ser apresentado o nome, cpf e o valor de pontosCashback. (read/list)
+    - [X] d\) Na página de listagem do cliente deve existir um link para uma página de formulário para adicionar um novo cliente. Neste formulário o cliente deve informar o nome e o cpf, caso já exista um cliente com esse cpf não deve ser possível criar outro. (create)
+    - [X] e\) Ao submeter o formulário o usuário deve ser redirecionado a uma página com detalhes do cliente que acabou de criar.(read/get)
+    - [X] f\) Na página de listagem para cada cliente adicione um link/botão para deletar o cliente. (delete)
+    - [X] g\) Na página de listagem para cada cliente adicione um link/botão que leve a um formulário para editar o cliente.(edit)

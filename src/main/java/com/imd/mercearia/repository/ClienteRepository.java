@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.imd.mercearia.model.Cliente;
 
-public interface ClienteRepository extends JpaRepository<Cliente, Long> {
+import java.util.Optional;
+
+public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
     Cliente findByCpf(String cpf);
 }
