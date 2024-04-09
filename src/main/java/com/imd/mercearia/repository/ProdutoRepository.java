@@ -11,13 +11,16 @@ import com.imd.mercearia.model.Produto;
 
 import jakarta.transaction.Transactional;
 
+
 public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
     
     @Transactional
     @Modifying
     @Query("DELETE FROM Produto p WHERE p.fornecedor = :fornecedor")
     void deleteByFornecedor(Fornecedor fornecedor);
-    // @Query(value = "selec e.* from produto order by name")
-    // List<Produto> getListaProdutosPorNome();
+    
+    @Query(value = "select * from produto p order by p.nome", nativeQuery = true)
+    List<Produto> getProdutosOrded();
+
     List<Produto> findByFornecedor(Fornecedor fornecedor);
 }
