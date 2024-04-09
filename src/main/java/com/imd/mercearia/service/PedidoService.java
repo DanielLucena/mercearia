@@ -29,4 +29,12 @@ public class PedidoService {
     public void deletePedido(Pedido pedido) {
         pedidoRepository.delete(pedido);
     }
+
+    public void atualizarPedido(Pedido pedido) {
+        pedidoRepository.save(pedido);
+    }
+
+    public double getCashbackGerado(Pedido pedido) {
+        return (pedido.getValorTotal() - pedido.getCashbackGerado()) * 0.03;
+    }
 }

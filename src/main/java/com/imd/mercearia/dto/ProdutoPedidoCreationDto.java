@@ -9,6 +9,8 @@ public class ProdutoPedidoCreationDto {
 
     private String cpfCliente;
 
+    private boolean usandoCashback;
+
     public ProdutoPedidoCreationDto() {
 
     }
@@ -35,6 +37,14 @@ public class ProdutoPedidoCreationDto {
 
     public void setCpfCliente(String cpfCliente) {
         this.cpfCliente = cpfCliente;
+    }
+
+    public boolean isUsandoCashback() {
+        return usandoCashback;
+    }
+
+    public void setUsandoCashback(boolean usandoCashback) {
+        this.usandoCashback = usandoCashback;
     }
 
 }

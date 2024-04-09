@@ -40,6 +40,7 @@ public class PedidoController {
     @RequestMapping("/showForm")
     public String showFormPedido(Model model) {
         ProdutoPedidoCreationDto produtosForm = new ProdutoPedidoCreationDto(new ArrayList<ProdutoPedido>());
+        produtosForm.setUsandoCashback(true);
         List<Produto> produtos = produtoService.getListaProdutosOrderByName();
         for (Produto produto : produtos) {
             ProdutoPedido item = new ProdutoPedido();
@@ -58,6 +59,16 @@ public class PedidoController {
         // cria novo objeto do pedido adiciona cpf e persiste no banco
         Pedido pedido = new Pedido();
         pedido.setCpfCliente(form.getCpfCliente());
+        pedido.setValorTotal(produtoPedidoService.getValorTotal(form.getItens()));
+
+        System.out.println("\nusando cashback: " + form.isUsandoCashback() + " \n");
+        double cachbackCLiente = 0;
+        if (form.isUsandoCashback()) {
+            // subistituir
+            cachbackCLiente = 0;
+        }
+        pedido.setCashbackUsado(cachbackCLiente);
+        pedido.setCashbackGerado(pedidoService.getCashbackGerado(pedido));
         pedidoService.criarPedido(pedido);
 
         for (ProdutoPedido produtoPedido : form.getItens()) {
@@ -74,7 +85,7 @@ public class PedidoController {
 
         }
         try {
-            produtoPedidoService.persistListaProdutosPedido(pedido.getProdutosPedido());
+            produtoPedidoService.persistListaProdutosPedido(pedido.getProdutosPedido(), pedido.getId());
         } catch (Exception e) {
             pedidoService.deletePedido(pedido);
             model.addAttribute("mensagem", e.getMessage());
