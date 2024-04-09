@@ -10,7 +10,7 @@ public class BeneficioCliente {
     @Id
     private String cpf;
 
-    private int pontosCashback;
+    private double pontosCashback;
 
     @OneToOne
     @JoinColumn(name = "cliente_id")
@@ -24,11 +24,11 @@ public class BeneficioCliente {
         this.cpf = cpf;
     }
 
-    public int getPontosCashback() {
+    public double getPontosCashback() {
         return pontosCashback;
     }
 
-    public void setPontosCashback(int pontosCashback) {
+    public void setPontosCashback(double pontosCashback) {
         this.pontosCashback = pontosCashback;
     }
 

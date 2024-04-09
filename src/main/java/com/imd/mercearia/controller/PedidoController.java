@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.imd.mercearia.dto.ProdutoPedidoCreationDto;
 import com.imd.mercearia.model.ProdutoPedido;
+import com.imd.mercearia.model.BeneficioCliente;
 import com.imd.mercearia.model.Pedido;
 import com.imd.mercearia.model.Produto;
 import com.imd.mercearia.service.ProdutoPedidoService;
+import com.imd.mercearia.service.BeneficioClienteService;
 import com.imd.mercearia.service.PedidoService;
 import com.imd.mercearia.service.ProdutoService;
 
@@ -29,6 +31,9 @@ public class PedidoController {
 
     @Autowired
     ProdutoPedidoService produtoPedidoService;
+
+    @Autowired
+    BeneficioClienteService beneficioClienteService;
 
     @RequestMapping("/getListaPedidos")
     public String getListaPedidos(Model model) {
@@ -59,13 +64,22 @@ public class PedidoController {
         // cria novo objeto do pedido adiciona cpf e persiste no banco
         Pedido pedido = new Pedido();
         pedido.setCpfCliente(form.getCpfCliente());
+
+        if (beneficioClienteService.getBeneficioClienteByCpf(form.getCpfCliente()) == null) {
+
+            BeneficioCliente beneficioCliente = new BeneficioCliente();
+            beneficioCliente.setCpf(form.getCpfCliente());
+            beneficioClienteService.salvarBeneficioCliente(beneficioCliente);
+        }
+
         pedido.setValorTotal(produtoPedidoService.getValorTotal(form.getItens()));
 
         System.out.println("\nusando cashback: " + form.isUsandoCashback() + " \n");
         double cachbackCLiente = 0;
         if (form.isUsandoCashback()) {
             // subistituir
-            cachbackCLiente = 0;
+            cachbackCLiente = beneficioClienteService.getBeneficioClienteByCpf(form.getCpfCliente())
+                    .getPontosCashback();
         }
         pedido.setCashbackUsado(cachbackCLiente);
         pedido.setCashbackGerado(pedidoService.getCashbackGerado(pedido));
