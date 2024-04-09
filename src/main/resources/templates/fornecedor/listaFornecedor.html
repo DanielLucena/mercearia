@@ -30,13 +30,9 @@
                     <td th:text="${fornecedor.id}"></td>
                     <td th:text="${fornecedor.nome}"></td>
                     <td class="action-buttons">
-                        <form th:action="@{'/fornecedor/deletar/' + ${fornecedor.id}}" method="post"></form>
-                            <a class="btn btn-primary" th:href="@{/fornecedor/detalhes/{id} (id=${fornecedor.id})}">Detalhes</a>
-                            <a class="btn btn-secondary" th:href="@{/fornecedor/editar/{id} (id=${fornecedor.id})}">Editar</a>
-                            <input type="hidden" name="_method" value="delete" />
-                            <button class="btn btn-danger" type="submit" onclick="return confirmDelete()">Excluir</button> 
-                        </form>
-                    
+                        <a class="btn btn-primary" th:href="@{/fornecedor/detalhes/{id} (id=${fornecedor.id})}">Detalhes</a>
+                        <a class="btn btn-secondary" th:href="@{/fornecedor/editar/{id} (id=${fornecedor.id})}">Editar</a>
+                        <a class="btn btn-danger" onclick="return confirmDelete()" th:href ="@{/fornecedor/deletar/{id}(id=${fornecedor.id})}">Excluir</a>
                     </td>
                 </tr>
             </tbody>
