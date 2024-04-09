@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-<html lang="en"
-       xmlns="http://www.w3.org/1999/xhtml"  >
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
     <title>Mercearia</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Sistema mercearia </h1>
-    <nav>
-        <a href="fornecedor/getListaFornecedores">Módulo Fornecedor</a><br>
- 
-        <a href="produto/getListaProdutos">Módulo Produto</a><br>
-
-        <a href="pedido/getListaPedidos">Módulo Pedido</a><br>
-
-        <a href="cliente/getListaCliente">Módulo Cliente</a><br>
-    </nav>
-    
+    <div class="container">
+        <h1 class="text-center mt-5">Sistema Mercearia</h1>
+        <nav class="mt-4">
+            <a class="btn btn-primary btn-lg btn-block mb-3" href="fornecedor/getListaFornecedores">Módulo Fornecedor</a>
+            <a class="btn btn-primary btn-lg btn-block mb-3" href="produto/getListaProdutos">Módulo Produto</a>
+            <a class="btn btn-info btn-lg btn-block mb-3" href="pedido/getListaPedidos">Módulo Pedido</a>
+            <a class="btn btn-info btn-lg btn-block mb-3" href="cliente/getListaCliente">Módulo Cliente</a>
+        </nav>
+    </div>
 </body>
 </html>

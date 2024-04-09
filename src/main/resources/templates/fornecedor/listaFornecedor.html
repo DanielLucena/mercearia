@@ -15,7 +15,7 @@
         <!-- Verifica se há uma mensagem de erro e a exibe -->
         <p th:if="${erro}" th:text="${erro}" class="alert alert-danger"></p>
 
-        <h1><p>Lista de Fornecedores</p></h1>
+        <h1 class= "text-center"><p>Lista de Fornecedores</p></h1>
         <br />
         <table class="table">
             <thead class="thead-dark">
@@ -40,9 +40,8 @@
 
         <br /><br />
         <a class="btn btn-success create-btn" th:href="@{/fornecedor/novo}">Criar Novo Fornecedor</a>
-        <!-- <a class="btn btn-success" th:href="@{/fornecedor/novo}">Criar Novo Fornecedor</a><br> -->
         <br>
-        <a class="btn btn-info" href="/">Voltar para o menu</a><br>
+        <a class="btn btn-secondary" href="/">Voltar para o menu</a><br>
    
 </body>
     

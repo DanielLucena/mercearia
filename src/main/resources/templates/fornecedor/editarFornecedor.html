@@ -1,18 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <!-- Meta tags, title, and stylesheets -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Fornecedor</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Editar Fornecedor</h1>
-    <form action="/fornecedor/atualizar/{id}" th:action="@{/fornecedor/atualizar/{id}(id=${fornecedor.id})}" method="post" th:object="${fornecedor}">
-        <input type="hidden" th:field="*{id}" />
-        <label for="nome">Nome do Fornecedor:</label>
-        <input type="text" id="nome" name="nome" th:field="*{nome}" required>
-        <button type="submit">Atualizar Fornecedor</button>
-    </form>
-    <br />
-    <a href="/fornecedor/getListaFornecedores">Voltar para a lista de fornecedores</a>
-    <a href="/">Voltar para o menu</a>
+    <div class="container">
+        <h1 class="mt-5 mb-4 text-center">Editar Fornecedor</h1>
+        <form action="/fornecedor/atualizar/{id}" th:action="@{/fornecedor/atualizar/{id}(id=${fornecedor.id})}" method="post" th:object="${fornecedor}">
+            <input type="hidden" th:field="*{id}" />
+            <div class="form-group">
+                <label for="nome">Nome do Fornecedor:</label>
+                <input type="text" id="nome" class="form-control" name="nome" th:field="*{nome}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Atualizar Fornecedor</button>
+        </form>
+        <div class="mt-3">
+            <a href="/fornecedor/getListaFornecedores" class="btn btn-secondary mr-2">Voltar para a lista de fornecedores</a>
+        </div>
+    </div>
+
 </body>
 </html>

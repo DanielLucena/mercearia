@@ -1,43 +1,52 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes do Fornecedor</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-
 <body>
-    <h1>Detalhes do Fornecedor</h1>
-    <p th:text="'ID: ' + ${fornecedor.id}"></p>
-    <p th:text="'Nome: ' + ${fornecedor.nome}"></p>
-    
+    <div class="container">
+        <h1 class="mt-5" th:text=" 'Detalhes do Fornecedor: ' + ${fornecedor.nome}"></h1>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <p class="font-weight-bold">ID:</p>
+                <p th:text="' ' + ${fornecedor.id}"></p>
+                <p class="font-weight-bold">Nome:</p>
+                <p th:text="' ' + ${fornecedor.nome}"></p>
+            </div>
+        </div>
 
-    <h2>Produtos do Fornecedor:</h2>
-    <!-- Verifica se há uma mensagem (mensagem só aparece caso produtos.isEmpty() em fornecedorController) e a exibe -->
+        <h2 class="mt-5">Produtos do Fornecedor:</h2>
 
-    <p th:if="${mensagem}" th:text="${mensagem}" class="alert alert-warning"></p>
-    
-    <!-- Verifica se há produtos e os exibe -->
-    <tr th:if="${produtos}">
-        <td colspan="3">
-            <table>
-                <tr>
-                    <th>Nome do Produto</th>
-                    <th>Quantidade em Estoque</th>
-                </tr>
-                <tr th:each="produto : ${produtos}">
-                    <td th:text="${produto.nome}"></td>
-                    <td th:text="${produto.quantidadeEstoque}"></td>
-                </tr>
+        <!-- Verifica se há uma mensagem (mensagem só aparece caso produtos.isEmpty() em fornecedorController) e a exibe -->
+        <p th:if="${mensagem}" class="alert alert-warning" role="alert" th:text="${mensagem}"></p>
+
+        <!-- Verifica se há produtos e os exibe -->
+        <div th:if="${produtos}" class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nome do Produto</th>
+                        <th scope="col">Quantidade em Estoque</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="produto : ${produtos}">
+                        <td th:text="${produto.nome}"></td>
+                        <td th:text="${produto.quantidadeEstoque}"></td>
+                    </tr>
+                </tbody>
             </table>
-        </td>
-    </tr>    
-    
-    <a href="/fornecedor/getListaFornecedores">Voltar para a lista de fornecedores</a>
-    <br />
-    <a href="/">Voltar para o menu</a><br>
-</body>
+        </div>
+        
+        <div class="mt-4">
+            <a href="/fornecedor/getListaFornecedores" class="btn btn-primary mr-2">Voltar para a lista de fornecedores</a>
+        </div>
+    </div>
 
+</body>
 </html>
