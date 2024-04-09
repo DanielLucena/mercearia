@@ -41,7 +41,7 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
     - [ ] c\) Na página de listagem dos pedidos deve existir um link para uma página de formulário para adicionar um novo pedido. (create)
         - [x] i\) Nesta página  deve ser mostrado uma lista com  os produtos que foram cadastrados no sistema e um campo de input do tipo number para cada item para informar a quantidade de cada produto.
         - [x] ii\) A lista de produtos para esse formulário deve estar em ordem alfabética do nome dos produtos. (queries de busca personalizada)
-        - [ ] iii\) Para cada Produto deve-se verificar se existe o valor solicitado no estoque. Caso algum item não tenha a quantidade suficiente o pedido não deve ser criado, caso exista o valor suficiente deve ser decrementado o valor do estoque de cada produto.
+        - [x] iii\) Para cada Produto deve-se verificar se existe o valor solicitado no estoque. Caso algum item não tenha a quantidade suficiente o pedido não deve ser criado, caso exista o valor suficiente deve ser decrementado o valor do estoque de cada produto.
         - [x] iv\) Deve conter um campo de cpf do cliente que pode ficar em branco.
         - [ ] v\) Deve existir um checkbox “usar cashback nesta compra”, caso seja marcado o campo cpf for preenchido com um cpf cadastrado no sistema deve ser abatido do valorTotal o valor de cashback que o cliente possui.
         - [ ] vi\) Caso seja registrado um cpf no pedido deve ser criado uma nova entidade BeneficioCliente com cpf caso não exista. é incrementado ao atributo pontosCahsback  desse BeneficioCliente o valor de 3% de valorTotal do pedido.

@@ -26,4 +26,7 @@ public class PedidoService {
         return pedidoRepository.findById(id).orElse(null);
     }
 
+    public void deletePedido(Pedido pedido) {
+        pedidoRepository.delete(pedido);
+    }
 }

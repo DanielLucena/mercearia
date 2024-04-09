@@ -65,13 +65,21 @@ public class PedidoController {
             produtoPedido.setPedido(pedido);
 
             // adiciona o produtoPedido na lista do produto
-            produtoPedido.getProduto().getProdutosPedido().add(produtoPedido);
+            // produtoPedido.getProduto().getProdutosPedido().add(produtoPedido);
 
             // adiciona o produtoPedido na lista do pedido
-            pedido.getProdutosPedido().add(produtoPedido);
-        }
+            if (produtoPedido.getQuantidade() > 0) {
+                pedido.getProdutosPedido().add(produtoPedido);
+            }
 
-        produtoPedidoService.persistListaProdutosPedido(form.getItens());
+        }
+        try {
+            produtoPedidoService.persistListaProdutosPedido(pedido.getProdutosPedido());
+        } catch (Exception e) {
+            pedidoService.deletePedido(pedido);
+            model.addAttribute("mensagem", e.getMessage());
+            return "pedido/pedidoInvalido";
+        }
 
         model.addAttribute("pedido", pedido);
         return "pedido/detalhesPedido";
