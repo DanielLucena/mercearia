@@ -1,7 +1,7 @@
 package com.imd.mercearia.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +26,7 @@ public class Pedido {
     private double valorTotal;
 
     @OneToMany(mappedBy = "pedido")
-    Set<ProdutoPedido> produtosPedido = new HashSet<>();
+    List<ProdutoPedido> produtosPedido = new ArrayList<ProdutoPedido>();
 
     @Column
     private double cashbackGerado;
@@ -66,7 +66,7 @@ public class Pedido {
         this.valorTotal = valorTotal;
     }
 
-    public Set<ProdutoPedido> getProdutosPedido() {
+    public List<ProdutoPedido> getProdutosPedido() {
         return produtosPedido;
     }
 
@@ -86,7 +86,7 @@ public class Pedido {
         this.cashbackUsado = cashbackUsado;
     }
 
-    public void setProdutosPedido(Set<ProdutoPedido> produtosPedido) {
+    public void setProdutosPedido(List<ProdutoPedido> produtosPedido) {
         this.produtosPedido = produtosPedido;
     }
 

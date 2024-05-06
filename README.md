@@ -38,14 +38,14 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
 - [ ] 4\) Módulo de Pedido (crie para essa entidade classe de modelo, repository, service, controller e páginas html que achar necessário para completar os itens a seguir) 
     - [x] a\) Deve ser criada uma entidade de Pedido criando a sua classe modelo com os atributos id(pk), cpfCliente, valorTotal.
     - [x] b\) Ao clicar no link do módulo do pedido deve ser redirecionado para uma página com a listagem dos pedidos. Para cada pedido deve ser apresentado o cpfCliente, valorTotal. (read/list)
-    - [ ] c\) Na página de listagem dos pedidos deve existir um link para uma página de formulário para adicionar um novo pedido. (create)
+    - [x] c\) Na página de listagem dos pedidos deve existir um link para uma página de formulário para adicionar um novo pedido. (create)
         - [x] i\) Nesta página  deve ser mostrado uma lista com  os produtos que foram cadastrados no sistema e um campo de input do tipo number para cada item para informar a quantidade de cada produto.
         - [x] ii\) A lista de produtos para esse formulário deve estar em ordem alfabética do nome dos produtos. (queries de busca personalizada)
         - [x] iii\) Para cada Produto deve-se verificar se existe o valor solicitado no estoque. Caso algum item não tenha a quantidade suficiente o pedido não deve ser criado, caso exista o valor suficiente deve ser decrementado o valor do estoque de cada produto.
         - [x] iv\) Deve conter um campo de cpf do cliente que pode ficar em branco.
-        - [ ] v\) Deve existir um checkbox “usar cashback nesta compra”, caso seja marcado o campo cpf for preenchido com um cpf cadastrado no sistema deve ser abatido do valorTotal o valor de cashback que o cliente possui.
-        - [ ] vi\) Caso seja registrado um cpf no pedido deve ser criado uma nova entidade BeneficioCliente com cpf caso não exista. é incrementado ao atributo pontosCahsback  desse BeneficioCliente o valor de 3% de valorTotal do pedido.
-    - [ ] d\) Ao submeter o formulário o usuário deve ser redirecionado a uma página com detalhes do pedido que acabou de criar. Deve ser listado os produtos que contêm pelo menos um item no pedido. Deve ser informado também quanto de cashback foi usado no pedido, o valorTotal e quanto de cashback foi gerado. (read/get)
+        - [x] v\) Deve existir um checkbox “usar cashback nesta compra”, caso seja marcado o campo cpf for preenchido com um cpf cadastrado no sistema deve ser abatido do valorTotal o valor de cashback que o cliente possui.
+        - [x] vi\) Caso seja registrado um cpf no pedido deve ser criado uma nova entidade BeneficioCliente com cpf caso não exista. é incrementado ao atributo pontosCahsback  desse BeneficioCliente o valor de 3% de valorTotal do pedido.
+    - [x] d\) Ao submeter o formulário o usuário deve ser redirecionado a uma página com detalhes do pedido que acabou de criar. Deve ser listado os produtos que contêm pelo menos um item no pedido. Deve ser informado também quanto de cashback foi usado no pedido, o valorTotal e quanto de cashback foi gerado. (read/get)
     - [x] e\) Adicione o atributo produtos que será mapeado em ManyToMany pela tabela de ligação produto_pedido e deve conter nessa tabela a coluna quantidade que indica a quantidade de itens daquele produto presentes no pedido.
     - [ ] f\) Altere a listagem, para cada pedido deve ser listado seus produtos e suas quantidade de cada produto no pedido.
 obs.: Não haverá edição nem remoção do pedido visto que os pontos de cashback já teriam sido criados e os produtos já levaram baixa no estoque.

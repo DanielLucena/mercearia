@@ -1,11 +1,11 @@
 package com.imd.mercearia.service;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.imd.mercearia.exception.EstoqueInsuficienteException;
 import com.imd.mercearia.model.Pedido;
 import com.imd.mercearia.model.ProdutoPedido;
 import com.imd.mercearia.repository.ProdutoPedidoRepository;
@@ -18,15 +18,17 @@ public class ProdutoPedidoService {
     @Autowired
     ProdutoService produtoService;
 
-    @Autowired
-    PedidoService pedidoService;
+    // @Autowired
+    // PedidoService pedidoService;
 
-    public void persistListaProdutosPedido(Set<ProdutoPedido> produtos, Integer pedido_id) throws Exception {
+    public void persistListaProdutosPedido(List<ProdutoPedido> produtos, Pedido Pedido)
+            throws EstoqueInsuficienteException {
         validaListaProdutos(produtos);
 
         for (ProdutoPedido produtoPedido : produtos) {
-            System.out.println("item do pedido: " + produtoPedido.getPedido().getId());
+            // System.out.println("item do pedido: " + produtoPedido.getPedido().getId());
             if (produtoPedido.getQuantidade() > 0) {
+                produtoPedido.setPedido(Pedido);
                 produtoPedidoRepository.save(produtoPedido);
                 produtoService.darBaixaAoEstoque(produtoPedido.getProduto(),
                         produtoPedido.getQuantidade());
@@ -36,14 +38,10 @@ public class ProdutoPedidoService {
         }
     }
 
-    public void validaListaProdutos(Set<ProdutoPedido> produtos) throws Exception {
+    public void validaListaProdutos(List<ProdutoPedido> produtos) throws EstoqueInsuficienteException {
         for (ProdutoPedido produtoPedido : produtos) {
             if (produtoPedido.getQuantidade() > produtoPedido.getProduto().getQuantidadeEstoque()) {
-                throw new Exception("Quantidade em estoque insuficiente do produto: " +
-                        produtoPedido.getProduto().getNome() +
-                        ". Você colocou no pedido " + produtoPedido.getQuantidade() +
-                        " itens desse produto, porem so existem " + produtoPedido.getProduto().getQuantidadeEstoque() +
-                        " itens no estoque!");
+                throw new EstoqueInsuficienteException(produtoPedido);
             }
         }
     }
