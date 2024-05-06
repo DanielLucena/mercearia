@@ -6,16 +6,41 @@ import org.springframework.stereotype.Component;
 import com.imd.mercearia.model.BeneficioCliente;
 import com.imd.mercearia.repository.BeneficioClienteRepository;
 
+import jakarta.transaction.Transactional;
+
 @Component
 public class BeneficioClienteService {
     @Autowired
     BeneficioClienteRepository beneficioClienteRepository;
 
-    public void salvarBeneficioCliente(BeneficioCliente beneficioCliente) {
-        beneficioClienteRepository.save(beneficioCliente);
+    public BeneficioCliente salvarBeneficioCliente(BeneficioCliente beneficioCliente) {
+        BeneficioCliente novoBeneficioCliente = beneficioClienteRepository.save(beneficioCliente);
+        return novoBeneficioCliente;
     }
 
-    public BeneficioCliente getBeneficioClienteByCpf(String cpf) {
-        return beneficioClienteRepository.findById(cpf).orElse(null);
+    public BeneficioCliente obterOuCriarPorCPF(String cpf) {
+        BeneficioCliente beneficioCliente = beneficioClienteRepository.findByCpf(cpf);
+        if (beneficioCliente == null) {
+            beneficioCliente = new BeneficioCliente();
+            beneficioCliente.setCpf(cpf);
+            beneficioCliente = beneficioClienteRepository.save(beneficioCliente);
+        }
+
+        return beneficioCliente;
+    }
+
+    @Transactional
+    public double consomePontosCashbackCliente(BeneficioCliente beneficioCliente) {
+        double cashback = beneficioCliente.getPontosCashback();
+        beneficioCliente.setPontosCashback(0.);
+        salvarBeneficioCliente(beneficioCliente);
+        return cashback;
+    }
+
+    @Transactional
+    public void incrementaPontosCashbackCliente(BeneficioCliente beneficioCliente, double pontos) {
+        double pontosInicial = beneficioCliente.getPontosCashback();
+        beneficioCliente.setPontosCashback(pontosInicial + pontos);
+        salvarBeneficioCliente(beneficioCliente);
     }
 }

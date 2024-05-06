@@ -2,12 +2,14 @@ package com.imd.mercearia.model;
 
 import jakarta.persistence.*;
 
-import java.util.Set;
-
 @Entity
-@Table(name = "beneficios_clientes")
+@Table(name = "beneficio_cliente")
 public class BeneficioCliente {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(unique = true)
     private String cpf;
 
     private double pontosCashback;
@@ -15,6 +17,15 @@ public class BeneficioCliente {
     @OneToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
+
+    public BeneficioCliente() {
+
+    }
+
+    public BeneficioCliente(String cpfString) {
+        this.cpf = cpfString;
+        this.pontosCashback = 0.;
+    }
 
     public String getCpf() {
         return cpf;
@@ -39,4 +50,10 @@ public class BeneficioCliente {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    @Override
+    public String toString() {
+        return "[cpf: " + cpf + ", pontos cashbabk: " + pontosCashback + "]";
+    }
+
 }

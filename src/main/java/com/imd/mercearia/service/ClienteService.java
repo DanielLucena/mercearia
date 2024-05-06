@@ -2,10 +2,8 @@ package com.imd.mercearia.service;
 
 import java.util.List;
 
-import com.imd.mercearia.model.Fornecedor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import com.imd.mercearia.model.Cliente;
 import com.imd.mercearia.repository.ClienteRepository;
 
@@ -21,7 +19,6 @@ public class ClienteService {
     public void atualizarCliente(Cliente cliente) {
         clienteRepository.save(cliente);
     }
-
 
     public void deletarCliente(Integer id) {
         clienteRepository.deleteById(id);
