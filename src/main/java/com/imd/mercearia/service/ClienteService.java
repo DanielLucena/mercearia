@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.imd.mercearia.model.BeneficioCliente;
 import com.imd.mercearia.model.Cliente;
 import com.imd.mercearia.repository.ClienteRepository;
 
@@ -12,7 +14,12 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private BeneficioClienteService beneficioClienteService;
+
     public Cliente salvarCliente(Cliente cliente) {
+        BeneficioCliente beneficioClientebeneficio = beneficioClienteService.obterOuCriarPorCPF(cliente.getCpf());
+        cliente.setBeneficioCliente(beneficioClientebeneficio);
         return clienteRepository.save(cliente);
     }
 

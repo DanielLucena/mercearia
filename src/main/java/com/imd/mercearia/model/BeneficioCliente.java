@@ -9,13 +9,12 @@ public class BeneficioCliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String cpf;
 
     private double pontosCashback;
 
-    @OneToOne
-    @JoinColumn(name = "cliente_id")
+    @OneToOne(mappedBy = "beneficioCliente", cascade = CascadeType.ALL)
     private Cliente cliente;
 
     public BeneficioCliente() {

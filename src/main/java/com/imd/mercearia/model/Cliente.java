@@ -14,7 +14,8 @@ public class Cliente {
     @Column(length = 10)
     private String cpf;
 
-    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "beneficio_cliente_id")
     private BeneficioCliente beneficioCliente;
 
     public Integer getId() {
