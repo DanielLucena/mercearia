@@ -23,6 +23,7 @@
                     <th scope="col">CPF</th>
                     <!-- <th scope="col">Pontos Cashback</th> -->
                     <th scope="col">Ações</th>
+                    <th scope="col">Lista de pedidos</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,6 +40,7 @@
                             <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
                         </form>
                     </td>
+                    <td><a th:href="@{/cliente/pedidos/{id}(id=${cliente.id})}" class="btn btn-info btn-sm">Pedidos</a> </td>
                 </tr>
             </tbody>
         </table>

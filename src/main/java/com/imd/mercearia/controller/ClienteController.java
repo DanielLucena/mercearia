@@ -9,12 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.imd.mercearia.model.Cliente;
+import com.imd.mercearia.model.Pedido;
 import com.imd.mercearia.service.ClienteService;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("/cliente")
@@ -73,4 +69,13 @@ public class ClienteController {
 
         return "redirect:/cliente/getListaCliente";
     }
+
+    @GetMapping("/pedidos/{id}")
+    public String getMethodName(@PathVariable("id") Integer id, Model model) {
+        Cliente cliente = clienteService.buscarClientePorId(id);
+        List<Pedido> pedidos = clienteService.buscaPedidosByCliente(cliente.getCpf());
+        model.addAttribute("pedidos", pedidos);
+        return "pedido/listaPedido";
+    }
+
 }

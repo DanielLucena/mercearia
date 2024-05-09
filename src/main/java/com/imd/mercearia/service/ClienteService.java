@@ -7,12 +7,17 @@ import org.springframework.stereotype.Component;
 
 import com.imd.mercearia.model.BeneficioCliente;
 import com.imd.mercearia.model.Cliente;
+import com.imd.mercearia.model.Pedido;
 import com.imd.mercearia.repository.ClienteRepository;
+import com.imd.mercearia.repository.PedidoRepository;
 
 @Component
 public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private PedidoRepository pedidoRepository;
 
     @Autowired
     private BeneficioClienteService beneficioClienteService;
@@ -37,5 +42,9 @@ public class ClienteService {
 
     public Cliente buscarClientePorId(Integer id) {
         return clienteRepository.findById(id).orElse(null);
+    }
+
+    public List<Pedido> buscaPedidosByCliente(String cpf) {
+        return pedidoRepository.getPedidosByCpf(cpf);
     }
 }
