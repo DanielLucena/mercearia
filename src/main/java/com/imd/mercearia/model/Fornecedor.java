@@ -2,6 +2,8 @@ package com.imd.mercearia.model;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -22,6 +24,7 @@ public class Fornecedor {
     @Column(length = 100)
     private String nome;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "fornecedor", fetch = FetchType.LAZY)
     private Set<Produto> produtos;
 

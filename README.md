@@ -14,12 +14,12 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
 ## Requisitos do sistema
 
 ### Transição para REST
-- [ ] Rotas de fornecedor
-    - [ ] list
-    - [ ] post
-    - [ ] get
-    - [ ] put
-    - [ ] delete
+- [x] Rotas de fornecedor
+    - [x] list
+    - [x] post
+    - [x] get
+    - [x] put
+    - [x] delete
 - [ ] Rotas de produto
     - [ ] list
     - [ ] post
