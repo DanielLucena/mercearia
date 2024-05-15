@@ -42,7 +42,7 @@ public class FornecedorController {
             service.atualizarFornecedor(fornecedor);
             return fornecedor;
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "Produto não encontrado."));
+                "Fornecedor não encontrado."));
     }
 
     @GetMapping("{id}")
@@ -51,7 +51,7 @@ public class FornecedorController {
         return service
                 .getFornecedorPorId(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Produto não encontrado."));
+                        "Fornecedor não encontrado."));
     }
 
     @DeleteMapping("{id}")
@@ -62,7 +62,7 @@ public class FornecedorController {
                     service.deletarFornecedor(id);
                     return Void.TYPE;
                 }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Produto não encontrado."));
+                        "Fornecedor não encontrado."));
     }
 
     @GetMapping
