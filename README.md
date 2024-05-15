@@ -22,7 +22,7 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
     - [x] delete
 - [ ] Rotas de produto
     - [ ] list
-    - [ ] post
+    - [x] post
     - [ ] get
     - [ ] put
     - [ ] delete
