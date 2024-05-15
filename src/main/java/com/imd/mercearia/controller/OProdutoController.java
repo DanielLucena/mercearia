@@ -56,14 +56,15 @@ public class OProdutoController {
         return "redirect:/produto/getListaProdutos";
     }
 
-    @GetMapping("/editar/{id}")
-    public String editarProdutoForm(@PathVariable("id") Integer id, Model model) {
-        Produto produto = produtoService.getProdutoById(id);
-        List<Fornecedor> fornecedores = fornecedorService.getListaFornecedores();
-        model.addAttribute("produto", produto);
-        model.addAttribute("fornecedores", fornecedores);
-        return "produto/editarProduto";
-    }
+    // @GetMapping("/editar/{id}")
+    // public String editarProdutoForm(@PathVariable("id") Integer id, Model model)
+    // {
+    // Produto produto = produtoService.getProdutoById(id);
+    // List<Fornecedor> fornecedores = fornecedorService.getListaFornecedores();
+    // model.addAttribute("produto", produto);
+    // model.addAttribute("fornecedores", fornecedores);
+    // return "produto/editarProduto";
+    // }
 
     @PostMapping("/atualizar")
     public String atualizarProduto(@ModelAttribute Produto produto) {

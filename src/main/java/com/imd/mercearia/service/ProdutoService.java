@@ -1,6 +1,7 @@
 package com.imd.mercearia.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,11 @@ public class ProdutoService {
     }
 
     public Produto criarProduto(ProdutoCreationDTO dto) {
+        Produto produto = converteDtoParaProduto(dto);
+        return produtoRepository.save(produto);
+    }
+
+    public Produto converteDtoParaProduto(ProdutoCreationDTO dto) {
         Integer idFornecedor = dto.getFornecedor();
         Fornecedor fornecedor = fornecedorRepository
                 .findById(idFornecedor)
@@ -36,11 +42,11 @@ public class ProdutoService {
         produto.setPreco(dto.getPreco());
         produto.setQuantidadeEstoque(dto.getQuantidade());
         produto.setFornecedor(fornecedor);
-        return produtoRepository.save(produto);
+        return produto;
     }
 
-    public Produto getProdutoById(Integer id) {
-        return produtoRepository.findById(id).orElse(null);
+    public Optional<Produto> getProdutoById(Integer id) {
+        return produtoRepository.findById(id);
     }
 
     public void atualizarProduto(Produto produto) {
@@ -52,7 +58,9 @@ public class ProdutoService {
     }
 
     public void deleteProdutoById(Integer id) {
-        deleteProduto(getProdutoById(id));
+        Produto produto = produtoRepository.findById(id).orElse(null);
+
+        produtoRepository.delete(produto);
     }
 
     public List<Produto> getProdutosPorFornecedor(Fornecedor fornecedor) {
