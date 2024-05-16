@@ -3,6 +3,8 @@ package com.imd.mercearia.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,6 +36,7 @@ public class Produto {
     @JoinColumn(name = "fornecedor_id")
     private Fornecedor fornecedor;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "produto")
     Set<ProdutoPedido> produtosPedido = new HashSet<>();
 
