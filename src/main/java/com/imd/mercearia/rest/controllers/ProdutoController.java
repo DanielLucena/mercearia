@@ -1,5 +1,7 @@
 package com.imd.mercearia.rest.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,6 +68,11 @@ public class ProdutoController {
                     return Void.TYPE;
                 }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Produto não encontrado."));
+    }
+
+    @GetMapping
+    public List<Produto> find() {
+        return service.getListaProdutos();
     }
 
 }

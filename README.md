@@ -20,8 +20,8 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
     - [x] get
     - [x] put
     - [x] delete
-- [ ] Rotas de produto
-    - [ ] list
+- [x] Rotas de produto
+    - [x] list
     - [x] post
     - [x] get
     - [x] put

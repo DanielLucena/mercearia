@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 
 import com.imd.mercearia.dto.ProdutoCreationDTO;
@@ -89,5 +91,17 @@ public class ProdutoService {
         }
         produto.setQuantidadeEstoque(novaQuantidade);
         produtoRepository.save(produto);
+    }
+
+    // nao esta em uso ainda
+    public List<Produto> listaProdutoPorFiltro(Produto filtro) {
+        ExampleMatcher matcher = ExampleMatcher
+                .matching()
+                .withIgnoreNullValues()
+                .withIgnoreCase()
+                .withStringMatcher(
+                        ExampleMatcher.StringMatcher.CONTAINING);
+        Example<Produto> example = Example.of(filtro, matcher);
+        return produtoRepository.findAll(example);
     }
 }
