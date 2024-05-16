@@ -1,8 +1,11 @@
 package com.imd.mercearia.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 
 import com.imd.mercearia.model.Fornecedor;
@@ -23,12 +26,12 @@ public class FornecedorService {
         return fornecedorRepository.findAll();
     }
 
-    public void criarFornecedor(Fornecedor fornecedor) {
-        fornecedorRepository.save(fornecedor);
+    public Fornecedor criarFornecedor(Fornecedor fornecedor) {
+        return fornecedorRepository.save(fornecedor);
     }
 
-    public Fornecedor getFornecedorPorId(Integer id) {
-        return fornecedorRepository.findById(id).orElse(null);
+    public Optional<Fornecedor> getFornecedorPorId(Integer id) {
+        return fornecedorRepository.findById(id);
     }
 
     public void atualizarFornecedor(Fornecedor fornecedor) {
@@ -37,7 +40,7 @@ public class FornecedorService {
 
     public void deletarFornecedor(Integer id) {
         Fornecedor fornecedor = fornecedorRepository.findById(id).orElse(null);
-       
+
         produtoRepository.deleteByFornecedor(fornecedor);
         fornecedorRepository.delete(fornecedor);
     }
@@ -45,5 +48,14 @@ public class FornecedorService {
     public List<Produto> getProdutosPorFornecedor(Fornecedor fornecedor) {
         return produtoRepository.findByFornecedor(fornecedor);
     }
-    
+
+    public List<Fornecedor> listaFornecedorPorFiltro(Fornecedor filtro) {
+        ExampleMatcher matcher = ExampleMatcher
+                .matching()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example example = Example.of(filtro, matcher);
+        return fornecedorRepository.findAll(example);
+    }
+
 }

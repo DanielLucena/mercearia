@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("/produto")
-public class ProdutoController {
+public class OProdutoController {
     @Autowired
     ProdutoService produtoService;
 
@@ -29,7 +29,8 @@ public class ProdutoController {
     @GetMapping("/getListaProdutos")
     public String getListaProdutos(Model model) {
         List<Produto> produtos = produtoService.getListaProdutos();
-        List<Fornecedor> fornecedores = fornecedorService.getListaFornecedores(); // Método hipotético para obter fornecedores
+        List<Fornecedor> fornecedores = fornecedorService.getListaFornecedores(); // Método hipotético para obter
+                                                                                  // fornecedores
         model.addAttribute("produtos", produtos);
         model.addAttribute("fornecedores", fornecedores);
         return "produto/listaProduto";
@@ -37,38 +38,38 @@ public class ProdutoController {
 
     @GetMapping("/criar")
     public String formularioProduto(Model model) {
-        List<Fornecedor> fornecedores = fornecedorService.getListaFornecedores(); // Método hipotético para obter fornecedores
+        List<Fornecedor> fornecedores = fornecedorService.getListaFornecedores(); // Método hipotético para obter
+                                                                                  // fornecedores
         model.addAttribute("fornecedores", fornecedores);
         return "produto/criarProduto";
     }
 
-    @PostMapping("/novo")
-    public String criarProduto(@ModelAttribute Produto produto) {
-        produtoService.criarProduto(produto);
-        return "redirect:/produto/getListaProdutos";
-    }
+    // @PostMapping("/novo")
+    // public String criarProduto(@ModelAttribute Produto produto) {
+    // produtoService.criarProduto(produto);
+    // return "redirect:/produto/getListaProdutos";
+    // }
+
     @GetMapping("/delete/{id}")
     public String deletarProduto(@PathVariable("id") Integer id) {
         produtoService.deleteProdutoById(id);
         return "redirect:/produto/getListaProdutos";
     }
 
-    @GetMapping("/editar/{id}")
-    public String editarProdutoForm(@PathVariable("id") Integer id, Model model) {
-        Produto produto = produtoService.getProdutoById(id);
-        List<Fornecedor> fornecedores = fornecedorService.getListaFornecedores();
-        model.addAttribute("produto", produto);
-        model.addAttribute("fornecedores", fornecedores);
-        return "produto/editarProduto";
-    }
+    // @GetMapping("/editar/{id}")
+    // public String editarProdutoForm(@PathVariable("id") Integer id, Model model)
+    // {
+    // Produto produto = produtoService.getProdutoById(id);
+    // List<Fornecedor> fornecedores = fornecedorService.getListaFornecedores();
+    // model.addAttribute("produto", produto);
+    // model.addAttribute("fornecedores", fornecedores);
+    // return "produto/editarProduto";
+    // }
 
     @PostMapping("/atualizar")
     public String atualizarProduto(@ModelAttribute Produto produto) {
         produtoService.atualizarProduto(produto);
         return "redirect:/produto/getListaProdutos";
     }
-
-    
-
 
 }
