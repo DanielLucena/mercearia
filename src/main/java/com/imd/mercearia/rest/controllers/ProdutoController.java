@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -43,7 +44,7 @@ public class ProdutoController {
                     service.atualizarProduto(produto);
                     return produto;
                 }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Fornecedor não encontrado."));
+                        "Produto não encontrado."));
     }
 
     @GetMapping("{id}")
@@ -51,8 +52,20 @@ public class ProdutoController {
         return service
                 .getProdutoById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Fornecedor não encontrado."));
+                        "Produto não encontrado."));
 
+    }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Integer id) {
+        service
+                .getProdutoById(id)
+                .map(p -> {
+                    service.deleteProdutoById(id);
+                    return Void.TYPE;
+                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Produto não encontrado."));
     }
 
 }
