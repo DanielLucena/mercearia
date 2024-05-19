@@ -14,7 +14,7 @@ import com.imd.mercearia.service.ClienteService;
 
 @Controller
 @RequestMapping("/cliente")
-public class ClienteController {
+public class OClienteController {
     @Autowired
     private ClienteService clienteService;
 

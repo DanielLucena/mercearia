@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.imd.mercearia.exception.ClienteJaCadastradoException;
 import com.imd.mercearia.model.BeneficioCliente;
 import com.imd.mercearia.model.Cliente;
 import com.imd.mercearia.model.Pedido;
@@ -23,8 +24,11 @@ public class ClienteService {
     private BeneficioClienteService beneficioClienteService;
 
     public Cliente salvarCliente(Cliente cliente) {
-        BeneficioCliente beneficioClientebeneficio = beneficioClienteService.obterOuCriarPorCPF(cliente.getCpf());
-        cliente.setBeneficioCliente(beneficioClientebeneficio);
+        BeneficioCliente beneficioCliente = beneficioClienteService.obterOuCriarPorCPF(cliente.getCpf());
+        if (beneficioCliente.getCliente() != null) {
+            throw new ClienteJaCadastradoException(cliente);
+        }
+        cliente.setBeneficioCliente(beneficioCliente);
         return clienteRepository.save(cliente);
     }
 
