@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 
 import com.imd.mercearia.exception.ClienteJaCadastradoException;
@@ -75,5 +77,14 @@ public class ClienteService {
 
     public List<Pedido> buscaPedidosByCliente(String cpf) {
         return pedidoRepository.getPedidosByCpf(cpf);
+    }
+
+    public List<Cliente> listaClientesPorfiltro(Cliente filtro) {
+        ExampleMatcher matcher = ExampleMatcher
+                .matching()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example example = Example.of(filtro, matcher);
+        return clienteRepository.findAll(example);
     }
 }
