@@ -1,5 +1,7 @@
 package com.imd.mercearia.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -14,6 +16,7 @@ public class BeneficioCliente {
 
     private double pontosCashback;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "beneficioCliente", cascade = CascadeType.ALL)
     private Cliente cliente;
 
