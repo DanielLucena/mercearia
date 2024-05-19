@@ -14,7 +14,7 @@ import com.imd.mercearia.service.ClienteService;
 
 @Controller
 @RequestMapping("/cliente")
-public class ClienteController {
+public class OClienteController {
     @Autowired
     private ClienteService clienteService;
 
@@ -38,19 +38,19 @@ public class ClienteController {
         return "redirect:/cliente/detalhes/{id}";
     }
 
-    @GetMapping("/detalhes/{id}")
-    public String detalhesCliente(@PathVariable("id") Integer id, Model model) {
-        Cliente cliente = clienteService.buscarClientePorId(id);
-        model.addAttribute("cliente", cliente);
-        return "cliente/detalhesCliente";
-    }
+    // @GetMapping("/detalhes/{id}")
+    // public String detalhesCliente(@PathVariable("id") Integer id, Model model) {
+    // Cliente cliente = clienteService.buscarClientePorId(id);
+    // model.addAttribute("cliente", cliente);
+    // return "cliente/detalhesCliente";
+    // }
 
-    @GetMapping("/editar/{id}")
-    public String editarCliente(@PathVariable("id") Integer id, Model model) {
-        Cliente cliente = clienteService.buscarClientePorId(id);
-        model.addAttribute("cliente", cliente);
-        return "cliente/editarCliente";
-    }
+    // @GetMapping("/editar/{id}")
+    // public String editarCliente(@PathVariable("id") Integer id, Model model) {
+    // Cliente cliente = clienteService.buscarClientePorId(id);
+    // model.addAttribute("cliente", cliente);
+    // return "cliente/editarCliente";
+    // }
 
     @PostMapping("/atualizar/{id}")
     public String atualizarCliente(@PathVariable("id") Integer id, @ModelAttribute("cliente") Cliente cliente) {
@@ -70,12 +70,13 @@ public class ClienteController {
         return "redirect:/cliente/getListaCliente";
     }
 
-    @GetMapping("/pedidos/{id}")
-    public String getMethodName(@PathVariable("id") Integer id, Model model) {
-        Cliente cliente = clienteService.buscarClientePorId(id);
-        List<Pedido> pedidos = clienteService.buscaPedidosByCliente(cliente.getCpf());
-        model.addAttribute("pedidos", pedidos);
-        return "pedido/listaPedido";
-    }
+    // @GetMapping("/pedidos/{id}")
+    // public String getMethodName(@PathVariable("id") Integer id, Model model) {
+    // Cliente cliente = clienteService.buscarClientePorId(id);
+    // List<Pedido> pedidos =
+    // clienteService.buscaPedidosByCliente(cliente.getCpf());
+    // model.addAttribute("pedidos", pedidos);
+    // return "pedido/listaPedido";
+    // }
 
 }

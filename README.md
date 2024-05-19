@@ -30,12 +30,12 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
     - [ ] list
     - [ ] post
 - [ ] Rotas de cliente
-    - [ ] list
-    - [ ] post
-    - [ ] get
-    - [ ] put
-    - [ ] delete
-    - [ ] getPedidosFromCliente
+    - [x] list
+    - [x] post
+    - [x] get
+    - [x] put
+    - [x] delete
+    - [x] getPedidosFromCliente
 
 ### Novas rotas
 - [ ] Rotas de pedido

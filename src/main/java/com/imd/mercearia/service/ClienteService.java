@@ -1,10 +1,16 @@
 package com.imd.mercearia.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.imd.mercearia.exception.ClienteJaCadastradoException;
 import com.imd.mercearia.model.BeneficioCliente;
 import com.imd.mercearia.model.Cliente;
 import com.imd.mercearia.model.Pedido;
@@ -23,16 +29,43 @@ public class ClienteService {
     private BeneficioClienteService beneficioClienteService;
 
     public Cliente salvarCliente(Cliente cliente) {
-        BeneficioCliente beneficioClientebeneficio = beneficioClienteService.obterOuCriarPorCPF(cliente.getCpf());
-        cliente.setBeneficioCliente(beneficioClientebeneficio);
+        BeneficioCliente beneficioCliente = beneficioClienteService.obterOuCriarPorCPF(cliente.getCpf());
+        if (beneficioCliente.getCliente() != null) {
+            throw new ClienteJaCadastradoException(cliente);
+        }
+        cliente.setBeneficioCliente(beneficioCliente);
         return clienteRepository.save(cliente);
     }
 
     public void atualizarCliente(Cliente cliente) {
+        // busca cliente original cadastrado no banco
+        Cliente oldCliente = clienteRepository
+                .findById(cliente.getId())
+                .orElseThrow(null);
+
+        // certifica que o cpf do cliente não sera alterado para null
+        if (cliente.getCpf() == null) {
+            cliente.setCpf(oldCliente.getCpf());
+        } else {
+            // certifica que o novo cpf não esteja em uso
+            if (beneficioClienteService
+                    .existsBeneficioClienteComCpf(cliente.getCpf())) {
+                throw new ClienteJaCadastradoException(cliente);
+            }
+        }
+
+        BeneficioCliente beneficioCliente = oldCliente.getBeneficioCliente();
+        beneficioCliente.setCpf(cliente.getCpf());
+
+        cliente.setBeneficioCliente(beneficioCliente);
+        beneficioClienteService.update(beneficioCliente);
+
         clienteRepository.save(cliente);
     }
 
     public void deletarCliente(Integer id) {
+        Cliente cliente = clienteRepository.findById(id).orElse(null);
+        beneficioClienteService.deletarBeneficioCliente(cliente.getBeneficioCliente());
         clienteRepository.deleteById(id);
     }
 
@@ -40,11 +73,26 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
-    public Cliente buscarClientePorId(Integer id) {
-        return clienteRepository.findById(id).orElse(null);
+    public Optional<Cliente> buscarClientePorId(Integer id) {
+        return clienteRepository.findById(id);
     }
 
     public List<Pedido> buscaPedidosByCliente(String cpf) {
         return pedidoRepository.getPedidosByCpf(cpf);
+    }
+
+    public List<Pedido> buscaPedidosByClienteId(Integer id) {
+        Cliente cliente = buscarClientePorId(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Cliente não encontrado."));
+        return pedidoRepository.getPedidosByCpf(cliente.getCpf());
+    }
+
+    public List<Cliente> listaClientesPorfiltro(Cliente filtro) {
+        ExampleMatcher matcher = ExampleMatcher
+                .matching()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example example = Example.of(filtro, matcher);
+        return clienteRepository.findAll(example);
     }
 }

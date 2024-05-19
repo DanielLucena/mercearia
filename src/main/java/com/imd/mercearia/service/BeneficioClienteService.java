@@ -43,4 +43,17 @@ public class BeneficioClienteService {
         beneficioCliente.setPontosCashback(pontosInicial + pontos);
         salvarBeneficioCliente(beneficioCliente);
     }
+
+    public void update(BeneficioCliente beneficioCliente) {
+        beneficioClienteRepository.save(beneficioCliente);
+    }
+
+    public boolean existsBeneficioClienteComCpf(String cpf) {
+        return beneficioClienteRepository.findByCpf(cpf) != null;
+    }
+
+    public void deletarBeneficioCliente(BeneficioCliente beneficioCliente) {
+        beneficioClienteRepository.delete(beneficioCliente);
+    }
+
 }
