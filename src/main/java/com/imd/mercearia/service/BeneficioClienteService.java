@@ -52,4 +52,8 @@ public class BeneficioClienteService {
         return beneficioClienteRepository.findByCpf(cpf) != null;
     }
 
+    public void deletarBeneficioCliente(BeneficioCliente beneficioCliente) {
+        beneficioClienteRepository.delete(beneficioCliente);
+    }
+
 }

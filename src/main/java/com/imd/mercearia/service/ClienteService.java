@@ -60,6 +60,8 @@ public class ClienteService {
     }
 
     public void deletarCliente(Integer id) {
+        Cliente cliente = clienteRepository.findById(id).orElse(null);
+        beneficioClienteService.deletarBeneficioCliente(cliente.getBeneficioCliente());
         clienteRepository.deleteById(id);
     }
 
