@@ -1,5 +1,7 @@
 package com.imd.mercearia.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -12,6 +14,7 @@ public class ProdutoPedido {
     @EmbeddedId
     private ProdutoPedidoKey id = new ProdutoPedidoKey();
 
+    @JsonIgnore
     @ManyToOne
     @MapsId("pedidoId")
     @JoinColumn(name = "pedido_id")

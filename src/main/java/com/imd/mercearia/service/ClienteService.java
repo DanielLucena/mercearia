@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.imd.mercearia.exception.ClienteJaCadastradoException;
 import com.imd.mercearia.model.BeneficioCliente;
@@ -77,6 +79,12 @@ public class ClienteService {
 
     public List<Pedido> buscaPedidosByCliente(String cpf) {
         return pedidoRepository.getPedidosByCpf(cpf);
+    }
+
+    public List<Pedido> buscaPedidosByClienteId(Integer id) {
+        Cliente cliente = buscarClientePorId(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Cliente não encontrado."));
+        return pedidoRepository.getPedidosByCpf(cliente.getCpf());
     }
 
     public List<Cliente> listaClientesPorfiltro(Cliente filtro) {

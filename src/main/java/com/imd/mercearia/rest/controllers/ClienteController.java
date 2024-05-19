@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.imd.mercearia.model.Cliente;
+import com.imd.mercearia.model.Pedido;
 import com.imd.mercearia.service.ClienteService;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -68,5 +69,10 @@ public class ClienteController {
     @GetMapping
     public List<Cliente> find(Cliente filtro) {
         return service.listaClientesPorfiltro(filtro);
+    }
+
+    @GetMapping("/pedidos/{id}")
+    public List<Pedido> getPedidosFromCliente(@PathVariable Integer id) {
+        return service.buscaPedidosByClienteId(id);
     }
 }
