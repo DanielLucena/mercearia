@@ -43,6 +43,13 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
     - [ ] put
     - [ ] delete
     - [ ] listaPorFuncionario
+    - [ ] patch
+- [ ] Rotas de fornecedor
+    - [ ] patch
+- [ ] Rotas de produto
+    - [ ] patch
+- [ ] Rotas de cliente
+    - [ ] patch
 
 
 ### Entidades Novas
