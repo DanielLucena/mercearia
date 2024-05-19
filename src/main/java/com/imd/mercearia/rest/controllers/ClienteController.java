@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.imd.mercearia.model.Cliente;
 import com.imd.mercearia.service.ClienteService;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/api/cliente")
@@ -22,6 +25,18 @@ public class ClienteController {
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente save(@RequestBody Cliente cliente) {
         return service.salvarCliente(cliente);
+    }
+
+    @PutMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@PathVariable Integer id, @RequestBody Cliente cliente) {
+        service.buscarClientePorId(id)
+                .map(p -> {
+                    cliente.setId(p.getId());
+                    service.atualizarCliente(cliente);
+                    return cliente;
+                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Cliente não encontrado."));
 
     }
 }

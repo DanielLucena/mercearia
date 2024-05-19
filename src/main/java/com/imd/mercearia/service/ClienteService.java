@@ -1,6 +1,7 @@
 package com.imd.mercearia.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,6 +34,28 @@ public class ClienteService {
     }
 
     public void atualizarCliente(Cliente cliente) {
+        // busca cliente original cadastrado no banco
+        Cliente oldCliente = clienteRepository
+                .findById(cliente.getId())
+                .orElseThrow(null);
+
+        // certifica que o cpf do cliente não sera alterado para null
+        if (cliente.getCpf() == null) {
+            cliente.setCpf(oldCliente.getCpf());
+        } else {
+            // certifica que o novo cpf não esteja em uso
+            if (beneficioClienteService
+                    .existsBeneficioClienteComCpf(cliente.getCpf())) {
+                throw new ClienteJaCadastradoException(cliente);
+            }
+        }
+
+        BeneficioCliente beneficioCliente = oldCliente.getBeneficioCliente();
+        beneficioCliente.setCpf(cliente.getCpf());
+
+        cliente.setBeneficioCliente(beneficioCliente);
+        beneficioClienteService.update(beneficioCliente);
+
         clienteRepository.save(cliente);
     }
 
@@ -44,8 +67,8 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
-    public Cliente buscarClientePorId(Integer id) {
-        return clienteRepository.findById(id).orElse(null);
+    public Optional<Cliente> buscarClientePorId(Integer id) {
+        return clienteRepository.findById(id);
     }
 
     public List<Pedido> buscaPedidosByCliente(String cpf) {
