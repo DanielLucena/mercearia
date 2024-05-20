@@ -1,14 +1,18 @@
 package com.imd.mercearia.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import com.imd.mercearia.model.Pedido;
 import com.imd.mercearia.model.ProdutoPedido;
 import com.imd.mercearia.repository.ProdutoPedidoRepository;
+import com.imd.mercearia.rest.dto.InformacaoItemDto;
 import com.imd.mercearia.rest.dto.ItemDto;
 
 @Component
@@ -71,5 +75,21 @@ public class ProdutoPedidoService {
 
         }
         return valorTotal;
+    }
+
+    public List<InformacaoItemDto> converterListaProdutoPedidoParaDto(List<ProdutoPedido> itens) {
+        if (CollectionUtils.isEmpty(itens)) {
+            return Collections.emptyList();
+        }
+
+        return itens.stream().map(
+                item -> InformacaoItemDto
+                        .builder()
+                        .codigoProduto(item.getProduto().getId())
+                        .nome(item.getProduto().getNome())
+                        .quantidade(item.getQuantidade())
+                        .preco(item.getQuantidade() * item.getProduto().getPreco())
+                        .build())
+                .collect(Collectors.toList());
     }
 }

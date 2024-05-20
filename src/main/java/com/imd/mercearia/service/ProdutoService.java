@@ -9,13 +9,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.imd.mercearia.dto.ProdutoCreationDTO;
 import com.imd.mercearia.exception.RegraNegocioException;
 import com.imd.mercearia.exception.EstoqueInsuficienteException;
 import com.imd.mercearia.model.Fornecedor;
 import com.imd.mercearia.model.Produto;
 import com.imd.mercearia.repository.FornecedorRepository;
 import com.imd.mercearia.repository.ProdutoRepository;
+import com.imd.mercearia.rest.dto.ProdutoCreationDTO;
 
 @Component
 public class ProdutoService {
