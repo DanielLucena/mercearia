@@ -1,6 +1,4 @@
-package com.imd.mercearia.dto;
-
-import java.math.BigDecimal;
+package com.imd.mercearia.rest.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,10 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ProdutoCreationDTO {
+public class InformacaoItemDto {
+    private Integer codigoProduto;
     private String nome;
+    private int quantidade;
     private double preco;
-    private Integer fornecedor;
-    private Integer quantidade;
-
 }

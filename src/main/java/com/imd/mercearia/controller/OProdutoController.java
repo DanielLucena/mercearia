@@ -66,10 +66,10 @@ public class OProdutoController {
     // return "produto/editarProduto";
     // }
 
-    @PostMapping("/atualizar")
-    public String atualizarProduto(@ModelAttribute Produto produto) {
-        produtoService.atualizarProduto(produto);
-        return "redirect:/produto/getListaProdutos";
-    }
+    // @PostMapping("/atualizar")
+    // public String atualizarProduto(@ModelAttribute Produto produto) {
+    // produtoService.atualizarProduto(produto);
+    // return "redirect:/produto/getListaProdutos";
+    // }
 
 }

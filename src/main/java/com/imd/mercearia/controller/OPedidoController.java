@@ -9,9 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.imd.mercearia.dto.ProdutoPedidoCreationDto;
 import com.imd.mercearia.exception.EstoqueInsuficienteException;
 import com.imd.mercearia.model.ProdutoPedido;
+import com.imd.mercearia.rest.dto.PedidoCreationDto;
 import com.imd.mercearia.model.Pedido;
 import com.imd.mercearia.model.Produto;
 import com.imd.mercearia.service.ProdutoPedidoService;
@@ -21,7 +21,7 @@ import com.imd.mercearia.service.ProdutoService;
 
 @Controller
 @RequestMapping("/pedido")
-public class PedidoController {
+public class OPedidoController {
 
     @Autowired
     PedidoService pedidoService;
@@ -42,33 +42,35 @@ public class PedidoController {
         return "pedido/listaPedido";
     }
 
-    @RequestMapping("/showForm")
-    public String showFormPedido(Model model) {
-        ProdutoPedidoCreationDto produtosForm = new ProdutoPedidoCreationDto(new ArrayList<ProdutoPedido>());
-        produtosForm.setUsandoCashback(true);
-        List<Produto> produtos = produtoService.getListaProdutosOrderByName();
-        for (Produto produto : produtos) {
-            ProdutoPedido item = new ProdutoPedido();
-            item.setProduto(produto);
-            item.setQuantidade(0);
-            produtosForm.addItem(item);
-        }
+    // @RequestMapping("/showForm")
+    // public String showFormPedido(Model model) {
+    // PedidoCreationDto produtosForm = new PedidoCreationDto(new
+    // ArrayList<ProdutoPedido>());
+    // produtosForm.setUsandoCashback(true);
+    // List<Produto> produtos = produtoService.getListaProdutosOrderByName();
+    // for (Produto produto : produtos) {
+    // ProdutoPedido item = new ProdutoPedido();
+    // item.setProduto(produto);
+    // item.setQuantidade(0);
+    // produtosForm.addItem(item);
+    // }
 
-        model.addAttribute("form", produtosForm);
-        return "pedido/formPedido";
-    }
+    // model.addAttribute("form", produtosForm);
+    // return "pedido/formPedido";
+    // }
 
-    @RequestMapping("/addPedido")
-    public String showFormPedido(@ModelAttribute ProdutoPedidoCreationDto form, Model model) {
-        try {
-            Pedido pedido = pedidoService.processarPedido(form);
-            model.addAttribute("pedido", pedido);
-            return "pedido/detalhesPedido";
-        } catch (EstoqueInsuficienteException e) {
-            model.addAttribute("mensagem", e.getMessage());
-            return "pedido/pedidoInvalido";
-        }
+    // @RequestMapping("/addPedido")
+    // public String showFormPedido(@ModelAttribute PedidoCreationDto form, Model
+    // model) {
+    // try {
+    // Pedido pedido = pedidoService.processarPedido(form);
+    // model.addAttribute("pedido", pedido);
+    // return "pedido/detalhesPedido";
+    // } catch (EstoqueInsuficienteException e) {
+    // model.addAttribute("mensagem", e.getMessage());
+    // return "pedido/pedidoInvalido";
+    // }
 
-    }
+    // }
 
 }
