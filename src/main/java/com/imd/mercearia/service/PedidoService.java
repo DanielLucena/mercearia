@@ -1,5 +1,6 @@
 package com.imd.mercearia.service;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,10 +51,6 @@ public class PedidoService {
         pedidoRepository.save(pedido);
     }
 
-    public double getCashbackGerado(Pedido pedido) {
-        return (pedido.getValorTotal() - pedido.getCashbackGerado()) * 0.03;
-    }
-
     public Pedido processarPedido(PedidoCreationDto pedidoCreationDto) throws EstoqueInsuficienteException {
         String cpf = pedidoCreationDto.getCpfCliente();
         System.out.println("!!!usando cashback? " + pedidoCreationDto.isUsandoCashback());
@@ -84,10 +81,10 @@ public class PedidoService {
         // salvar pedido
         Pedido pedido = new Pedido();
         pedido.setCpfCliente(cpf);
-        pedido.setCashbackGerado(cashbackGerado);
-        pedido.setCashbackUsado(desconto);
+        pedido.setCashbackGerado(BigDecimal.valueOf(cashbackGerado));
+        pedido.setCashbackUsado(BigDecimal.valueOf(desconto));
         pedido.setProdutosPedido(produtosLista);
-        pedido.setValorTotal(valorTotal);
+        pedido.setValorTotal(BigDecimal.valueOf(valorTotal));
         pedidoRepository.save(pedido);
 
         // salvar itens do pedido

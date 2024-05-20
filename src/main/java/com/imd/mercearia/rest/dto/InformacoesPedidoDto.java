@@ -16,7 +16,7 @@ public class InformacoesPedidoDto {
     private Integer id;
     private String cpfCliente;
     private List<InformacaoItemDto> itens;
-    private double desconto;
-    private double valorTotal;
+    private BigDecimal desconto;
+    private BigDecimal valorTotal;
 
 }

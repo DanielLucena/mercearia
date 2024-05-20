@@ -1,5 +1,6 @@
 package com.imd.mercearia.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,17 +23,17 @@ public class Pedido {
     @Column(nullable = true)
     private String cpfCliente;
 
-    @Column
-    private double valorTotal;
+    @Column(precision = 20, scale = 2)
+    private BigDecimal valorTotal;
 
     @OneToMany(mappedBy = "pedido")
     List<ProdutoPedido> produtosPedido = new ArrayList<ProdutoPedido>();
 
-    @Column
-    private double cashbackGerado;
+    @Column(precision = 20, scale = 2)
+    private BigDecimal cashbackGerado;
 
-    @Column
-    private double cashbackUsado;
+    @Column(precision = 20, scale = 2)
+    private BigDecimal cashbackUsado;
 
     public Pedido() {
 
@@ -58,11 +59,11 @@ public class Pedido {
         this.cpfCliente = cpfCliente;
     }
 
-    public double getValorTotal() {
+    public BigDecimal getValorTotal() {
         return valorTotal;
     }
 
-    public void setValorTotal(double valorTotal) {
+    public void setValorTotal(BigDecimal valorTotal) {
         this.valorTotal = valorTotal;
     }
 
@@ -70,19 +71,19 @@ public class Pedido {
         return produtosPedido;
     }
 
-    public double getCashbackGerado() {
+    public BigDecimal getCashbackGerado() {
         return cashbackGerado;
     }
 
-    public void setCashbackGerado(double cashbackGerado) {
+    public void setCashbackGerado(BigDecimal cashbackGerado) {
         this.cashbackGerado = cashbackGerado;
     }
 
-    public double getCashbackUsado() {
+    public BigDecimal getCashbackUsado() {
         return cashbackUsado;
     }
 
-    public void setCashbackUsado(double cashbackUsado) {
+    public void setCashbackUsado(BigDecimal cashbackUsado) {
         this.cashbackUsado = cashbackUsado;
     }
 
