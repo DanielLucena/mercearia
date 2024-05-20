@@ -1,14 +1,15 @@
 package com.imd.mercearia.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.imd.mercearia.exception.EstoqueInsuficienteException;
 import com.imd.mercearia.model.Pedido;
 import com.imd.mercearia.model.ProdutoPedido;
 import com.imd.mercearia.repository.ProdutoPedidoRepository;
+import com.imd.mercearia.rest.dto.ItemDto;
 
 @Component
 public class ProdutoPedidoService {
@@ -21,29 +22,44 @@ public class ProdutoPedidoService {
     // @Autowired
     // PedidoService pedidoService;
 
-    public void persistListaProdutosPedido(List<ProdutoPedido> produtos, Pedido Pedido)
-            throws EstoqueInsuficienteException {
-        validaListaProdutos(produtos);
+    public void persistListaProdutosPedido(List<ItemDto> itens, Pedido pedido) {
+        validaListaProdutos(itens);
 
-        for (ProdutoPedido produtoPedido : produtos) {
+        for (ItemDto item : itens) {
             // System.out.println("item do pedido: " + produtoPedido.getPedido().getId());
-            if (produtoPedido.getQuantidade() > 0) {
-                produtoPedido.setPedido(Pedido);
+            if (item.getQuantidade() > 0) {
+                ProdutoPedido produtoPedido = new ProdutoPedido();
+                produtoPedido.setPedido(pedido);
+                produtoPedido.setProduto(produtoService.getProdutoById(item.getProduto()));
+                produtoPedido.setQuantidade(item.getQuantidade());
                 produtoPedidoRepository.save(produtoPedido);
                 produtoService.darBaixaAoEstoque(produtoPedido.getProduto(),
-                        produtoPedido.getQuantidade());
+                        item.getQuantidade());
+                System.out.println(produtoPedido.getId());
             }
-
-            System.out.println(produtoPedido.getId());
         }
+
     }
 
-    public void validaListaProdutos(List<ProdutoPedido> produtos) throws EstoqueInsuficienteException {
-        for (ProdutoPedido produtoPedido : produtos) {
-            if (produtoPedido.getQuantidade() > produtoPedido.getProduto().getQuantidadeEstoque()) {
-                throw new EstoqueInsuficienteException(produtoPedido);
-            }
+    public void validaListaProdutos(List<ItemDto> itens) {
+
+        for (ItemDto item : itens) {
+            produtoService.validaEstoqueProdutoSuficiente(item.getProduto(), item.getQuantidade());
+
         }
+
+    }
+
+    public List<ProdutoPedido> converteDtoToListProdutoPedido(List<ItemDto> itens, Pedido pedido) {
+        List<ProdutoPedido> produtos = new ArrayList<>();
+        for (ItemDto item : itens) {
+            ProdutoPedido produtoPedido = new ProdutoPedido();
+            produtoPedido.setPedido(pedido);
+            produtoPedido.setProduto(produtoService.getProdutoById(item.getProduto()));
+            produtoPedido.setQuantidade(item.getQuantidade());
+            produtos.add(produtoPedido);
+        }
+        return produtos;
     }
 
     public double getValorTotal(List<ProdutoPedido> produtoPedidos) {

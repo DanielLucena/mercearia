@@ -5,11 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.imd.mercearia.dto.ProdutoPedidoCreationDto;
 import com.imd.mercearia.exception.EstoqueInsuficienteException;
 import com.imd.mercearia.model.BeneficioCliente;
 import com.imd.mercearia.model.Pedido;
+import com.imd.mercearia.model.ProdutoPedido;
 import com.imd.mercearia.repository.PedidoRepository;
+import com.imd.mercearia.rest.dto.PedidoCreationDto;
 
 @Component
 public class PedidoService {
@@ -47,7 +48,7 @@ public class PedidoService {
         return (pedido.getValorTotal() - pedido.getCashbackGerado()) * 0.03;
     }
 
-    public Pedido processarPedido(ProdutoPedidoCreationDto pedidoCreationDto) throws EstoqueInsuficienteException {
+    public Pedido processarPedido(PedidoCreationDto pedidoCreationDto) throws EstoqueInsuficienteException {
         String cpf = pedidoCreationDto.getCpfCliente();
         System.out.println("!!!usando cashback? " + pedidoCreationDto.isUsandoCashback());
 
@@ -55,14 +56,18 @@ public class PedidoService {
         // throws exception
         produtoPedidoService.validaListaProdutos(pedidoCreationDto.getItens());
 
-        // pegar valor do cashback do cliente
-        double desconto = getCashbackUsado(cpf, pedidoCreationDto.isUsandoCashback());
-
         // se possuir cpf associado pegar ou criar cliente
         BeneficioCliente beneficioCliente = beneficioClienteService.obterOuCriarPorCPF(cpf);
 
         // calcular o valor do pedido
-        double subtotal = produtoPedidoService.getValorTotal(pedidoCreationDto.getItens());
+        List<ProdutoPedido> produtosLista = produtoPedidoService
+                .converteDtoToListProdutoPedido(
+                        pedidoCreationDto.getItens(),
+                        null);
+        double subtotal = produtoPedidoService.getValorTotal(produtosLista);
+
+        // pegar valor do cashback do cliente
+        double desconto = getCashbackUsado(cpf, pedidoCreationDto.isUsandoCashback(), subtotal);
 
         // subtrair o valor do desconto
         double valorTotal = subtotal - desconto;
@@ -75,7 +80,7 @@ public class PedidoService {
         pedido.setCpfCliente(cpf);
         pedido.setCashbackGerado(cashbackGerado);
         pedido.setCashbackUsado(desconto);
-        pedido.setProdutosPedido(pedidoCreationDto.getItens());
+        pedido.setProdutosPedido(produtosLista);
         pedido.setValorTotal(valorTotal);
         pedidoRepository.save(pedido);
 
@@ -88,12 +93,12 @@ public class PedidoService {
         return pedido;
     }
 
-    public double getCashbackUsado(String cpfCliente, boolean isUsandoCashback) {
+    public double getCashbackUsado(String cpfCliente, boolean isUsandoCashback, double subtotal) {
         // saber se esta usando cashback
         if (isUsandoCashback) {
             BeneficioCliente beneficioCliente = beneficioClienteService
                     .obterOuCriarPorCPF(cpfCliente);
-            return beneficioClienteService.consomePontosCashbackCliente(beneficioCliente);
+            return beneficioClienteService.consomePontosCashbackCliente(beneficioCliente, subtotal);
         }
         return 0.;
     }

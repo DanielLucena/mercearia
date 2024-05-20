@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.imd.mercearia.dto.ProdutoCreationDTO;
 import com.imd.mercearia.model.Produto;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/produto")
@@ -40,34 +38,19 @@ public class ProdutoController {
     public void update(@PathVariable Integer id, @RequestBody ProdutoCreationDTO dto) {
         Produto produto = service.converteDtoParaProduto(dto);
 
-        service.getProdutoById(id)
-                .map(p -> {
-                    produto.setId(p.getId());
-                    service.atualizarProduto(produto);
-                    return produto;
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Produto não encontrado."));
+        service.atualizarProduto(produto, id);
     }
 
     @GetMapping("{id}")
     public Produto getById(@PathVariable Integer id) {
-        return service
-                .getProdutoById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Produto não encontrado."));
+        return service.getProdutoById(id);
 
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
-        service
-                .getProdutoById(id)
-                .map(p -> {
-                    service.deleteProdutoById(id);
-                    return Void.TYPE;
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Produto não encontrado."));
+        service.deleteProdutoById(id);
     }
 
     @GetMapping
