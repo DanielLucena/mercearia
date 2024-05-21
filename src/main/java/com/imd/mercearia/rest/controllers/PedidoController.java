@@ -7,10 +7,13 @@ import com.imd.mercearia.model.Pedido;
 import com.imd.mercearia.rest.dto.PedidoCreationDto;
 import com.imd.mercearia.service.PedidoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,13 +26,15 @@ public class PedidoController {
     @Autowired
     PedidoService service;
 
-    @PostMapping
+    @Operation(summary = "Salva um novo pedido", method = "POST")
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Pedido save(@RequestBody PedidoCreationDto dto) {
         System.out.println("PedidoController.save() " + dto);
         return service.processarPedido(dto);
     }
 
+    @Operation(summary = "busca pedidos com filtro", method = "GET")
     @GetMapping
     public List<Pedido> find(PedidoCreationDto dto) {
         return service.listaPedidosPorFiltro(dto);
