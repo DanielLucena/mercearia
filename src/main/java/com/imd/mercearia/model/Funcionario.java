@@ -1,18 +1,23 @@
 package com.imd.mercearia.model;
 
+import java.util.Set;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "funcionario")
-public class Funcionario{
+public class Funcionario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
     @Column(length = 100, nullable = false)
     private String nome;
-    
 
+    @OneToMany(mappedBy = "funcionario", fetch = FetchType.LAZY)
+    private Set<Remessa> remessas;
+
+    // Getters and Setters
     public Integer getId() {
         return id;
     }
@@ -21,12 +26,19 @@ public class Funcionario{
         this.id = id;
     }
 
-    // Getters and Setters
     public String getNome() {
         return nome;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Set<Remessa> getRemessas() {
+        return remessas;
+    }
+
+    public void setRemessas(Set<Remessa> remessas) {
+        this.remessas = remessas;
     }
 }

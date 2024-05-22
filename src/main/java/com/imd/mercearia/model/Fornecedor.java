@@ -1,9 +1,8 @@
 package com.imd.mercearia.model;
 
 import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import jakarta.persistence.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -28,6 +27,12 @@ public class Fornecedor {
     @OneToMany(mappedBy = "fornecedor", fetch = FetchType.LAZY)
     private Set<Produto> produtos;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "fornecedor", fetch = FetchType.LAZY)
+    private Set<Remessa> remessas;
+
+    // Getters and Setters
+
     public Fornecedor() {
 
     }
@@ -35,7 +40,6 @@ public class Fornecedor {
     public Fornecedor(String nome) {
         this.nome = nome;
     }
-
     public Integer getId() {
         return id;
     }
@@ -63,5 +67,12 @@ public class Fornecedor {
     @Override
     public String toString() {
         return "Fornecedor [ " + this.nome + ", id = " + this.id + "]";
+    }
+    public Set<Remessa> getRemessas() {
+        return remessas;
+    }
+
+    public void setRemessas(Set<Remessa> remessas) {
+        this.remessas = remessas;
     }
 }

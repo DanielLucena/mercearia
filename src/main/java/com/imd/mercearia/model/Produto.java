@@ -42,6 +42,10 @@ public class Produto {
     @OneToMany(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     Set<ProdutoPedido> produtosPedido = new HashSet<>();
 
+    @OneToMany(mappedBy = "produto", fetch = FetchType.LAZY)
+    private Set<ItemRemessa> itensRemessa;
+
+
     public Produto() {
 
     }
@@ -105,6 +109,14 @@ public class Produto {
         // return "Produto [nome: " + nome + ", preço: " + preco
         // + ", quantidade em estoque: " + quantidadeEstoque + "]";
         return "[produto_id: " + id + " ]";
+    }
+
+    public Set<ItemRemessa> getItensRemessa() {
+        return itensRemessa;
+    }
+
+    public void setItensRemessa(Set<ItemRemessa> itensRemessa) {
+        this.itensRemessa = itensRemessa;
     }
 
 }
