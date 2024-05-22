@@ -30,11 +30,20 @@ public class BeneficioClienteService {
     }
 
     @Transactional
-    public double consomePontosCashbackCliente(BeneficioCliente beneficioCliente) {
-        double cashback = beneficioCliente.getPontosCashback();
-        beneficioCliente.setPontosCashback(0.);
+    public double consomePontosCashbackCliente(BeneficioCliente beneficioCliente, double subtotal) {
+        double antigoPontosCasback = beneficioCliente.getPontosCashback();
+        double pontosDescontados = antigoPontosCasback > subtotal ? subtotal : antigoPontosCasback;
+        double novoPontosCashback = antigoPontosCasback - pontosDescontados;
+        beneficioCliente.setPontosCashback(novoPontosCashback);
         salvarBeneficioCliente(beneficioCliente);
-        return cashback;
+
+        System.out.println("Consumo de cashback: ["
+                + "\nCashback da conta antigo  : " + antigoPontosCasback
+                + ",\nsubtotal                 : " + subtotal
+                + ",\npontos descontados       : " + pontosDescontados
+                + ",\nCashback da conta novo   : " + novoPontosCashback
+                + "\n]");
+        return pontosDescontados;
     }
 
     @Transactional

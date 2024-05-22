@@ -1,19 +1,21 @@
 package com.imd.mercearia.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
-import com.imd.mercearia.dto.ProdutoCreationDTO;
 import com.imd.mercearia.exception.RegraNegocioException;
+import com.imd.mercearia.exception.EstoqueInsuficienteException;
 import com.imd.mercearia.model.Fornecedor;
 import com.imd.mercearia.model.Produto;
 import com.imd.mercearia.repository.FornecedorRepository;
 import com.imd.mercearia.repository.ProdutoRepository;
+import com.imd.mercearia.rest.dto.ProdutoCreationDTO;
 
 @Component
 public class ProdutoService {
@@ -47,12 +49,21 @@ public class ProdutoService {
         return produto;
     }
 
-    public Optional<Produto> getProdutoById(Integer id) {
-        return produtoRepository.findById(id);
+    public Produto getProdutoById(Integer id) {
+        return produtoRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Produto não encontrado."));
+
     }
 
-    public void atualizarProduto(Produto produto) {
-        produtoRepository.save(produto);
+    public void atualizarProduto(Produto produto, Integer id) {
+        produtoRepository.findById(id)
+                .map(p -> {
+                    produto.setId(p.getId());
+                    produtoRepository.save(produto);
+                    return produto;
+                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Produto não encontrado."));
     }
 
     public void deleteProduto(Produto produto) {
@@ -60,9 +71,13 @@ public class ProdutoService {
     }
 
     public void deleteProdutoById(Integer id) {
-        Produto produto = produtoRepository.findById(id).orElse(null);
+        produtoRepository.findById(id)
+                .map(p -> {
+                    produtoRepository.delete(p);
+                    return Void.TYPE;
+                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Produto não encontrado."));
 
-        produtoRepository.delete(produto);
     }
 
     public List<Produto> getProdutosPorFornecedor(Fornecedor fornecedor) {
@@ -103,5 +118,17 @@ public class ProdutoService {
                         ExampleMatcher.StringMatcher.CONTAINING);
         Example<Produto> example = Example.of(filtro, matcher);
         return produtoRepository.findAll(example);
+    }
+
+    public void validaEstoqueProdutoSuficiente(Integer idProduto, int quantidade) {
+        produtoRepository.findById(idProduto)
+                .map(p -> {
+                    if (quantidade > p.getQuantidadeEstoque()) {
+                        throw new EstoqueInsuficienteException(p, quantidade);
+                    }
+                    return Void.TYPE;
+                })
+                .orElseThrow(() -> new RegraNegocioException("Código de produto inválido. id: " + idProduto));
+
     }
 }
