@@ -3,6 +3,7 @@ package com.imd.mercearia.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -42,6 +43,7 @@ public class Produto {
     @OneToMany(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     Set<ProdutoPedido> produtosPedido = new HashSet<>();
 
+    @JsonBackReference
     @OneToMany(mappedBy = "produto", fetch = FetchType.LAZY)
     private Set<ItemRemessa> itensRemessa;
 

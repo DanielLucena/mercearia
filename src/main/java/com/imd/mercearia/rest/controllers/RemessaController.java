@@ -1,6 +1,7 @@
 package com.imd.mercearia.rest.controllers;
 
 import com.imd.mercearia.model.Remessa;
+import com.imd.mercearia.rest.dto.RemessaCreationDTO;
 import com.imd.mercearia.service.RemessaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,8 +18,8 @@ public class RemessaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Remessa criarRemessa(@RequestBody Remessa remessa) {
-        return remessaService.criarRemessa(remessa);
+    public Remessa criarRemessa(@RequestBody RemessaCreationDTO dto) {
+        return remessaService.criarRemessa(dto);
     }
 
     @PutMapping("{id}")
