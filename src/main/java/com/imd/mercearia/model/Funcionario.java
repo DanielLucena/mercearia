@@ -1,6 +1,9 @@
 package com.imd.mercearia.model;
 
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -14,6 +17,7 @@ public class Funcionario {
     @Column(length = 100, nullable = false)
     private String nome;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "funcionario", fetch = FetchType.LAZY)
     private Set<Remessa> remessas;
 
