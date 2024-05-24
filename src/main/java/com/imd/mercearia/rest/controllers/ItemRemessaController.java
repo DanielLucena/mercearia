@@ -25,11 +25,7 @@ public class ItemRemessaController {
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Integer id, @RequestBody ItemRemessa itemRemessa) {
-        itemRemessaService.getItemRemessaById(id).map(ir -> {
-            itemRemessa.setId(ir.getId());
-            itemRemessaService.saveItemRemessa(itemRemessa);
-            return itemRemessa;
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ItemRemessa não encontrado."));
+        itemRemessaService.updateItemRemessa(id, itemRemessa);
     }
 
     @GetMapping("{id}")
@@ -41,10 +37,7 @@ public class ItemRemessaController {
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
-        itemRemessaService.getItemRemessaById(id).map(ir -> {
-            itemRemessaService.deleteItemRemessa(id);
-            return Void.TYPE;
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ItemRemessa não encontrado."));
+        itemRemessaService.deleteItemRemessa(id);
     }
 
     @GetMapping
