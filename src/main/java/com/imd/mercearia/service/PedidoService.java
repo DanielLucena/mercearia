@@ -8,8 +8,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.imd.mercearia.exception.EstoqueInsuficienteException;
 import com.imd.mercearia.model.BeneficioCliente;
@@ -40,7 +42,9 @@ public class PedidoService {
     }
 
     public Pedido getPedidoById(Integer id) {
-        return pedidoRepository.findById(id).orElse(null);
+        return pedidoRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Pedido não encontrado."));
     }
 
     public void deletePedido(Pedido pedido) {
@@ -122,7 +126,7 @@ public class PedidoService {
         return converterListaPedidoParaDto(pedidoRepository.findAll(example));
     }
 
-    private InformacoesPedidoDto converterPedidoParaDto(Pedido pedido) {
+    public InformacoesPedidoDto converterPedidoParaDto(Pedido pedido) {
         return InformacoesPedidoDto
                 .builder()
                 .id(pedido.getId())
