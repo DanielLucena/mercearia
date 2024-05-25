@@ -1,5 +1,6 @@
 package com.imd.mercearia.service;
 
+import com.imd.mercearia.exception.EstoqueInsuficienteException;
 import com.imd.mercearia.exception.RegraNegocioException;
 import com.imd.mercearia.model.Remessa;
 import com.imd.mercearia.model.ItemRemessa;
@@ -17,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import com.imd.mercearia.rest.dto.RemessaCreationDTO.ItemRemessaDTO;
-
 
 import java.util.HashSet;
 import java.util.List;
@@ -101,4 +101,77 @@ public class RemessaService {
     public List<Remessa> getTodasRemessas() {
         return remessaRepository.findAll();
     }
+
+    public ItemRemessa adicionarItemRemessa(Integer remessaId, ItemRemessa itemRemessa) {
+        Remessa remessa = remessaRepository.findById(remessaId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Remessa não encontrada"));
+
+        Produto produto = itemRemessa.getProduto();
+        validaEstoqueProdutoSuficiente(produto, itemRemessa.getQuantidade());
+
+        produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() - itemRemessa.getQuantidade());
+        produtoRepository.save(produto);
+
+        itemRemessa.setRemessa(remessa);
+        return itemRemessaRepository.save(itemRemessa);
+    }
+
+    public void atualizarItemRemessa(Integer remessaId, Integer itemId, ItemRemessa itemRemessa) {
+        Remessa remessa = remessaRepository.findById(remessaId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Remessa não encontrada"));
+
+        ItemRemessa itemExistente = itemRemessaRepository.findById(itemId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ItemRemessa não encontrado"));
+
+        int quantidadeDiferenca = itemRemessa.getQuantidade() - itemExistente.getQuantidade();
+        Produto produto = itemRemessa.getProduto();
+
+        validaEstoqueProdutoSuficiente(produto, quantidadeDiferenca);
+
+        produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() - quantidadeDiferenca);
+        produtoRepository.save(produto);
+
+        itemRemessa.setId(itemExistente.getId());
+        itemRemessa.setRemessa(remessa);
+        itemRemessaRepository.save(itemRemessa);
+    }
+
+    public ItemRemessa getItemRemessaPorId(Integer remessaId, Integer itemId) {
+        Remessa remessa = remessaRepository.findById(remessaId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Remessa não encontrada"));
+
+        return itemRemessaRepository.findById(itemId)
+                .filter(item -> item.getRemessa().getId().equals(remessaId))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ItemRemessa não encontrado"));
+    }
+
+    public void deletarItemRemessa(Integer remessaId, Integer itemId) {
+        Remessa remessa = remessaRepository.findById(remessaId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Remessa não encontrada"));
+
+        ItemRemessa itemRemessa = itemRemessaRepository.findById(itemId)
+                .filter(item -> item.getRemessa().getId().equals(remessaId))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ItemRemessa não encontrado"));
+
+        Produto produto = itemRemessa.getProduto();
+        produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() + itemRemessa.getQuantidade());
+        produtoRepository.save(produto);
+
+        itemRemessaRepository.delete(itemRemessa);
+    }
+
+    public List<ItemRemessa> getItensRemessa(Integer remessaId) {
+        Remessa remessa = remessaRepository.findById(remessaId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Remessa não encontrada"));
+
+        return remessa.getItens().stream().toList();
+    }
+
+    private void validaEstoqueProdutoSuficiente(Produto produto, int quantidade) {
+        if (quantidade > produto.getQuantidadeEstoque()) {
+            throw new EstoqueInsuficienteException(produto, quantidade);
+        }
+    }
 }
+
+
