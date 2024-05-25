@@ -1,16 +1,10 @@
 package com.imd.mercearia.model;
 
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "pedido")
@@ -27,7 +21,10 @@ public class Pedido {
     private BigDecimal valorTotal;
 
     @OneToMany(mappedBy = "pedido")
-    List<ProdutoPedido> produtosPedido = new ArrayList<ProdutoPedido>();
+    List<ProdutoPedido> produtosPedido = new ArrayList<>();
+
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Pagamento> pagamentos = new ArrayList<>();
 
     @Column(precision = 20, scale = 2)
     private BigDecimal cashbackGerado;
@@ -35,9 +32,7 @@ public class Pedido {
     @Column(precision = 20, scale = 2)
     private BigDecimal cashbackUsado;
 
-    public Pedido() {
-
-    }
+    public Pedido() {}
 
     public Pedido(String cpfCliente) {
         this.cpfCliente = cpfCliente;
@@ -71,6 +66,10 @@ public class Pedido {
         return produtosPedido;
     }
 
+    public void setProdutosPedido(List<ProdutoPedido> produtosPedido) {
+        this.produtosPedido = produtosPedido;
+    }
+
     public BigDecimal getCashbackGerado() {
         return cashbackGerado;
     }
@@ -87,8 +86,12 @@ public class Pedido {
         this.cashbackUsado = cashbackUsado;
     }
 
-    public void setProdutosPedido(List<ProdutoPedido> produtosPedido) {
-        this.produtosPedido = produtosPedido;
+    public List<Pagamento> getPagamentos() {
+        return pagamentos;
+    }
+
+    public void setPagamentos(List<Pagamento> pagamentos) {
+        this.pagamentos = pagamentos;
     }
 
     @Override

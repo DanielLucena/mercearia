@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.imd.mercearia.exception.EstoqueInsuficienteException;
 import com.imd.mercearia.model.ProdutoPedido;
-import com.imd.mercearia.rest.dto.PedidoCreationDto;
+import com.imd.mercearia.rest.dto.PedidoCreationDTO;
 import com.imd.mercearia.model.Pedido;
 import com.imd.mercearia.model.Produto;
 import com.imd.mercearia.service.ProdutoPedidoService;

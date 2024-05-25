@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imd.mercearia.model.Pedido;
-import com.imd.mercearia.rest.dto.PedidoCreationDto;
+import com.imd.mercearia.rest.dto.PedidoCreationDTO;
 import com.imd.mercearia.service.PedidoService;
 
 import java.util.List;
@@ -25,13 +25,13 @@ public class PedidoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Pedido save(@RequestBody PedidoCreationDto dto) {
+    public Pedido save(@RequestBody PedidoCreationDTO dto) {
         System.out.println("PedidoController.save() " + dto);
         return service.processarPedido(dto);
     }
 
     @GetMapping
-    public List<Pedido> find(PedidoCreationDto dto) {
+    public List<Pedido> find(PedidoCreationDTO dto) {
         return service.listaPedidosPorFiltro(dto);
     }
 
