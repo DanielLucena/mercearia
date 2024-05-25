@@ -1,6 +1,7 @@
 package com.imd.mercearia.service;
 
 import com.imd.mercearia.exception.EstoqueInsuficienteException;
+import com.imd.mercearia.exception.RegistroNaoEncontradoException;
 import com.imd.mercearia.exception.RegraNegocioException;
 import com.imd.mercearia.model.Remessa;
 import com.imd.mercearia.model.ItemRemessa;
@@ -9,17 +10,13 @@ import com.imd.mercearia.model.Fornecedor;
 import com.imd.mercearia.model.Funcionario;
 import com.imd.mercearia.repository.RemessaRepository;
 import com.imd.mercearia.repository.ItemRemessaRepository;
-import com.imd.mercearia.repository.FornecedorRepository;
-import com.imd.mercearia.repository.FuncionarioRepository;
 import com.imd.mercearia.repository.ProdutoRepository;
 import com.imd.mercearia.rest.dto.RemessaCreationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import com.imd.mercearia.rest.dto.RemessaCreationDTO.ItemRemessaDTO;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -33,37 +30,36 @@ public class RemessaService {
     private ItemRemessaRepository itemRemessaRepository;
 
     @Autowired
-    private FornecedorRepository fornecedorRepository;
-
-    @Autowired
-    private FuncionarioRepository funcionarioRepository;
-
-    @Autowired
     private ProdutoRepository produtoRepository;
 
-    public Remessa criarRemessa(RemessaCreationDTO dto) {
-        Fornecedor fornecedor = fornecedorRepository.findById(dto.getFornecedorId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Fornecedor não encontrado."));
-        Funcionario funcionario = funcionarioRepository.findById(dto.getFuncionarioId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado."));
+    @Autowired
+    private ItemRemessaService itemRemessaService;
 
+    @Autowired
+    private FornecedorService fornecedorService;
+
+    @Autowired
+    private FuncionarioService funcionarioService;
+
+    public Remessa salvarRemessa(RemessaCreationDTO dto) {
+        Fornecedor fornecedor = fornecedorService.getFornecedorPorId(dto.getFornecedorId())
+                .orElseThrow(() -> new RegraNegocioException("Código de fornecedor inválido"));
+        Funcionario funcionario = funcionarioService.buscarFuncionarioPorId(dto.getFuncionarioId())
+                .orElseThrow(() -> new RegraNegocioException("Código de funcionario inválido"));
         Remessa remessa = new Remessa();
         remessa.setFornecedor(fornecedor);
         remessa.setFuncionario(funcionario);
 
-        Set<ItemRemessa> itens = new HashSet<>();
-        for (ItemRemessaDTO itemDTO : dto.getItens()) {
-            Produto produto = produtoRepository.findById(itemDTO.getProdutoId())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado."));
-            ItemRemessa itemRemessa = new ItemRemessa();
-            itemRemessa.setProduto(produto);
-            itemRemessa.setQuantidade(itemDTO.getQuantidade());
-            itemRemessa.setRemessa(remessa); // setting the parent remessa
-            itens.add(itemRemessa);
+        remessaRepository.save(remessa);
+
+        try {
+            Set<ItemRemessa> ItensRemessa = itemRemessaService.persistSetRemessa(dto.getItens(), remessa);
+            remessa.setItens(ItensRemessa);
+            return remessa;
+        } catch (RegistroNaoEncontradoException e) {
+            throw new RegraNegocioException(e.getMessage());
         }
 
-        remessa.setItens(itens);
-        return remessaRepository.save(remessa);
     }
 
     public Remessa atualizarRemessa(Integer id, Remessa remessa) {
@@ -173,5 +169,3 @@ public class RemessaService {
         }
     }
 }
-
-

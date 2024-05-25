@@ -20,7 +20,7 @@ public class RemessaController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Remessa criarRemessa(@RequestBody RemessaCreationDTO dto) {
-        return remessaService.criarRemessa(dto);
+        return remessaService.salvarRemessa(dto);
     }
 
     @PutMapping("{id}")
@@ -53,7 +53,8 @@ public class RemessaController {
 
     @PutMapping("{remessaId}/item/{itemId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void atualizarItemRemessa(@PathVariable Integer remessaId, @PathVariable Integer itemId, @RequestBody ItemRemessa itemRemessa) {
+    public void atualizarItemRemessa(@PathVariable Integer remessaId, @PathVariable Integer itemId,
+            @RequestBody ItemRemessa itemRemessa) {
         remessaService.atualizarItemRemessa(remessaId, itemId, itemRemessa);
     }
 

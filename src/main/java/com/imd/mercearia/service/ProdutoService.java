@@ -9,6 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.imd.mercearia.exception.RegraNegocioException;
 import com.imd.mercearia.exception.EstoqueInsuficienteException;
+import com.imd.mercearia.exception.RegistroNaoEncontradoException;
 import com.imd.mercearia.model.Fornecedor;
 import com.imd.mercearia.model.Produto;
 import com.imd.mercearia.repository.FornecedorRepository;
@@ -55,7 +56,7 @@ public class ProdutoService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID do produto não pode ser nulo.");
         }
         return produtoRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado."));
+                .orElseThrow(() -> new RegistroNaoEncontradoException(Produto.class, id));
     }
 
     public void atualizarProduto(Produto produto, Integer id) {
@@ -118,6 +119,7 @@ public class ProdutoService {
                     }
                     return Void.TYPE;
                 })
-                .orElseThrow(() -> new RegraNegocioException("Código de produto inválido. id: " + idProduto));
+                .orElseThrow(() -> new RegistroNaoEncontradoException(Produto.class, idProduto));
     }
+
 }

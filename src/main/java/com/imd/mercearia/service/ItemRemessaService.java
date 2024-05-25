@@ -7,12 +7,16 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.imd.mercearia.model.ItemRemessa;
 import com.imd.mercearia.model.Produto;
+import com.imd.mercearia.model.Remessa;
 import com.imd.mercearia.repository.ItemRemessaRepository;
 import com.imd.mercearia.repository.ProdutoRepository;
+import com.imd.mercearia.rest.dto.ItemDto;
 import com.imd.mercearia.exception.EstoqueInsuficienteException;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ItemRemessaService {
@@ -22,6 +26,9 @@ public class ItemRemessaService {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+
+    @Autowired
+    private ProdutoService produtoService;
 
     public List<ItemRemessa> getAllItensRemessa() {
         return itemRemessaRepository.findAll();
@@ -71,6 +78,37 @@ public class ItemRemessaService {
     private void validaEstoqueProdutoSuficiente(Produto produto, int quantidade) {
         if (quantidade > produto.getQuantidadeEstoque()) {
             throw new EstoqueInsuficienteException(produto, quantidade);
+        }
+    }
+
+    public Set<ItemRemessa> persistSetRemessa(Set<ItemDto> itens, Remessa remessa) {
+        // validade lista de itens sem perssistir
+        validaSetItens(itens);
+
+        Set<ItemRemessa> itensRemessa = new HashSet<ItemRemessa>();
+        for (ItemDto itemDto : itens) {
+            Produto produto = produtoService.getProdutoById(itemDto.getProduto());
+            int quantidade = itemDto.getQuantidade();
+            ItemRemessa item = ItemRemessa.builder()
+                    .produto(produto)
+                    .remessa(remessa)
+                    .quantidade(quantidade)
+                    .build();
+            if (item.getQuantidade() >= 0) {
+                itemRemessaRepository.save(item);
+                itensRemessa.add(item);
+            }
+
+            // incrementa quantidade em produto ja valida dentro dessa função se a
+            // quantidade é maior que 0
+            produtoService.adicionarAoEstoque(produto, quantidade);
+        }
+        return itensRemessa;
+    }
+
+    public void validaSetItens(Set<ItemDto> itens) {
+        for (ItemDto item : itens) {
+            produtoService.getProdutoById(item.getProduto());
         }
     }
 }

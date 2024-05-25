@@ -1,12 +1,19 @@
 package com.imd.mercearia.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "item_remessa")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class ItemRemessa {
 
     @Id
@@ -24,38 +31,4 @@ public class ItemRemessa {
 
     @Column(nullable = false)
     private Integer quantidade;
-
-    // Getters and Setters
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Remessa getRemessa() {
-        return remessa;
-    }
-
-    public void setRemessa(Remessa remessa) {
-        this.remessa = remessa;
-    }
-
-    public Produto getProduto() {
-        return produto;
-    }
-
-    public void setProduto(Produto produto) {
-        this.produto = produto;
-    }
-
-    public Integer getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
-    }
 }

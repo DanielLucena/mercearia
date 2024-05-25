@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.imd.mercearia.exception.RegistroNaoEncontradoException;
 import com.imd.mercearia.model.Produto;
 import com.imd.mercearia.rest.dto.ProdutoCreationDTO;
 import com.imd.mercearia.service.ProdutoService;
@@ -43,7 +45,12 @@ public class ProdutoController {
 
     @GetMapping("{id}")
     public Produto getById(@PathVariable Integer id) {
-        return service.getProdutoById(id);
+        try {
+            return service.getProdutoById(id);
+        } catch (RegistroNaoEncontradoException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado.");
+        }
 
     }
 

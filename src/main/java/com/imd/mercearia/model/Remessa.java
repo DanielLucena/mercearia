@@ -17,9 +17,8 @@ public class Remessa {
     @JoinColumn(name = "fornecedor_id", nullable = false)
     private Fornecedor fornecedor;
 
-    @JsonIgnore 
+    @JsonIgnore
     @OneToMany(mappedBy = "remessa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-   
     private Set<ItemRemessa> itens;
 
     @ManyToOne
