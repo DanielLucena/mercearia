@@ -2,10 +2,13 @@ package com.imd.mercearia.model;
 
 import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "fornecedor")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Fornecedor {
 
     @Id

@@ -75,12 +75,12 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
     - [X] get
     - [X] put
     - [X] delete
-- [ ] Remessa
+- [X] Remessa
     - [x] criar entidade: fornecedor_id, itens, funcionario_id
-    - [ ] list
+    - [x] list
     - [x] post
-    - [ ] get
-    - [ ] put
-    - [ ] delete 
+    - [x] get
+    - [x] put
+    - [x] delete 
 - [x] ItemRemessa (entidade de ligação)
     - [x] criar entidade: remessa_id, produto_id, quantidade
