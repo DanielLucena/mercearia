@@ -80,6 +80,14 @@ public class SecurityConfig {
                         .requestMatchers("/api/funcionario/**")
                         .hasRole("GERENTE")
 
+                        // regras de remessa
+                        .requestMatchers(HttpMethod.GET, "/api/remessa/**")
+                        .hasAnyRole("REPOSITOR", "GERENTE")
+                        .requestMatchers(HttpMethod.POST, "/api/remessa/**")
+                        .hasAnyRole("REPOSITOR", "GERENTE")
+                        .requestMatchers("/api/remessa/**")
+                        .hasRole("GERENTE")
+
                         // fim do filtro
                         .anyRequest().authenticated()
 

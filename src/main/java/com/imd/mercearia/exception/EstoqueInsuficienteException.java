@@ -1,7 +1,6 @@
 package com.imd.mercearia.exception;
 
 import com.imd.mercearia.model.Produto;
-import com.imd.mercearia.model.ProdutoPedido;
 
 public class EstoqueInsuficienteException extends RuntimeException {
     public EstoqueInsuficienteException(Produto produto, int quantidade) {
