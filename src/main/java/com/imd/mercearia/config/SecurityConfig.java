@@ -45,12 +45,20 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers(HttpMethod.POST, "/api/usuario/**")
                         .permitAll()
+
+                        // regras de fornecedor
+                        .requestMatchers(HttpMethod.GET, "/api/fornecedor/**")
+                        .hasAnyRole("REPOSITOR", "GERENTE") // essa regra presiva vir antes da geral de gerente
                         .requestMatchers("/api/fornecedor/**")
                         .hasRole("GERENTE")
-                        .requestMatchers("/api/produto/**")
-                        .hasAnyRole("GERENTE")
+
+                        // regras de produto
                         .requestMatchers(HttpMethod.GET, "/api/produto/**")
-                        .hasAnyRole("REPOSITOR", "CAIXA")
+                        .hasAnyRole("REPOSITOR", "CAIXA", "GERENTE", "CLIENTE")
+                        .requestMatchers("/api/produto/**")
+                        .hasRole("GERENTE")
+
+                        // fim do filtro
                         .anyRequest().authenticated()
 
                 )

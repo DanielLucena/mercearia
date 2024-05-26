@@ -101,9 +101,9 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
 - [x] implementar autenticação
 - [x] implementar compatibilidade com autorização
 - [ ] implementar autorização para rotas de Pedido
-- [ ] implementar autorização para rotas de Produto
+- [x] implementar autorização para rotas de Produto
 - [ ] implementar autorização para rotas de Cliente
-- [ ] implementar autorização para rotas de Fornecedor
+- [x] implementar autorização para rotas de Fornecedor
 - [ ] implementar autorização para rotas de Remessa
 - [ ] implementar autorização para rotas de Funcionario
 - [ ] implementar autorização para rotas de Pagamento
