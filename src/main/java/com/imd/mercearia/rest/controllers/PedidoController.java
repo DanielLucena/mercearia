@@ -11,6 +11,7 @@ import com.imd.mercearia.rest.dto.InformacoesPedidoDto;
 import com.imd.mercearia.service.PedidoService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @RestController
 @RequestMapping("/api/pedido")
+@Tag(name = "Pedido")
 public class PedidoController {
 
     @Autowired
@@ -38,13 +40,13 @@ public class PedidoController {
         return service.processarPedido(dto);
     }
 
-    @Operation(summary = "busca pedidos com filtro", method = "GET")
+    @Operation(summary = "Busca pedidos com filtro", method = "GET")
     @GetMapping
     public List<Pedido> find(PedidoCreationDTO dto) {
         return service.listaPedidosPorFiltro(dto);
     }
 
-    @Operation(summary = "busca pedidos por id", method = "GET")
+    @Operation(summary = "Busca pedidos por id", method = "GET")
     @GetMapping(value = "{id}")
     public InformacoesPedidoDto getById(@PathVariable Integer id) {
         return service.converterPedidoParaDto(service.getPedidoById(id));

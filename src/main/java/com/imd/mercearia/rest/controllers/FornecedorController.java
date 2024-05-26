@@ -19,20 +19,27 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.imd.mercearia.model.Fornecedor;
 import com.imd.mercearia.service.FornecedorService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/fornecedor")
+@Tag(name = "Fornecedor")
 public class FornecedorController {
     @Autowired
     private FornecedorService service;
 
+    @Operation(summary = "Cria um fornecedor", method = "POST")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Fornecedor save(@RequestBody Fornecedor fornecedor) {
         return service.criarFornecedor(fornecedor);
     }
 
+    @Operation(summary = "Atualiza um fornecedor", method = "PUT")
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Integer id, @RequestBody Fornecedor fornecedor) {
@@ -45,6 +52,7 @@ public class FornecedorController {
                 "Fornecedor não encontrado."));
     }
 
+    @Operation(summary = "Recupera um fornecedor pelo ID", method = "GET")
     @GetMapping("{id}")
     public Fornecedor getById(@PathVariable Integer id) {
 
@@ -54,6 +62,7 @@ public class FornecedorController {
                         "Fornecedor não encontrado."));
     }
 
+    @Operation(summary = "Exclui um fornecedor", method = "DELETE")
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
@@ -65,6 +74,7 @@ public class FornecedorController {
                         "Fornecedor não encontrado."));
     }
 
+    @Operation(summary = "Retorna uma listagem de todos os fornecedores", method = "GET")
     @GetMapping
     public List<Fornecedor> find(Fornecedor filtro) {
         return service.listaFornecedorPorFiltro(filtro);
