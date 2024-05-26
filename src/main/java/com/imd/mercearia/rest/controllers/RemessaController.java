@@ -33,6 +33,7 @@ public class RemessaController {
     public Remessa getRemessaPorId(@PathVariable Integer id) {
         return remessaService.getRemessaPorId(id);
     }
+    
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

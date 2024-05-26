@@ -90,6 +90,13 @@ public class RemessaService {
     public void deletarRemessa(Integer id) {
         Remessa remessa = remessaRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Remessa não encontrada"));
+
+        for (ItemRemessa item : remessa.getItens()) {
+            Produto produto = item.getProduto();
+            produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() + item.getQuantidade());
+            produtoRepository.save(produto);
+        }
+
         itemRemessaRepository.deleteAll(remessa.getItens());
         remessaRepository.delete(remessa);
     }

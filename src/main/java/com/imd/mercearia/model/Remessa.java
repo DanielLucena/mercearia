@@ -3,8 +3,6 @@ package com.imd.mercearia.model;
 import jakarta.persistence.*;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "remessa")
 public class Remessa {
@@ -17,7 +15,6 @@ public class Remessa {
     @JoinColumn(name = "fornecedor_id", nullable = false)
     private Fornecedor fornecedor;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "remessa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ItemRemessa> itens;
 
