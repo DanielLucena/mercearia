@@ -61,13 +61,13 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
     - [ ] put
     - [ ] delete
 - [ ] Usuario
-    - [ ] criar entidade: login, senha, role(cliente, caixa, repositor)
+    - [x] criar entidade: login, senha, role(cliente, caixa, repositor, gerente)
     - [ ] list
-    - [ ] post
+    - [x] post
     - [ ] get
     - [ ] put
     - [ ] delete
-    - [ ] atenticar
+    - [x] atenticar
 - [X] Funcionario
     - [X] criar entidade: nome, usuario_id
     - [X] list
@@ -84,3 +84,27 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
     - [x] delete 
 - [x] ItemRemessa (entidade de ligação)
     - [x] criar entidade: remessa_id, produto_id, quantidade
+
+### Documentação
+- [x] implementar compatibilidade com swagger-ui
+- [ ] documentar rotas de Pedido
+- [ ] documentar rotas de Produto
+- [ ] documentar rotas de Cliente
+- [ ] documentar rotas de Fornecedor
+- [ ] documentar rotas de Remessa
+- [ ] documentar rotas de Funcionario
+- [ ] documentar rotas de Pagamento
+- [ ] documentar rotas de Usuario
+
+
+### Segurança
+- [x] implementar autenticação
+- [x] implementar compatibilidade com autorização
+- [ ] implementar autorização para rotas de Pedido
+- [ ] implementar autorização para rotas de Produto
+- [ ] implementar autorização para rotas de Cliente
+- [ ] implementar autorização para rotas de Fornecedor
+- [ ] implementar autorização para rotas de Remessa
+- [ ] implementar autorização para rotas de Funcionario
+- [ ] implementar autorização para rotas de Pagamento
+- [ ] implementar autorização para rotas de Usuario
