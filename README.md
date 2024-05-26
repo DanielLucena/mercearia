@@ -39,7 +39,7 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
 
 ### Novas rotas
 - [ ] Rotas de pedido
-    - [ ] get
+    - [x] get
     - [ ] put
     - [ ] delete
     - [ ] listaPorFuncionario

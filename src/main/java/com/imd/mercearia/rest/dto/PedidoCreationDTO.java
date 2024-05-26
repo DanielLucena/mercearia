@@ -18,7 +18,5 @@ public class PedidoCreationDTO {
     private List<ItemDto> itens;
     private String cpfCliente;
     private boolean usandoCashback;
-    private List<PagamentoDTO> pagamentos; 
+    private List<PagamentoDTO> pagamentos;
 }
-
-
