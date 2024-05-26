@@ -3,6 +3,7 @@ package com.imd.mercearia.rest.controllers;
 import com.imd.mercearia.model.Remessa;
 import com.imd.mercearia.model.ItemRemessa;
 import com.imd.mercearia.rest.dto.RemessaCreationDTO;
+import com.imd.mercearia.rest.dto.RemessaDTO;
 import com.imd.mercearia.service.RemessaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public class RemessaController {
     }
 
     @GetMapping("{id}")
-    public Remessa getRemessaPorId(@PathVariable Integer id) {
+    public RemessaDTO getRemessaPorId(@PathVariable Integer id) {
         return remessaService.getRemessaPorId(id);
     }
     

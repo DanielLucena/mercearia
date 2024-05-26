@@ -12,6 +12,8 @@ import com.imd.mercearia.repository.RemessaRepository;
 import com.imd.mercearia.repository.ItemRemessaRepository;
 import com.imd.mercearia.repository.ProdutoRepository;
 import com.imd.mercearia.rest.dto.RemessaCreationDTO;
+import com.imd.mercearia.rest.dto.RemessaDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -66,26 +68,26 @@ public class RemessaService {
         Remessa remessaExistente = remessaRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Remessa não encontrada"));
 
-        // Atualiza os detalhes da remessa
+        // Atualiza os detalhes da remessa (fornecedor e funcionário)
         remessaExistente.setFornecedor(remessa.getFornecedor());
         remessaExistente.setFuncionario(remessa.getFuncionario());
 
-        // Atualiza os itens da remessa
-        itemRemessaRepository.deleteAll(remessaExistente.getItens());
-        for (ItemRemessa item : remessa.getItens()) {
-            item.setRemessa(remessaExistente);
-        }
-        remessaExistente.setItens(remessa.getItens());
-
-        Remessa remessaAtualizada = remessaRepository.save(remessaExistente);
-        itemRemessaRepository.saveAll(remessaExistente.getItens());
-        return remessaAtualizada;
+        // Salva a remessa atualizada
+        return remessaRepository.save(remessaExistente);
     }
 
-    public Remessa getRemessaPorId(Integer id) {
-        return remessaRepository.findById(id)
+    public RemessaDTO getRemessaPorId(Integer id) {
+        Remessa remessa = remessaRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Remessa não encontrada"));
+
+        return RemessaDTO.builder()
+                .id(remessa.getId())
+                .fornecedor(remessa.getFornecedor())
+                .funcionario(remessa.getFuncionario())
+                .itens(remessa.getItens())
+                .build();
     }
+
 
     public void deletarRemessa(Integer id) {
         Remessa remessa = remessaRepository.findById(id)
