@@ -73,6 +73,13 @@ public class SecurityConfig {
                         .hasAnyRole("CLIENTE", "GERENTE")
                         .requestMatchers("/api/pedido/**")
                         .hasRole("GERENTE")
+
+                        // regras de funcionario
+                        .requestMatchers(HttpMethod.GET, "/api/funcionario/**")
+                        .hasAnyRole("REPOSITOR", "CAIXA", "GERENTE")
+                        .requestMatchers("/api/funcionario/**")
+                        .hasRole("GERENTE")
+
                         // fim do filtro
                         .anyRequest().authenticated()
 
