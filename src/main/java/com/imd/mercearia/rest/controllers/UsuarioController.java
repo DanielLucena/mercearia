@@ -18,12 +18,15 @@ import com.imd.mercearia.rest.dto.TokenDTO;
 import com.imd.mercearia.security.JwtService;
 import com.imd.mercearia.service.UsuarioService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/usuario")
 @RequiredArgsConstructor
+@Tag(name = "Usuário")
 public class UsuarioController {
     private final UsuarioService usuarioService;
     private final PasswordEncoder passwordEncoder;
@@ -31,6 +34,7 @@ public class UsuarioController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Cria um usuário", method = "POST")
     public Usuario salvar(@RequestBody @Valid Usuario usuario) {
         String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
         usuario.setSenha(senhaCriptografada);
@@ -39,6 +43,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/auth")
+    @Operation(summary = "Autentica um usuário", method = "POST")
     public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais) {
         try {
             Usuario usuario = Usuario.builder()

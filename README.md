@@ -67,7 +67,7 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
     - [ ] get
     - [ ] put
     - [ ] delete
-    - [x] atenticar
+    - [x] autenticar
 - [X] Funcionario
     - [X] criar entidade: nome, usuario_id
     - [X] list
@@ -87,14 +87,14 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
 
 ### Documentação
 - [x] implementar compatibilidade com swagger-ui
-- [ ] documentar rotas de Pedido
-- [ ] documentar rotas de Produto
-- [ ] documentar rotas de Cliente
-- [ ] documentar rotas de Fornecedor
-- [ ] documentar rotas de Remessa
-- [ ] documentar rotas de Funcionario
+- [x] documentar rotas de Pedido
+- [x] documentar rotas de Produto
+- [x] documentar rotas de Cliente
+- [x] documentar rotas de Fornecedor
+- [x] documentar rotas de Remessa
+- [x] documentar rotas de Funcionario
 - [ ] documentar rotas de Pagamento
-- [ ] documentar rotas de Usuario
+- [x] documentar rotas de Usuario
 
 
 ### Segurança
