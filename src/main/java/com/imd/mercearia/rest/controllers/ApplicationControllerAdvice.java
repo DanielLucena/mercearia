@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.imd.mercearia.exception.ClienteJaCadastradoException;
 import com.imd.mercearia.exception.EstoqueInsuficienteException;
+import com.imd.mercearia.exception.RegistroNaoEncontradoException;
 import com.imd.mercearia.exception.RegraNegocioException;
 import com.imd.mercearia.rest.ApiErrors;
 
@@ -45,5 +46,12 @@ public class ApplicationControllerAdvice {
                 .map(erro -> erro.getDefaultMessage())
                 .collect(Collectors.toList());
         return new ApiErrors(errors);
+    }
+
+    @ExceptionHandler(RegistroNaoEncontradoException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiErrors handleRegistroNaoEncontradoException(RegistroNaoEncontradoException ex) {
+        String mensagemErro = ex.getMessage();
+        return new ApiErrors(mensagemErro);
     }
 }

@@ -4,19 +4,23 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "cliente")
-public class Cliente {
+public class Cliente{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 100)
+    @Column(length = 100, nullable = false)
     private String nome;
-    @Column(length = 10)
+
+    @Column(length = 11, nullable = false, unique = true)
     private String cpf;
 
     @OneToOne
     @JoinColumn(name = "beneficio_cliente_id")
     private BeneficioCliente beneficioCliente;
+
+    // Getters and Setters
 
     public Integer getId() {
         return id;

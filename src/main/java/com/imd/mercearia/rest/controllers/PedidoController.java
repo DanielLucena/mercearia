@@ -4,8 +4,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imd.mercearia.model.Pedido;
+
+import com.imd.mercearia.rest.dto.PedidoCreationDTO;
 import com.imd.mercearia.rest.dto.InformacoesPedidoDto;
-import com.imd.mercearia.rest.dto.PedidoCreationDto;
+
 import com.imd.mercearia.service.PedidoService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,14 +33,14 @@ public class PedidoController {
     @Operation(summary = "Salva um novo pedido", method = "POST")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public Pedido save(@RequestBody PedidoCreationDto dto) {
+    public Pedido save(@RequestBody PedidoCreationDTO dto) {
         System.out.println("PedidoController.save() " + dto);
         return service.processarPedido(dto);
     }
 
     @Operation(summary = "busca pedidos com filtro", method = "GET")
     @GetMapping
-    public List<Pedido> find(PedidoCreationDto dto) {
+    public List<Pedido> find(PedidoCreationDTO dto) {
         return service.listaPedidosPorFiltro(dto);
     }
 

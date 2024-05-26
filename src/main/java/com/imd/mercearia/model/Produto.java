@@ -3,6 +3,7 @@ package com.imd.mercearia.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -41,6 +42,11 @@ public class Produto {
     @JsonIgnore
     @OneToMany(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     Set<ProdutoPedido> produtosPedido = new HashSet<>();
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "produto", fetch = FetchType.LAZY)
+    private Set<ItemRemessa> itensRemessa;
+
 
     public Produto() {
 
@@ -105,6 +111,14 @@ public class Produto {
         // return "Produto [nome: " + nome + ", preço: " + preco
         // + ", quantidade em estoque: " + quantidadeEstoque + "]";
         return "[produto_id: " + id + " ]";
+    }
+
+    public Set<ItemRemessa> getItensRemessa() {
+        return itensRemessa;
+    }
+
+    public void setItensRemessa(Set<ItemRemessa> itensRemessa) {
+        this.itensRemessa = itensRemessa;
     }
 
 }

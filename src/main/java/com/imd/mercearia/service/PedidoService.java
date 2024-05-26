@@ -15,11 +15,13 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.imd.mercearia.exception.EstoqueInsuficienteException;
 import com.imd.mercearia.model.BeneficioCliente;
+import com.imd.mercearia.model.Pagamento;
 import com.imd.mercearia.model.Pedido;
 import com.imd.mercearia.model.ProdutoPedido;
+import com.imd.mercearia.repository.PagamentoRepository;
 import com.imd.mercearia.repository.PedidoRepository;
 import com.imd.mercearia.rest.dto.InformacoesPedidoDto;
-import com.imd.mercearia.rest.dto.PedidoCreationDto;
+import com.imd.mercearia.rest.dto.PedidoCreationDTO;
 
 @Component
 public class PedidoService {
@@ -32,6 +34,9 @@ public class PedidoService {
 
     @Autowired
     ProdutoPedidoService produtoPedidoService;
+
+    @Autowired
+    PagamentoRepository pagamentoRepository;    
 
     public List<Pedido> getListaPedidos() {
         return pedidoRepository.findAll();
@@ -55,7 +60,7 @@ public class PedidoService {
         pedidoRepository.save(pedido);
     }
 
-    public Pedido processarPedido(PedidoCreationDto pedidoCreationDto) throws EstoqueInsuficienteException {
+    public Pedido processarPedido(PedidoCreationDTO pedidoCreationDto) throws EstoqueInsuficienteException {
         String cpf = pedidoCreationDto.getCpfCliente();
         System.out.println("!!!usando cashback? " + pedidoCreationDto.isUsandoCashback());
 
@@ -89,6 +94,14 @@ public class PedidoService {
         pedido.setCashbackUsado(BigDecimal.valueOf(desconto));
         pedido.setProdutosPedido(produtosLista);
         pedido.setValorTotal(BigDecimal.valueOf(valorTotal));
+         // Processar pagamento
+        List<Pagamento> pagamentos = pedidoCreationDto.getPagamentos().stream()
+                .map(dto -> new Pagamento(dto.getTipoPagamento(), dto.getValor(), dto.getTroco()))
+                .collect(Collectors.toList());
+        pedido.setPagamentos(pagamentos);
+        
+        // pedidoRepository.save(pedido);
+        pagamentoRepository.saveAll(pagamentos);
         pedidoRepository.save(pedido);
 
         // salvar itens do pedido
@@ -114,7 +127,7 @@ public class PedidoService {
         return valorTotal * 0.03;
     }
 
-    public List<Pedido> listaPedidosPorFiltro(PedidoCreationDto dto) {
+    public List<Pedido> listaPedidosPorFiltro(PedidoCreationDTO dto) {
         Pedido filtro = new Pedido();
         filtro.setCpfCliente(dto.getCpfCliente());
         ExampleMatcher matcher = ExampleMatcher

@@ -1,12 +1,14 @@
 package com.imd.mercearia.model;
 
 import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "fornecedor")
-public class Fornecedor {
+@Table(name = "funcionario")
+public class Funcionario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,18 +18,10 @@ public class Fornecedor {
     private String nome;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "fornecedor", fetch = FetchType.LAZY)
-    private Set<Produto> produtos;
+    @OneToMany(mappedBy = "funcionario", fetch = FetchType.LAZY)
+    private Set<Remessa> remessas;
 
     // Getters and Setters
-
-    public Fornecedor() {
-    }
-
-    public Fornecedor(String nome) {
-        this.nome = nome;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -44,16 +38,11 @@ public class Fornecedor {
         this.nome = nome;
     }
 
-    public Set<Produto> getProdutos() {
-        return produtos;
+    public Set<Remessa> getRemessas() {
+        return remessas;
     }
 
-    public void setProdutos(Set<Produto> produtos) {
-        this.produtos = produtos;
-    }
-
-    @Override
-    public String toString() {
-        return "Fornecedor [ " + this.nome + ", id = " + this.id + "]";
+    public void setRemessas(Set<Remessa> remessas) {
+        this.remessas = remessas;
     }
 }

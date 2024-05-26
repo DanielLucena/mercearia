@@ -3,14 +3,13 @@ package com.imd.mercearia.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.imd.mercearia.exception.RegraNegocioException;
 import com.imd.mercearia.exception.EstoqueInsuficienteException;
+import com.imd.mercearia.exception.RegistroNaoEncontradoException;
 import com.imd.mercearia.model.Fornecedor;
 import com.imd.mercearia.model.Produto;
 import com.imd.mercearia.repository.FornecedorRepository;
@@ -36,7 +35,10 @@ public class ProdutoService {
     }
 
     public Produto converteDtoParaProduto(ProdutoCreationDTO dto) {
-        Integer idFornecedor = dto.getFornecedor();
+        Integer idFornecedor = dto.getFornecedorId();
+        if (idFornecedor == null) {
+            throw new RegraNegocioException("Código de fornecedor não pode ser nulo.");
+        }
         Fornecedor fornecedor = fornecedorRepository
                 .findById(idFornecedor)
                 .orElseThrow(() -> new RegraNegocioException("Código de fornecedor inválido."));
@@ -44,40 +46,47 @@ public class ProdutoService {
         Produto produto = new Produto();
         produto.setNome(dto.getNome());
         produto.setPreco(dto.getPreco());
-        produto.setQuantidadeEstoque(dto.getQuantidade());
+        produto.setQuantidadeEstoque(dto.getQuantidadeEstoque());
         produto.setFornecedor(fornecedor);
         return produto;
     }
 
     public Produto getProdutoById(Integer id) {
+        if (id == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID do produto não pode ser nulo.");
+        }
         return produtoRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Produto não encontrado."));
-
+                .orElseThrow(() -> new RegistroNaoEncontradoException(Produto.class, id));
     }
 
     public void atualizarProduto(Produto produto, Integer id) {
+        if (id == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID do produto não pode ser nulo.");
+        }
         produtoRepository.findById(id)
                 .map(p -> {
                     produto.setId(p.getId());
                     produtoRepository.save(produto);
                     return produto;
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Produto não encontrado."));
+                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado."));
     }
 
     public void deleteProduto(Produto produto) {
+        if (produto == null || produto.getId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Produto ou ID do produto não pode ser nulo.");
+        }
         produtoRepository.delete(produto);
     }
 
     public void deleteProdutoById(Integer id) {
+        if (id == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID do produto não pode ser nulo.");
+        }
         produtoRepository.findById(id)
                 .map(p -> {
                     produtoRepository.delete(p);
                     return Void.TYPE;
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Produto não encontrado."));
-
+                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado."));
     }
 
     public List<Produto> getProdutosPorFornecedor(Fornecedor fornecedor) {
@@ -97,27 +106,9 @@ public class ProdutoService {
     }
 
     public void darBaixaAoEstoque(Produto produto, int quantidade) {
-        int novaQuantidade;
-        if (quantidade < produto.getQuantidadeEstoque()) {
-            novaQuantidade = produto.getQuantidadeEstoque() - quantidade;
-
-        } else {
-            novaQuantidade = 0;
-        }
+        int novaQuantidade = Math.max(produto.getQuantidadeEstoque() - quantidade, 0);
         produto.setQuantidadeEstoque(novaQuantidade);
         produtoRepository.save(produto);
-    }
-
-    // nao esta em uso ainda
-    public List<Produto> listaProdutoPorFiltro(Produto filtro) {
-        ExampleMatcher matcher = ExampleMatcher
-                .matching()
-                .withIgnoreNullValues()
-                .withIgnoreCase()
-                .withStringMatcher(
-                        ExampleMatcher.StringMatcher.CONTAINING);
-        Example<Produto> example = Example.of(filtro, matcher);
-        return produtoRepository.findAll(example);
     }
 
     public void validaEstoqueProdutoSuficiente(Integer idProduto, int quantidade) {
@@ -128,7 +119,7 @@ public class ProdutoService {
                     }
                     return Void.TYPE;
                 })
-                .orElseThrow(() -> new RegraNegocioException("Código de produto inválido. id: " + idProduto));
-
+                .orElseThrow(() -> new RegistroNaoEncontradoException(Produto.class, idProduto));
     }
+
 }

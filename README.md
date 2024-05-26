@@ -68,19 +68,19 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
     - [ ] put
     - [ ] delete
     - [ ] atenticar
-- [ ] Funcionario
-    - [ ] criar entidade: nome, usuario_id
-    - [ ] list
-    - [ ] post
-    - [ ] get
-    - [ ] put
-    - [ ] delete
+- [X] Funcionario
+    - [X] criar entidade: nome, usuario_id
+    - [X] list
+    - [X] post
+    - [X] get
+    - [X] put
+    - [X] delete
 - [ ] Remessa
-    - [ ] criar entidade: fornecedor_id, itens, funcionario_id
+    - [x] criar entidade: fornecedor_id, itens, funcionario_id
     - [ ] list
-    - [ ] post
+    - [x] post
     - [ ] get
     - [ ] put
     - [ ] delete 
-- [ ] ItemRemessa (entidade de ligação)
-    - [ ] criar entidade: remessa_id, produto_id, quantidade
+- [x] ItemRemessa (entidade de ligação)
+    - [x] criar entidade: remessa_id, produto_id, quantidade
