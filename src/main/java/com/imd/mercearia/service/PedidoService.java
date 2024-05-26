@@ -36,7 +36,7 @@ public class PedidoService {
     ProdutoPedidoService produtoPedidoService;
 
     @Autowired
-    PagamentoRepository pagamentoRepository;    
+    PagamentoRepository pagamentoRepository;
 
     public List<Pedido> getListaPedidos() {
         return pedidoRepository.findAll();
@@ -94,14 +94,6 @@ public class PedidoService {
         pedido.setCashbackUsado(BigDecimal.valueOf(desconto));
         pedido.setProdutosPedido(produtosLista);
         pedido.setValorTotal(BigDecimal.valueOf(valorTotal));
-         // Processar pagamento
-        List<Pagamento> pagamentos = pedidoCreationDto.getPagamentos().stream()
-                .map(dto -> new Pagamento(dto.getTipoPagamento(), dto.getValor(), dto.getTroco()))
-                .collect(Collectors.toList());
-        pedido.setPagamentos(pagamentos);
-        
-        // pedidoRepository.save(pedido);
-        pagamentoRepository.saveAll(pagamentos);
         pedidoRepository.save(pedido);
 
         // salvar itens do pedido

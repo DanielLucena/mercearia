@@ -23,8 +23,9 @@ public class Pedido {
     @OneToMany(mappedBy = "pedido")
     List<ProdutoPedido> produtosPedido = new ArrayList<>();
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Pagamento> pagamentos = new ArrayList<>();
+    // @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval =
+    // true)
+    // private List<Pagamento> pagamentos = new ArrayList<>();
 
     @Column(precision = 20, scale = 2)
     private BigDecimal cashbackGerado;
@@ -32,7 +33,8 @@ public class Pedido {
     @Column(precision = 20, scale = 2)
     private BigDecimal cashbackUsado;
 
-    public Pedido() {}
+    public Pedido() {
+    }
 
     public Pedido(String cpfCliente) {
         this.cpfCliente = cpfCliente;
@@ -84,14 +86,6 @@ public class Pedido {
 
     public void setCashbackUsado(BigDecimal cashbackUsado) {
         this.cashbackUsado = cashbackUsado;
-    }
-
-    public List<Pagamento> getPagamentos() {
-        return pagamentos;
-    }
-
-    public void setPagamentos(List<Pagamento> pagamentos) {
-        this.pagamentos = pagamentos;
     }
 
     @Override

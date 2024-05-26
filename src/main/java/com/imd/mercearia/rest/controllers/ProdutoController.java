@@ -45,13 +45,7 @@ public class ProdutoController {
 
     @GetMapping("{id}")
     public Produto getById(@PathVariable Integer id) {
-        try {
-            return service.getProdutoById(id);
-        } catch (RegistroNaoEncontradoException e) {
-            System.out.println(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado.");
-        }
-
+        return service.getProdutoById(id);
     }
 
     @DeleteMapping("{id}")

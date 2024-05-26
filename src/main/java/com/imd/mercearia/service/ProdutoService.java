@@ -68,7 +68,7 @@ public class ProdutoService {
                     produto.setId(p.getId());
                     produtoRepository.save(produto);
                     return produto;
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado."));
+                }).orElseThrow(() -> new RegistroNaoEncontradoException(Produto.class, id));
     }
 
     public void deleteProduto(Produto produto) {
@@ -80,13 +80,13 @@ public class ProdutoService {
 
     public void deleteProdutoById(Integer id) {
         if (id == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID do produto não pode ser nulo.");
+            throw new RegistroNaoEncontradoException(Produto.class, id);
         }
         produtoRepository.findById(id)
                 .map(p -> {
                     produtoRepository.delete(p);
                     return Void.TYPE;
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado."));
+                }).orElseThrow(() -> new RegistroNaoEncontradoException(Produto.class, id));
     }
 
     public List<Produto> getProdutosPorFornecedor(Fornecedor fornecedor) {
