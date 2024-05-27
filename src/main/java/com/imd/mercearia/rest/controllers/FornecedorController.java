@@ -6,15 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.imd.mercearia.model.Fornecedor;
@@ -22,8 +14,6 @@ import com.imd.mercearia.service.FornecedorService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/fornecedor")
@@ -50,6 +40,20 @@ public class FornecedorController {
             return fornecedor;
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "Fornecedor não encontrado."));
+    }
+
+    @Operation(summary = "Atualiza parcialmente um fornecedor", method = "PATCH")
+    @PatchMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void patch(@PathVariable Integer id, @RequestBody Fornecedor fornecedor) {
+        Fornecedor fornecedorExistente = service.getFornecedorPorId(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Fornecedor não encontrado"));
+
+        if (fornecedor.getNome() != null) {
+            fornecedorExistente.setNome(fornecedor.getNome());
+        }
+
+        service.atualizarFornecedor(fornecedorExistente);
     }
 
     @Operation(summary = "Recupera um fornecedor pelo ID", method = "GET")

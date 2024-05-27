@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.imd.mercearia.exception.RegistroNaoEncontradoException;
@@ -16,13 +14,6 @@ import com.imd.mercearia.service.ProdutoService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/api/produto")
@@ -45,6 +36,25 @@ public class ProdutoController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Integer id, @RequestBody ProdutoCreationDTO dto) {
         Produto produto = service.converteDtoParaProduto(dto);
+
+        service.atualizarProduto(produto, id);
+    }
+
+    @Operation(summary = "Atualiza parcialmente um produto", method = "PATCH")
+    @PatchMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void patch(@PathVariable Integer id, @RequestBody ProdutoCreationDTO dto) {
+        Produto produto = service.getProdutoById(id);
+        if (produto == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado");
+        }
+
+        if (dto.getNome() != null) {
+            produto.setNome(dto.getNome());
+        }
+        if (dto.getPreco() != null) {
+            produto.setPreco(dto.getPreco());
+        }
 
         service.atualizarProduto(produto, id);
     }

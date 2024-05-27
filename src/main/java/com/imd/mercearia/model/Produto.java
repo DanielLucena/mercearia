@@ -32,7 +32,7 @@ public class Produto {
     private String nome;
 
     @Column
-    private double preco;
+    private Double preco;
 
     @Column
     private int quantidadeEstoque;

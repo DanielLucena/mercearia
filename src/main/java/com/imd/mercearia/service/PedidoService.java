@@ -3,25 +3,26 @@ package com.imd.mercearia.service;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.imd.mercearia.model.Fornecedor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.imd.mercearia.exception.EstoqueInsuficienteException;
 import com.imd.mercearia.model.BeneficioCliente;
-import com.imd.mercearia.model.Pagamento;
 import com.imd.mercearia.model.Pedido;
 import com.imd.mercearia.model.ProdutoPedido;
 import com.imd.mercearia.repository.PagamentoRepository;
 import com.imd.mercearia.repository.PedidoRepository;
 import com.imd.mercearia.rest.dto.InformacoesPedidoDto;
 import com.imd.mercearia.rest.dto.PedidoCreationDTO;
+import org.springframework.web.server.ResponseStatusException;
 
 @Component
 public class PedidoService {
@@ -46,13 +47,12 @@ public class PedidoService {
         pedidoRepository.save(pedido);
     }
 
-    public Pedido getPedidoById(Integer id) {
-        return pedidoRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Pedido não encontrado."));
-    }
+    public Optional<Pedido> getPedidoById(Integer id) { return pedidoRepository.findById(id); }
 
-    public void deletePedido(Pedido pedido) {
+    public void deletePedido(Integer id) {
+        Pedido pedido = pedidoRepository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não encontrado"));
+
         pedidoRepository.delete(pedido);
     }
 

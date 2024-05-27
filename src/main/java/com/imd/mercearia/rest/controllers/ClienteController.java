@@ -4,11 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.imd.mercearia.model.Cliente;
@@ -17,11 +13,6 @@ import com.imd.mercearia.service.ClienteService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/api/cliente")
@@ -47,6 +38,24 @@ public class ClienteController {
                     cliente.setId(p.getId());
                     service.atualizarCliente(cliente);
                     return cliente;
+                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Cliente não encontrado."));
+    }
+
+    @Operation(summary = "Atualiza parcialmente um cliente", method = "PATCH")
+    @PatchMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void patch(@PathVariable Integer id, @RequestBody Cliente cliente) {
+        service.buscarClientePorId(id)
+                .map(p -> {
+                    if (cliente.getNome() != null) {
+                        p.setNome(cliente.getNome());
+                    }
+                    if (cliente.getCpf() != null) {
+                        p.setCpf(cliente.getCpf());
+                    }
+                    service.atualizarCliente(p);
+                    return p;
                 }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Cliente não encontrado."));
     }

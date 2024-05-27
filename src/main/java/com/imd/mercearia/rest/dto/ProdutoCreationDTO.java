@@ -2,7 +2,7 @@ package com.imd.mercearia.rest.dto;
 
 public class ProdutoCreationDTO {
     private String nome;
-    private double preco;
+    private Double preco;
     private int quantidadeEstoque;
     private Integer fornecedorId;
 
@@ -15,7 +15,7 @@ public class ProdutoCreationDTO {
         this.nome = nome;
     }
 
-    public double getPreco() {
+    public Double getPreco() {
         return preco;
     }
 
