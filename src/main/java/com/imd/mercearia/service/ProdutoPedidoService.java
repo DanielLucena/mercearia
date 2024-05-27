@@ -37,8 +37,8 @@ public class ProdutoPedidoService {
                 produtoPedido.setProduto(produtoService.getProdutoById(item.getProduto()));
                 produtoPedido.setQuantidade(item.getQuantidade());
                 produtoPedidoRepository.save(produtoPedido);
-                produtoService.darBaixaAoEstoque(produtoPedido.getProduto(),
-                        item.getQuantidade());
+                // produtoService.darBaixaAoEstoque(produtoPedido.getProduto(),
+                // item.getQuantidade());
                 System.out.println(produtoPedido.getId());
             }
         }
@@ -91,5 +91,11 @@ public class ProdutoPedidoService {
                         .preco(item.getQuantidade() * item.getProduto().getPreco())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    public void decrementaEstoqueProdutos(List<ProdutoPedido> itens) {
+        for (ProdutoPedido item : itens) {
+            produtoService.darBaixaAoEstoque(item.getProduto(), item.getQuantidade());
+        }
     }
 }

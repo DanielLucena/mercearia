@@ -2,7 +2,12 @@ package com.imd.mercearia.model;
 
 import java.math.BigDecimal;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
 @Entity
 @Table(name = "pagamento")
 public class Pagamento {
@@ -25,45 +30,24 @@ public class Pagamento {
     @JoinColumn(name = "pedido_id", nullable = false)
     private Pedido pedido;
 
-    public Pagamento() {}
+    public Pagamento() {
+    }
 
-    public Pagamento(TipoPagamento tipoPagamento, BigDecimal valor, BigDecimal troco) {
+    public Pagamento(TipoPagamento tipoPagamento, BigDecimal valor, BigDecimal troco, Pedido pedido) {
         this.tipoPagamento = tipoPagamento;
         this.valor = valor;
         this.troco = troco;
+        this.pedido = pedido;
+        processarPagamento();
     }
 
-    public Integer getId() {
-        return id;
+    private void processarPagamento() {
+        if (valor.compareTo(pedido.getValorTotal()) >= 0) {
+            pedido.setStatus(Pedido.StatusPedido.CONCLUIDO);
+        }
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public TipoPagamento getTipoPagamento() {
-        return tipoPagamento;
-    }
-
-    public void setTipoPagamento(TipoPagamento tipoPagamento) {
-        this.tipoPagamento = tipoPagamento;
-    }
-
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
-    }
-
-    public BigDecimal getTroco() {
-        return troco;
-    }
-
-    public void setTroco(BigDecimal troco) {
-        this.troco = troco;
-    }
+    // getters e setters
 
     public enum TipoPagamento {
         CARTAO_CREDITO,
@@ -71,9 +55,4 @@ public class Pagamento {
         PIX,
         DINHEIRO
     }
-   
 }
-
-
-
-

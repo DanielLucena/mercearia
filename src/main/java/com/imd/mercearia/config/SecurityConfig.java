@@ -94,6 +94,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/remessa/**")
                         .hasRole("GERENTE")
 
+                        // regras de pagamento
+                        .requestMatchers("/api/pagamento/**")
+                        .hasAnyRole("REPOSITOR", "CAIXA", "GERENTE", "CLIENTE")
+
                         // fim do filtro
                         .anyRequest().authenticated()
 

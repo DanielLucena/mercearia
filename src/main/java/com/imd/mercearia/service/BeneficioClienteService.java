@@ -65,4 +65,10 @@ public class BeneficioClienteService {
         beneficioClienteRepository.delete(beneficioCliente);
     }
 
+    public double calcularDescontoCashbackCliente(BeneficioCliente beneficioCliente, double subtotal) {
+        double antigoPontosCasback = beneficioCliente.getPontosCashback();
+        double pontosDescontados = antigoPontosCasback > subtotal ? subtotal : antigoPontosCasback;
+        return pontosDescontados;
+    }
+
 }
