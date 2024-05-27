@@ -15,7 +15,9 @@ import lombok.ToString;
 @ToString
 
 public class PagamentoDTO {
-    private TipoPagamento tipoPagamento; 
+    private TipoPagamento tipoPagamento;
     private BigDecimal valor;
     private BigDecimal troco;
+    private Integer pedidoId;
+    private boolean isUsandoCashback;
 }
