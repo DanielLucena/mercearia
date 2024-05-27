@@ -54,10 +54,10 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
 
 ### Entidades Novas
 - [ ] Pagamento
-    - [ ] criar entidade: tipoPagamento(ENUM), valor, troco
+    - [x] criar entidade: tipoPagamento(ENUM), valor, troco
     - [ ] list
     - [ ] post
-    - [ ] get
+    - [x] get
     - [ ] put
     - [ ] delete
 - [ ] Usuario
@@ -93,7 +93,7 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
 - [x] documentar rotas de Fornecedor
 - [x] documentar rotas de Remessa
 - [x] documentar rotas de Funcionario
-- [ ] documentar rotas de Pagamento
+- [x] documentar rotas de Pagamento
 - [x] documentar rotas de Usuario
 
 
@@ -106,5 +106,5 @@ Ao um cliente finalizar um pedido, ele receberá um desconto para sua próxima c
 - [x] implementar autorização para rotas de Fornecedor
 - [x] implementar autorização para rotas de Remessa
 - [x] implementar autorização para rotas de Funcionario
-- [ ] implementar autorização para rotas de Pagamento
-- [ ] implementar autorização para rotas de Usuario
+- [x] implementar autorização para rotas de Pagamento
+- [x] implementar autorização para rotas de Usuario
