@@ -20,12 +20,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/api/cliente")
 @Tag(name = "Cliente")
+@CrossOrigin(origins = "*")
 public class ClienteController {
 
     @Autowired
@@ -78,7 +80,6 @@ public class ClienteController {
     public List<Cliente> find(Cliente filtro) {
         return service.listaClientesPorfiltro(filtro);
     }
-
 
     @Operation(summary = "Recupera uma listagem de pedidos feito por um cliente", method = "GET")
     @GetMapping("/pedidos/{id}")

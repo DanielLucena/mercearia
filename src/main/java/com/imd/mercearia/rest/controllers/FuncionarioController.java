@@ -15,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/api/funcionario")
 @Tag(name = "Funcionário")
+@CrossOrigin(origins = "*")
 public class FuncionarioController {
 
     @Autowired

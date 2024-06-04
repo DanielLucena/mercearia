@@ -1,7 +1,6 @@
 package com.imd.mercearia.rest.controllers;
 
 import com.imd.mercearia.model.Remessa;
-import com.imd.mercearia.model.ItemRemessa;
 import com.imd.mercearia.rest.dto.RemessaCreationDTO;
 import com.imd.mercearia.rest.dto.RemessaDTO;
 import com.imd.mercearia.service.RemessaService;
@@ -18,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/remessa")
 @Tag(name = "Remessa")
+@CrossOrigin(origins = "*")
 public class RemessaController {
 
     @Autowired
@@ -42,7 +42,7 @@ public class RemessaController {
     public RemessaDTO getRemessaPorId(@PathVariable Integer id) {
         return remessaService.getRemessaPorId(id);
     }
-    
+
     @Operation(summary = "Exclui uma remessa", method = "DELETE")
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -55,5 +55,5 @@ public class RemessaController {
     public List<Remessa> getTodasRemessas() {
         return remessaService.getTodasRemessas();
     }
-    
+
 }
