@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.imd.mercearia.enums.Role;
 import com.imd.mercearia.exception.LoginJaCadastradoException;
 import com.imd.mercearia.exception.SenhaInvalidaException;
 import com.imd.mercearia.model.Usuario;
@@ -80,6 +81,11 @@ public class UsuarioService implements UserDetailsService {
             }
 
         }
+        for (String role : roles) {
+            System.out.print(role + ", ");
+        }
+        System.out.println();
+
         // String[] roles = new String[] { "ADMIN", "USER" };
 
         // Cria e retorna o objeto UserDetails com os detalhes do usuário
@@ -90,5 +96,12 @@ public class UsuarioService implements UserDetailsService {
                 .roles(roles)
                 .build();
 
+    }
+
+    public Role getUserRole(String username) {
+        Usuario usuario = repository.findByLogin(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado na base de dados."));
+
+        return usuario.getRole();
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.imd.mercearia.enums.Role;
 import com.imd.mercearia.exception.SenhaInvalidaException;
 import com.imd.mercearia.model.Usuario;
 import com.imd.mercearia.rest.dto.CredenciaisDTO;
@@ -53,7 +54,8 @@ public class UsuarioController {
                     .senha(credenciais.getSenha()).build();
             UserDetails usuarioAutenticado = usuarioService.autenticar(usuario);
             String token = jwtService.gerarToken(usuario);
-            return new TokenDTO(usuario.getLogin(), token);
+            Role usuarioRole = usuarioService.getUserRole(usuario.getLogin());
+            return new TokenDTO(usuario.getLogin(), token, usuarioRole.toString());
         } catch (UsernameNotFoundException | SenhaInvalidaException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
