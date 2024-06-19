@@ -43,6 +43,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authz) -> authz
+                        // ping
+                        .requestMatchers("/ping")
+                        .permitAll()
                         // regra do swagger
                         .requestMatchers("/swagger-ui/**")
                         .permitAll()
