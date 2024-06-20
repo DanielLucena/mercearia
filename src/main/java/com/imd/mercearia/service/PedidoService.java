@@ -144,7 +144,7 @@ public class PedidoService {
         filtro.setCpfCliente(dto.getCpfCliente());
         ExampleMatcher matcher = ExampleMatcher
                 .matching()
-                .withIgnorePaths("valorTotal", "cashbackGerado", "cashbackUsado")
+                .withIgnorePaths("valorTotal", "cashbackGerado", "cashbackUsado", "status")
                 .withIgnoreCase()
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
         Example example = Example.of(filtro, matcher);
