@@ -18,5 +18,5 @@ public class InformacoesPedidoDto {
     private List<InformacaoItemDto> itens;
     private BigDecimal desconto;
     private BigDecimal valorTotal;
-
+    private String status;
 }

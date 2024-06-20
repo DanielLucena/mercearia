@@ -158,6 +158,7 @@ public class PedidoService {
                 .cpfCliente(pedido.getCpfCliente())
                 .desconto(pedido.getCashbackGerado())
                 .valorTotal(pedido.getValorTotal())
+                .status(pedido.getStatus().name())
                 .itens(produtoPedidoService
                         .converterListaProdutoPedidoParaDto(pedido.getProdutosPedido()))
                 .build();
