@@ -46,7 +46,8 @@ public class ClienteService {
             cliente.setCpf(oldCliente.getCpf());
         } else {
             if (beneficioClienteService
-                    .existsBeneficioClienteComCpf(cliente.getCpf())) {
+                    .existsBeneficioClienteComCpf(cliente.getCpf())
+                    && !cliente.getCpf().equals(oldCliente.getCpf())) {
                 throw new ClienteJaCadastradoException(cliente);
             }
         }
@@ -61,8 +62,9 @@ public class ClienteService {
     }
 
     public void deletarCliente(Integer id) {
-        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "Cliente não encontrado."));
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Cliente não encontrado."));
         beneficioClienteService.deletarBeneficioCliente(cliente.getBeneficioCliente());
         clienteRepository.deleteById(id);
     }
