@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -39,6 +40,6 @@ public class FuncionarioService {
                 .withIgnoreCase()
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
         Example<Funcionario> example = Example.of(filtro, matcher);
-        return funcionarioRepository.findAll(example);
+        return funcionarioRepository.findAll(example, Sort.by(Sort.Direction.ASC, "id"));
     }
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.imd.mercearia.model.Fornecedor;
@@ -54,8 +55,8 @@ public class FornecedorService {
                 .matching()
                 .withIgnoreCase()
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-        Example example = Example.of(filtro, matcher);
-        return fornecedorRepository.findAll(example);
+        Example<Fornecedor> example = Example.of(filtro, matcher);
+        return fornecedorRepository.findAll(example, Sort.by(Sort.Direction.ASC, "id"));
     }
 
 }

@@ -3,6 +3,9 @@ package com.imd.mercearia.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -122,4 +125,14 @@ public class ProdutoService {
                 .orElseThrow(() -> new RegistroNaoEncontradoException(Produto.class, idProduto));
     }
 
+    public List<Produto> listaProdutosPorFiltro(ProdutoCreationDTO dto) {
+        Produto filtro = new Produto(dto.getNome(), dto.getPreco(), dto.getQuantidadeEstoque());
+        ExampleMatcher matcher = ExampleMatcher
+                .matching()
+                .withIgnorePaths("preco", "quantidadeEstoque")
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example example = Example.of(filtro, matcher);
+        return produtoRepository.findAll(example, Sort.by(Sort.Direction.ASC, "id"));
+    }
 }

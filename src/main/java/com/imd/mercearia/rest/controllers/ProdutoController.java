@@ -64,8 +64,8 @@ public class ProdutoController {
 
     @Operation(summary = "Mostra a listagem de todos os produtos", method = "POST")
     @GetMapping
-    public List<Produto> find() {
-        return service.getListaProdutos();
+    public List<Produto> find(ProdutoCreationDTO dto) {
+        return service.listaProdutosPorFiltro(dto);
     }
 
 }

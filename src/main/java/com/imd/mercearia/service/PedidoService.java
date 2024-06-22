@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -148,7 +149,7 @@ public class PedidoService {
                 .withIgnoreCase()
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
         Example example = Example.of(filtro, matcher);
-        return converterListaPedidoParaDto(pedidoRepository.findAll(example));
+        return converterListaPedidoParaDto(pedidoRepository.findAll(example, Sort.by(Sort.Direction.ASC, "id")));
     }
 
     public InformacoesPedidoDto converterPedidoParaDto(Pedido pedido) {
