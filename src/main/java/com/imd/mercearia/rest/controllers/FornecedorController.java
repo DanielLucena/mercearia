@@ -54,12 +54,7 @@ public class FornecedorController {
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
-        // service
-        // .getFornecedorPorId(id).map(p -> {
-        // service.deletarFornecedor(id);
-        // return Void.TYPE;
-        // }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-        // "Fornecedor não encontrado."));
+        service.deletarFornecedor(id);
     }
 
     @Operation(summary = "Retorna uma listagem de todos os fornecedores", method = "GET")

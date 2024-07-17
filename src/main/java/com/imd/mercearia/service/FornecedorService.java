@@ -57,10 +57,14 @@ public class FornecedorService {
     }
 
     public void deletarFornecedor(Integer id) {
-        Fornecedor fornecedor = fornecedorRepository.findById(id).orElse(null);
-
-        produtoRepository.deleteByFornecedor(fornecedor);
-        fornecedorRepository.delete(fornecedor);
+        if (id == null) {
+            throw new RegraNegocioException("Id do fornecedor não pode ser nulo.");
+        }
+        fornecedorRepository.findById(id)
+                .map(p -> {
+                    fornecedorRepository.delete(p);
+                    return Void.TYPE;
+                }).orElseThrow(() -> new RegistroNaoEncontradoException(Fornecedor.class, id));
     }
 
     public List<Produto> getProdutosPorFornecedor(Fornecedor fornecedor) {
