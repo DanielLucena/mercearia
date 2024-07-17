@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.imd.mercearia.exception.RegistroNaoEncontradoException;
+import com.imd.mercearia.exception.RegraNegocioException;
 import com.imd.mercearia.model.Fornecedor;
 import com.imd.mercearia.model.Produto;
 import com.imd.mercearia.repository.FornecedorRepository;
@@ -35,13 +36,17 @@ public class FornecedorService {
         return fornecedorRepository.save(fornecedor);
     }
 
-    public Optional<Fornecedor> getFornecedorPorId(Integer id) {
-        return fornecedorRepository.findById(id);
+    public Fornecedor getFornecedorById(Integer id) {
+        if (id == null) {
+            throw new RegraNegocioException("Id do fornecedor não pode ser nulo.");
+        }
+        return fornecedorRepository.findById(id)
+                .orElseThrow(() -> new RegistroNaoEncontradoException(Produto.class, id));
     }
 
     public void atualizarFornecedor(Fornecedor fornecedor, Integer id) {
         if (id == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id do fornecedor não pode ser nulo.");
+            throw new RegraNegocioException("Id do fornecedor não pode ser nulo.");
         }
         fornecedorRepository.findById(id)
                 .map(p -> {
