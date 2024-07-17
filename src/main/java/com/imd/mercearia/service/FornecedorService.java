@@ -7,8 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.imd.mercearia.exception.RegistroNaoEncontradoException;
 import com.imd.mercearia.model.Fornecedor;
 import com.imd.mercearia.model.Produto;
 import com.imd.mercearia.repository.FornecedorRepository;
@@ -35,8 +39,16 @@ public class FornecedorService {
         return fornecedorRepository.findById(id);
     }
 
-    public void atualizarFornecedor(Fornecedor fornecedor) {
-        fornecedorRepository.save(fornecedor);
+    public void atualizarFornecedor(Fornecedor fornecedor, Integer id) {
+        if (id == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id do fornecedor não pode ser nulo.");
+        }
+        fornecedorRepository.findById(id)
+                .map(p -> {
+                    fornecedor.setId(p.getId());
+                    fornecedorRepository.save(fornecedor);
+                    return fornecedor;
+                }).orElseThrow(() -> new RegistroNaoEncontradoException(Fornecedor.class, id));
     }
 
     public void deletarFornecedor(Integer id) {

@@ -41,13 +41,7 @@ public class FornecedorController {
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Integer id, @RequestBody Fornecedor fornecedor) {
-
-        service.getFornecedorPorId(id).map(p -> {
-            fornecedor.setId(p.getId());
-            service.atualizarFornecedor(fornecedor);
-            return fornecedor;
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "Fornecedor não encontrado."));
+        service.atualizarFornecedor(fornecedor, id);
     }
 
     @Operation(summary = "Recupera um fornecedor pelo ID", method = "GET")
