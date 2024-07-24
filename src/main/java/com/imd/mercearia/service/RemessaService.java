@@ -44,8 +44,9 @@ public class RemessaService {
     private FuncionarioService funcionarioService;
 
     public Remessa salvarRemessa(RemessaCreationDTO dto) {
-        Fornecedor fornecedor = fornecedorService.getFornecedorPorId(dto.getFornecedorId())
-                .orElseThrow(() -> new RegraNegocioException("Código de fornecedor inválido"));
+        Fornecedor fornecedor = fornecedorService.getFornecedorById(dto.getFornecedorId());
+        // .orElseThrow(() -> new RegraNegocioException("Código de fornecedor
+        // inválido"));
         Funcionario funcionario = funcionarioService.buscarFuncionarioPorId(dto.getFuncionarioId())
                 .orElseThrow(() -> new RegraNegocioException("Código de funcionario inválido"));
         Remessa remessa = new Remessa();
@@ -87,7 +88,6 @@ public class RemessaService {
                 .itens(remessa.getItens())
                 .build();
     }
-
 
     public void deletarRemessa(Integer id) {
         Remessa remessa = remessaRepository.findById(id)

@@ -41,35 +41,20 @@ public class FornecedorController {
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Integer id, @RequestBody Fornecedor fornecedor) {
-
-        service.getFornecedorPorId(id).map(p -> {
-            fornecedor.setId(p.getId());
-            service.atualizarFornecedor(fornecedor);
-            return fornecedor;
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "Fornecedor não encontrado."));
+        service.atualizarFornecedor(fornecedor, id);
     }
 
     @Operation(summary = "Recupera um fornecedor pelo ID", method = "GET")
     @GetMapping("{id}")
     public Fornecedor getById(@PathVariable Integer id) {
-
-        return service
-                .getFornecedorPorId(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Fornecedor não encontrado."));
+        return service.getFornecedorById(id);
     }
 
     @Operation(summary = "Exclui um fornecedor", method = "DELETE")
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
-        service
-                .getFornecedorPorId(id).map(p -> {
-                    service.deletarFornecedor(id);
-                    return Void.TYPE;
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Fornecedor não encontrado."));
+        service.deletarFornecedor(id);
     }
 
     @Operation(summary = "Retorna uma listagem de todos os fornecedores", method = "GET")
